@@ -334,7 +334,7 @@ async function openReader(id) {
   const tapOn = !!store.data.settings.tapSelect;
   const tocTab = store.data.settings.panelTab === 'toc';
   const headMin = !!store.data.settings.panelHeadMin;
-  view.innerHTML = `<div class="reader ${closed ? 'panel-closed' : ''}${barCollapsed ? ' bar-collapsed' : ''}" data-lang="${info.kind === 'text' ? info.lang : ''}"${zh ? ' lang="zh-Hant"' : ''}>
+  view.innerHTML = `<div class="reader ${closed ? 'panel-closed' : ''}${barCollapsed ? ' bar-collapsed' : ''}${tapOn ? ' tool-on' : ''}" data-lang="${info.kind === 'text' ? info.lang : ''}"${zh ? ' lang="zh-Hant"' : ''}>
     <div class="reader-main">
       <div class="rbar" id="rbar"><a class="btn small ghost rb-back" href="#/library" aria-label="Back to library">←</a>
         <h1 class="title" data-heading>${esc(info.short)}</h1>
@@ -343,7 +343,7 @@ async function openReader(id) {
         <div class="land-tools only-land"><button class="btn small ghost" id="landAa" aria-label="Text size and theme" aria-expanded="false">Aa</button>
           <div class="land-pop" id="landPop" role="group" aria-label="Text size and theme"><button class="icon-btn" data-size="-1" aria-label="Smaller text">A−</button><button class="icon-btn" data-size="1" aria-label="Larger text">A+</button><button class="icon-btn" data-theme aria-label="Toggle dark mode">◐</button></div></div>
         <button class="btn small" id="panelBtn" aria-controls="panel" aria-expanded="${!closed}">${L.notes} <span id="hlCount"></span></button>
-        <div class="rb-tab">${info.kind === 'text' ? `<button type="button" class="rb-notes ts-btn" id="tabTapSel" aria-pressed="${tapOn}" aria-label="點選 Tap-select" title="點選 Tap-select"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}<button type="button" class="rb-notes" id="tabNotes" aria-controls="panel" aria-label="Notes 筆記" title="Notes 筆記">✎</button><button type="button" class="rb-toggle" id="barToggle" aria-controls="rbar" aria-expanded="${!barCollapsed}" aria-label="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}" title="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        <div class="rb-tab"><button type="button" class="rb-dot" id="rbDot" aria-expanded="false" aria-label="Show reader tools 顯示小工具" title="Show reader tools 顯示小工具"></button>${info.kind === 'text' ? `<button type="button" class="rb-notes ts-btn" id="tabTapSel" aria-pressed="${tapOn}" aria-label="點選 Tap-select" title="點選 Tap-select"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}<button type="button" class="rb-notes" id="tabNotes" aria-controls="panel" aria-label="Notes 筆記" title="Notes 筆記">✎</button><button type="button" class="rb-toggle" id="barToggle" aria-controls="rbar" aria-expanded="${!barCollapsed}" aria-label="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}" title="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
         <div class="progress" id="prog"></div></div>
       <div id="docRoot"></div>
     </div>
@@ -432,6 +432,7 @@ async function openReader(id) {
     const el = $('.reader'), tb = $('#barToggle'); if (!el) return;
     const keep = R.firstVisible();
     el.classList.toggle('bar-collapsed', collapsed);
+    el.classList.remove('bar-peek');
     store.data.settings.barCollapsed = collapsed; applyTop();
     const lbl = collapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列';
     tb.setAttribute('aria-expanded', String(!collapsed)); tb.setAttribute('aria-label', lbl); tb.title = lbl;
@@ -442,11 +443,44 @@ async function openReader(id) {
     announce(collapsed ? 'Reader bar hidden' : 'Reader bar shown');
   };
   $('#barToggle').onclick = () => R.setBar(!$('.reader').classList.contains('bar-collapsed'));
+  // collapsed corner: a faint dot peeks the mini tools; idle or a tap outside hides them again
+  const PEEK_MS = 3200;
+  let peekT = 0;
+  const setPeek = (on, { focus, restore = true } = {}) => {
+    const el = $('.reader'); if (!el || !el.classList.contains('bar-collapsed')) return;
+    const tab = $('.rb-tab');
+    const hadFocus = !!tab?.contains(document.activeElement);
+    el.classList.toggle('bar-peek', !!on);
+    $('#rbDot')?.setAttribute('aria-expanded', String(!!on));
+    clearTimeout(peekT);
+    if (on) {
+      peekT = setTimeout(() => setPeek(false), PEEK_MS);
+      // the dot is hidden while peeked; move focus to a tool so hiding it does not drop focus
+      if (focus || hadFocus) ($('#tabTapSel') || $('#tabNotes') || $('#barToggle'))?.focus();
+    } else if (hadFocus && restore) {
+      $('#rbDot')?.focus();
+    }
+  };
+  const bumpPeek = () => {
+    if (!$('.reader')?.classList.contains('bar-peek')) return;
+    clearTimeout(peekT);
+    peekT = setTimeout(() => setPeek(false), PEEK_MS);
+  };
+  $('#rbDot').onclick = e => setPeek(true, { focus: e.detail === 0 });
+  $('.rb-tab').addEventListener('pointerdown', bumpPeek);
+  $('.rb-tab').addEventListener('focusin', bumpPeek);
+  const offPeek = e => { if (!$('.reader')?.classList.contains('bar-peek') || e.target.closest?.('.rb-tab')) return; setPeek(false, { restore: false }); };
+  const onPeekKey = e => { if (e.key === 'Escape' && $('.reader')?.classList.contains('bar-peek')) setPeek(false); };
+  document.addEventListener('pointerdown', offPeek);
+  document.addEventListener('keydown', onPeekKey);
+  R.setPeek = setPeek;
+  R.cleanup.push(() => { document.removeEventListener('pointerdown', offPeek); document.removeEventListener('keydown', onPeekKey); clearTimeout(peekT); });
   // 點選 tap-select mode (texts): remembered per device
   R.tapOn = () => !!store.data.settings.tapSelect;
   const setTap = on => {
     store.data.settings.tapSelect = on; store.save();
     $$('.ts-btn').forEach(b => b.setAttribute('aria-pressed', String(on)));
+    $('.reader')?.classList.toggle('tool-on', on);
     $('.doc', R.root)?.classList.toggle('tapsel', on);
     if (!on) R.tapSel?.clear();
     toast(on ? '點選：點一下選一句，再點延伸，雙擊或長按選整句 · Tap a phrase, tap again to extend, double-tap / long-press for the sentence' : '點選已關閉 · Tap-select off');
@@ -523,7 +557,7 @@ async function renderTextDoc(R) {
   // Zen ink art for the sutras: a sumi-e header (Tōhaku's pines, public domain), hairline section marks (CSS), a closing ensō.
   // Decorative only (aria-hidden, outside every [data-anchor]), so highlight offsets are untouched.
   const art = /^(diamond|medicine)-/.test(R.id);
-  R.root.innerHTML = `<article class="doc${art ? ' art' : ''}${R.tapOn() ? ' tapsel' : ''}" lang="${m.lang}">
+  R.root.innerHTML = `<article class="doc${art ? ' art' : ''}${R.id.startsWith('diamond-') ? ' div-plain' : ''}${R.tapOn() ? ' tapsel' : ''}" lang="${m.lang}">
     ${art ? `<figure class="art-head" aria-hidden="true"><img class="art-wide" src="img/art/pines-wide.webp" width="1400" height="606" alt="" loading="lazy" decoding="async"><img class="art-tall" src="img/art/pines-tall.webp" width="460" height="825" alt="" loading="lazy" decoding="async"></figure>` : ''}
     <h1>${esc(m.title)}</h1><div class="sub">${esc(m.subtitle)}</div>
     ${blocks.map((b, i) => b[0] === 'h' ? `<h3 data-anchor="b${i}">${esc(b[1])}</h3>` : `<p data-anchor="b${i}" class="${b[0] === 'v' ? 'verse' : ''}">${esc(b[1])}</p>`).join('')}
