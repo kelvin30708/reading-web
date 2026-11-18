@@ -10,9 +10,12 @@ img/art/pines-wide.webp, img/art/pines-tall.webp
   Changes: cropped, paper tone removed so only the ink remains (transparent WebP), edges faded,
   resized. The changes are dedicated to the public domain (CC0).
 
-img/art/enso.webp, img/art/divider.webp, img/art/divider-v.webp
-  Ensō circle and ink-brush section dividers drawn procedurally for this app
-  (ux-rounds/make_art.py). Original work, dedicated to the public domain (CC0 1.0).
+img/art/enso.webp
+  Ensō circle drawn procedurally for this app (ux-rounds/make_art.py). Original work, dedicated to
+  the public domain (CC0 1.0).
+
+Section dividers (a short hairline with a small vermilion square) are pure CSS in css/app.css,
+designed for this app; no image file. CC0 1.0.
 
 vendor/fonts/  Noto Serif TC subset — SIL Open Font License 1.1 (see the OFL file beside the fonts).
 vendor/pdfjs/  PDF.js — Apache License 2.0 (Mozilla).

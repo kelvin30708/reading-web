@@ -35,6 +35,7 @@
       <button class="icon-btn" id="fontUp" title="Larger text" aria-label="Larger text">A+</button>
     </div>
     <button class="icon-btn" id="themeBtn" title="Light / dark" aria-label="Toggle dark mode">◐</button>
+    <button type="button" class="icon-btn top-toggle" id="topToggle" aria-expanded="true" aria-label="Hide top bar 收合頂列" title="Hide top bar 收合頂列"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   </div>
 </header>
 
@@ -51,8 +52,20 @@
   <span class="sep"></span>
   <button class="tb" data-act="note" title="N · Highlight and add a note 筆記" aria-keyshortcuts="N">✎ Note</button>
   <button class="tb" data-act="card" title="C · Add to flashcards 單字卡" aria-keyshortcuts="C">＋ Card</button>
+  <button class="tb" data-act="link" title="L · Link to another passage 連結" aria-label="Link to another passage 連結" aria-keyshortcuts="L">⤳<span class="tb-label"> Link</span></button>
   <button class="tb danger" data-act="remove" title="Del · Remove highlight" aria-label="Remove highlight" aria-keyshortcuts="Delete" hidden>✕<span class="tb-label"> Remove</span></button>
 </div>
+
+<div id="ctxMenu" class="ctxmenu" role="menu" aria-label="Selection 選取" hidden>
+  <button type="button" role="menuitem" data-ctx="link">⤳ 連結 Link to…</button>
+  <button type="button" role="menuitem" data-ctx="hl"><span class="cdot"></span>螢光筆 Highlight</button>
+  <button type="button" role="menuitem" data-ctx="copy">複製 Copy</button>
+</div>
+<div id="linkBanner" class="linkbanner" role="status" aria-live="polite" hidden>
+  <span class="lb-text"></span>
+  <span class="lb-acts"><button type="button" class="btn small ghost" data-lb="toc">目錄 Contents</button><button type="button" class="btn small primary" data-lb="ok" hidden>連結 Link</button><button type="button" class="btn small ghost" data-lb="cancel" aria-label="Cancel linking (Esc)">✕</button></span>
+</div>
+<button type="button" id="backPill" class="backpill" hidden>← 返回 Back</button>
 
 <dialog id="cardDlg" class="dlg">
   <form method="dialog" id="cardForm">

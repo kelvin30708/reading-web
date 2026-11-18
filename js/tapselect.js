@@ -84,7 +84,7 @@ export function setupTapSelect(R, { isOn, onCleared }) {
     pick(c, PHRASE);
   }
   const onDown = e => {
-    if (!isOn() || e.button > 0 || e.target.closest('mark.hl') && !cur()) return;
+    if (!isOn() || e.button > 0 || e.target.closest('mark.hl, .xl, .xt') && !cur() && !document.body.classList.contains('link-mode')) return;
     if (!e.target.closest('[data-anchor]') && !e.target.closest('.doc')) return;
     down = { x: e.clientX, y: e.clientY, t: Date.now(), id: e.pointerId }; lpDone = false;
     clearTimeout(lpTimer);
@@ -104,11 +104,11 @@ export function setupTapSelect(R, { isOn, onCleared }) {
     e.preventDefault();
   };
   const onCtx = e => { if (isOn() && root.contains(e.target)) e.preventDefault(); };   // no OS menu on long-press
-  const onClick = e => { if (isOn() && root.contains(e.target) && !e.target.closest('mark.hl')) e.stopPropagation(); };
+  const onClick = e => { if (isOn() && root.contains(e.target) && (!e.target.closest('mark.hl, .xl, .xt') || document.body.classList.contains('link-mode'))) e.stopPropagation(); };
   root.addEventListener('pointerdown', onDown); addEventListener('pointermove', onMove, { passive: true });
   root.addEventListener('pointerup', onUp); root.addEventListener('contextmenu', onCtx); root.addEventListener('click', onClick);
   root.addEventListener('pointercancel', () => { down = null; clearTimeout(lpTimer); });
-  root.addEventListener('mousedown', e => { if (isOn() && e.button === 0 && !e.target.closest('a,button,mark.hl')) e.preventDefault(); });
+  root.addEventListener('mousedown', e => { if (isOn() && e.button === 0 && !e.target.closest('a,button,mark.hl,.xl,.xt')) e.preventDefault(); });
   // handles: drag to move the start or the end, snapping to characters
   for (const [h, isStart] of [[hs, true], [he, false]]) {
     h.addEventListener('pointerdown', e => {

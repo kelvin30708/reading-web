@@ -3,7 +3,7 @@
 // deletions leave tombstones in `deleted`, and save() merges what is on disk before writing.
 const KEY = 'readingweb:v1';
 const DAY = 86400000;
-const blank = () => ({ highlights: {}, cards: [], uploads: [], deleted: {}, settings: { theme: null, fs: 19, pdfZoom: 1 }, pos: {} });
+const blank = () => ({ highlights: {}, cards: [], links: [], uploads: [], deleted: {}, settings: { theme: null, fs: 19, pdfZoom: 1 }, pos: {} });
 const mtOf = o => o.mt || o.created || 0;
 
 // Merge `inc` (another tab's copy or a backup) into `cur` IN PLACE, so objects the UI holds stay live.
@@ -26,6 +26,7 @@ export function mergeInto(cur, inc) {
   for (const doc of new Set([...Object.keys(cur.highlights), ...Object.keys(inc.highlights || {})]))
     mergeList(cur.highlights[doc] ||= [], inc.highlights?.[doc]);
   mergeList(cur.cards, inc.cards);
+  mergeList(cur.links ||= [], inc.links);   // cross-reference links: same per-item rules
   // uploads: union by id (a removed upload leaves a tombstone too); the Peak record if we lack one
   for (const u of inc.uploads || []) if (!cur.uploads.some(x => x.id === u.id) && !(del[u.id] >= (u.added || 0))) cur.uploads.push(structuredClone(u));
   cur.uploads = cur.uploads.filter(u => !(del[u.id] >= (u.added || 0)));
@@ -46,7 +47,7 @@ export const store = {
   load() {
     try { this.raw = localStorage.getItem(KEY); this.data = Object.assign(blank(), JSON.parse(this.raw || '{}')); }
     catch (e) { console.warn('bad state', e); this.data = blank(); }
-    this.data.deleted ||= {};
+    this.data.deleted ||= {}; this.data.links ||= [];
     migrate(this.data);
     return this.data;
   },
@@ -68,9 +69,9 @@ export const store = {
   tomb(id) { this.data.deleted[id] = Date.now(); },
   // Replace is authoritative: everything not in `obj` gets a tombstone, so other open tabs drop it too
   replaceAll(obj) {
-    const keep = new Set([...Object.values(obj.highlights || {}).flat(), ...(obj.cards || []), ...(obj.uploads || [])].map(o => o.id));
+    const keep = new Set([...Object.values(obj.highlights || {}).flat(), ...(obj.cards || []), ...(obj.links || []), ...(obj.uploads || [])].map(o => o.id));
     const now = Date.now(), tombs = { ...(obj.deleted || {}) };
-    for (const o of [...Object.values(this.data.highlights).flat(), ...this.data.cards, ...this.data.uploads]) if (!keep.has(o.id)) tombs[o.id] = now;
+    for (const o of [...Object.values(this.data.highlights).flat(), ...this.data.cards, ...(this.data.links || []), ...this.data.uploads]) if (!keep.has(o.id)) tombs[o.id] = now;
     this.data = Object.assign(blank(), obj, { deleted: tombs }); migrate(this.data);
     try { this.raw = localStorage.getItem(KEY); } catch {}
     this.save();

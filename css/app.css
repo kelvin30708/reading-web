@@ -4,7 +4,7 @@
    ========================================================================== */
 @font-face{font-family:"Noto Serif TC Sutra";src:url(../vendor/fonts/NotoSerifTC-400-sutra-subset.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Noto Serif TC Sutra";src:url(../vendor/fonts/NotoSerifTC-600-sutra-subset.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
-:root{
+:root{--top:60px;
   /* paper & ink */
   --bg:#F7F4EE;        /* washi */
   --paper:#FBFAF6;     /* lighter sheet for cards / panel items */
@@ -145,10 +145,10 @@ h3.section{font-family:var(--font-zh);font-weight:400;font-size:var(--fs-md);let
 .about li{margin:6px 0}
 
 /* ---------- reader ---------- */
-.reader{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:calc(100vh - 60px);transition:grid-template-columns var(--dur) var(--ease)}
+.reader{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:calc(100vh - var(--top));transition:grid-template-columns var(--dur) var(--ease)}
 .reader.panel-closed{grid-template-columns:minmax(0,1fr) 0}
 .reader-main{min-width:0;overflow-x:clip}
-.rbar{position:sticky;top:60px;z-index:20;display:flex;align-items:center;gap:8px;min-height:52px;padding:4px 20px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.rbar{position:sticky;top:var(--top);z-index:20;display:flex;align-items:center;gap:8px;min-height:52px;padding:4px 20px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .rbar .title{font-family:var(--font-zh);font-weight:400;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1;text-align:center;color:var(--ink-soft);font-size:var(--fs-base)}
 .progress{position:absolute;left:0;bottom:-1px;height:1px;background:var(--shu);width:0;transition:width .2s linear}
 .doc{max-width:40em;margin:0 auto;padding:64px 28px 30vh;font-family:var(--font-read);font-size:var(--fs);line-height:1.9;color:var(--ink);hanging-punctuation:first allow-end}
@@ -167,7 +167,7 @@ mark.hl.flash{outline:1px solid var(--shu);outline-offset:3px}
 .textLayer mark.hl{color:transparent;padding:0;border-radius:0}
 
 /* vertical writing (直排) for Chinese texts */
-.doc.vertical{writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;width:100%;max-width:none;max-height:none;height:calc(100vh - 60px - 53px);height:calc(100dvh - 60px - 53px);margin:0;padding:48px 56px 40px;overflow-x:auto;overflow-y:hidden;line-height:2.1;letter-spacing:.12em;text-align:start;scrollbar-width:thin;overscroll-behavior-x:contain}
+.doc.vertical{writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;width:100%;max-width:none;max-height:none;height:calc(100vh - var(--top) - 53px);height:calc(100dvh - var(--top) - 53px);margin:0;padding:48px 56px 40px;overflow-x:auto;overflow-y:hidden;line-height:2.1;letter-spacing:.12em;text-align:start;scrollbar-width:thin;overscroll-behavior-x:contain}
 .doc.vertical h1{margin:0 0 0 1.2em}
 .doc.vertical .sub{margin:0 0 0 2.5em;padding:0 0 0 2em;border-bottom:0;border-left:1px solid var(--line);max-height:20em}
 .doc.vertical h3{margin:0 1.6em 0 1em}
@@ -187,7 +187,7 @@ mark.hl.flash{outline:1px solid var(--shu);outline-offset:3px}
 .pdf-empty h2{font-family:var(--font-zh);font-weight:400;letter-spacing:.04em}
 
 /* ---------- side panel ---------- */
-.panel{border-left:1px solid var(--line);background:var(--panel);overflow:hidden;position:sticky;top:60px;height:calc(100vh - 60px);display:flex;flex-direction:column}
+.panel{border-left:1px solid var(--line);background:var(--panel);overflow:hidden;position:sticky;top:var(--top);height:calc(100vh - var(--top));display:flex;flex-direction:column}
 .panel-head{padding:18px 20px 12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .panel-head h4{margin:0 0 6px;font-size:var(--fs-sm);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);flex:1 1 100%;display:flex;align-items:center;justify-content:space-between}
 .panel-head .btn.small{font-size:var(--fs-xs)}
@@ -294,7 +294,7 @@ table.cards tr:hover td{background:var(--accent-soft);cursor:pointer}
   .only-mobile{display:inline-flex}
   .brand-text small{display:none}
   .doc{padding:36px 22px 40vh}
-  .doc.vertical{height:calc(100dvh - 60px - 53px);padding:28px 20px 56px}
+  .doc.vertical{height:calc(100dvh - var(--top) - 53px);padding:28px 20px 56px}
   .nav{margin-left:0}
   .nav a{padding:0 10px}
   .nav a.on::after{left:10px;right:10px}
@@ -688,13 +688,13 @@ table.cards{border-top:1px solid var(--line-strong)}
 /* ===== reader bar: collapsible + right-to-left in 直排 ===== */
 /* --rbar is the bar's height; the vertical page uses it, so collapsing hands the space to the text */
 .reader{--rbar:53px}
-.doc.vertical{height:calc(100dvh - 60px - var(--rbar))}
+.doc.vertical{height:calc(100dvh - var(--top) - var(--rbar))}
 @media (max-height:500px) and (orientation:landscape) and (pointer:coarse){
   .reader{--rbar:45px}
   .doc.vertical{height:calc(100dvh - var(--rbar))}
 }
 .rb-tab{display:flex;align-items:center;flex:none}
-.rb-tab button{display:inline-grid;place-items:center;min-width:var(--tap);min-height:var(--tap);border:0;background:transparent;color:var(--muted);border-radius:var(--radius);cursor:pointer;padding:0;font-size:var(--fs-sm);transition:color var(--dur) var(--ease),background-color var(--dur) var(--ease)}
+.rb-tab button{display:inline-grid;place-items:center;min-width:44px;min-height:44px;border:0;background:transparent;color:var(--muted);border-radius:var(--radius);cursor:pointer;padding:0;font-size:var(--fs-sm);transition:color var(--dur) var(--ease),background-color var(--dur) var(--ease)}
 @media (hover:hover){ .rb-tab button:hover{color:var(--ink);background:var(--accent-soft)} }
 .rb-tab button:active{color:var(--ink);background:var(--accent-soft)}
 .rb-tab svg{transition:transform var(--dur) var(--ease)}
@@ -709,8 +709,7 @@ table.cards{border-top:1px solid var(--line-strong)}
 .reader.bar-collapsed .rbar > :not(.rb-tab):not(.progress){display:none !important}
 .reader.bar-collapsed .rb-tab{position:absolute;top:0;right:16px;z-index:21;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-top:0;border-radius:0 0 var(--radius-lg) var(--radius-lg);padding:0 2px;box-shadow:0 4px 14px rgba(43,43,43,.05)}
 .reader.is-vertical.bar-collapsed .rb-tab{right:auto;left:16px;flex-direction:row-reverse}
-.reader.bar-collapsed .rb-tab button{min-height:32px;min-width:40px;position:relative}
-.reader.bar-collapsed .rb-tab button::before{content:"";position:absolute;inset:-6px 0}  /* 44px tap height */
+.reader.bar-collapsed .rb-tab button{min-height:44px;min-width:44px;position:relative}  /* 44px targets */
 .reader.bar-collapsed .rb-notes{display:inline-grid !important}
 .reader.bar-collapsed .rb-toggle svg{transform:rotate(180deg)}
 .reader.bar-collapsed .progress{bottom:-1px}
@@ -771,8 +770,104 @@ table.cards{border-top:1px solid var(--line-strong)}
 .art-end{margin:56px auto 8px;text-align:center;pointer-events:none;user-select:none}
 .art-end img{width:132px;height:auto;opacity:.7}
 .doc.vertical .art-end{margin:0 3em;display:flex;align-items:center}
-.doc.art h3:not(:first-of-type)::before{content:"";display:block;width:min(220px,55%);height:22px;margin:30px auto 18px;background:url(../img/art/divider.webp) center/contain no-repeat;opacity:.5}
-.doc.vertical.art h3:not(:first-of-type)::before{width:22px;height:min(200px,40%);margin:auto 1.4em auto 1em;background-image:url(../img/art/divider-v.webp)}
+/* section divider: a short hairline with a tiny vermilion square — modern, geometric, crisp (pure CSS, no image) */
+.doc.art h3:not(:first-of-type)::before{content:"";display:block;width:72px;height:5px;margin:40px auto 26px;background:
+  linear-gradient(var(--shu),var(--shu)) center/5px 5px no-repeat,
+  linear-gradient(var(--line-strong),var(--line-strong)) left center/calc(50% - 9px) 1px no-repeat,
+  linear-gradient(var(--line-strong),var(--line-strong)) right center/calc(50% - 9px) 1px no-repeat}
+/* 直排: the same mark stands upright between the columns */
+.doc.vertical.art h3:not(:first-of-type)::before{width:5px;height:72px;margin:auto 2em auto 1.4em;background:
+  linear-gradient(var(--shu),var(--shu)) center/5px 5px no-repeat,
+  linear-gradient(var(--line-strong),var(--line-strong)) center top/1px calc(50% - 9px) no-repeat,
+  linear-gradient(var(--line-strong),var(--line-strong)) center bottom/1px calc(50% - 9px) no-repeat}
 /* dark mode: the same ink turns to soft silver */
-[data-theme=dark] .art-head img,[data-theme=dark] .art-end img,[data-theme=dark] .doc.art h3::before{filter:invert(1) sepia(.15);opacity:.55}
+[data-theme=dark] .art-head img,[data-theme=dark] .art-end img{filter:invert(1) sepia(.15);opacity:.55}
 @media print{.art-head,.art-end{display:none}}
+
+/* ===== collapsible top bar ===== */
+.top-toggle,.tools .top-toggle{min-width:44px;min-height:44px}
+.top-toggle svg{transition:transform var(--dur) var(--ease)}
+body:has(.reader) #topToggle{display:none}            /* in the reader, the reader-bar control folds both bars */
+body.top-min{--top:0px}
+body.top-min .topbar{height:1px;min-height:0;padding:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:1px solid var(--line)}
+body.top-min .topbar > :not(.tools),body.top-min .topbar .tools > :not(#topToggle){display:none !important}
+body.top-min #topToggle{position:absolute;top:0;right:16px;z-index:31;min-width:44px;min-height:44px;border:1px solid var(--line);border-top:0;border-radius:0 0 var(--radius-lg) var(--radius-lg);background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+body.top-min #topToggle svg{transform:rotate(180deg)}
+body.top-min:has(.reader) .topbar{display:none}       /* reader: a single hairline + one tab (the reader bar's) */
+@media (max-height:500px) and (orientation:landscape) and (pointer:coarse){ body:has(.reader){--top:0px} }
+@media (max-width:860px){ body.top-min #topToggle{right:10px} }
+
+/* ===== side panel: rail when folded (desktop), mirrored in 直排, compact header ===== */
+.prail{display:none}
+.only-desk{display:inline-grid}
+.p-collapse,.ph-min{min-width:44px;min-height:44px;display:inline-grid;place-items:center}
+.p-collapse{margin-left:auto}
+.ph-min{flex:none;border:0;background:transparent;color:var(--muted)}
+.ph-min svg{transition:transform var(--dur) var(--ease)}
+.panel.head-min .ph-min svg{transform:rotate(180deg)}
+.panel.head-min .panel-head h4,.panel.head-min #exportBtn,.panel.head-min .panel-head a.btn,.panel.head-min .psearch,.panel.head-min .filters{display:none !important}
+.panel.head-min .panel-head{padding-top:6px;padding-bottom:0;min-height:0;justify-content:flex-end}
+@media (min-width:861px){
+  .reader.panel-closed{grid-template-columns:minmax(0,1fr) 52px}
+  .reader.panel-closed .panel > :not(.prail){display:none !important}
+  .reader.panel-closed .prail{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 0;height:100%}
+  .prail .icon-btn{width:44px;min-height:44px;display:grid;place-items:center;border-radius:var(--radius);color:var(--muted)}
+  .prail .icon-btn:hover{color:var(--ink);background:var(--accent-soft)}
+  #railOpen svg{transform:rotate(180deg)}                 /* panel on the right: ‹ opens, › folds */
+  .rail-t{writing-mode:vertical-rl;letter-spacing:.3em;font-family:var(--font-zh);font-size:var(--fs-sm);padding:10px 0;height:auto}
+  .rail-n{writing-mode:horizontal-tb;display:block;margin-top:6px;font-size:var(--fs-2xs);color:var(--shu);letter-spacing:0;font-family:var(--font-ui,inherit)}
+  .rail-n:empty{display:none}
+  /* 直排: the panel sits on the left, where the bar's Notes button is; the text keeps the right side */
+  .reader.is-vertical{grid-template-columns:360px minmax(0,1fr)}
+  .reader.is-vertical.panel-closed{grid-template-columns:52px minmax(0,1fr)}
+  .reader.is-vertical .panel{order:-1;border-left:0;border-right:1px solid var(--line)}
+  .reader.is-vertical #railOpen svg{transform:none}
+  .reader.is-vertical #panelCollapse svg{transform:rotate(180deg)}
+}
+@media (max-width:860px){ .only-desk{display:none !important} }
+
+/* ===== cross-reference links 連結 ===== */
+.xl,.xt{cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:2px;transition:background-color var(--dur) var(--ease)}
+.xl{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.28em;text-decoration-color:color-mix(in srgb,var(--shu) 70%,transparent)}
+.xt{text-decoration:underline dotted;text-decoration-thickness:1px;text-underline-offset:.28em;text-decoration-color:color-mix(in srgb,var(--muted) 80%,transparent)}
+.doc.vertical .xl,.doc.vertical .xt{text-underline-position:right}         /* 傍線: the side line sits right of the column */
+.xl-end::after{content:"↗";font-size:.55em;vertical-align:super;margin-left:.1em;color:var(--shu);font-family:var(--font-ui,system-ui);text-decoration:none;display:inline-block}
+.xt-end::after{content:"↩";font-size:.55em;vertical-align:super;margin-left:.1em;color:var(--muted);font-family:var(--font-ui,system-ui);display:inline-block}
+.doc.vertical .xl-end::after,.doc.vertical .xt-end::after{vertical-align:baseline;margin:.1em 0 0 0}
+.xl:hover,.xt:hover{background:color-mix(in srgb,var(--shu) 8%,transparent)}
+.xl:focus-visible,.xt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.xl.flash,.xt.flash{animation:xflash 1.6s var(--ease)}
+@keyframes xflash{0%,30%{background:color-mix(in srgb,var(--shu) 22%,transparent)}100%{background:transparent}}
+.xl[data-lid="__pending"]{background:color-mix(in srgb,var(--shu) 12%,transparent)}
+/* context menu (only when text is selected) */
+.ctxmenu{position:fixed;z-index:60;min-width:200px;display:flex;flex-direction:column;padding:6px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-float)}
+.ctxmenu[hidden]{display:none}
+.ctxmenu button{display:flex;align-items:center;gap:10px;min-height:40px;padding:0 12px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:var(--fs-sm);text-align:left;border-radius:var(--radius);cursor:pointer}
+.ctxmenu button:hover,.ctxmenu button:focus-visible{background:var(--accent-soft);outline:none}
+.ctxmenu .cdot{width:10px;height:10px;border-radius:50%;background:var(--sw-yellow)}
+@media (pointer:coarse){ .ctxmenu button{min-height:44px} }
+/* link-picking banner */
+.linkbanner{position:fixed;z-index:46;left:50%;transform:translateX(-50%);top:calc(var(--top) + 64px);display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;max-width:min(680px,calc(100vw - 24px));padding:8px 8px 8px 16px;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--shu);border-radius:var(--radius-lg);box-shadow:var(--shadow-float);font-size:var(--fs-sm);color:var(--ink)}
+.linkbanner[hidden]{display:none}
+.linkbanner .lb-acts{display:flex;gap:4px}
+.linkbanner .btn{min-height:40px}
+.linkbanner .lb-arrow{color:var(--shu);margin:0 .4em}
+@media (max-width:860px){ .linkbanner{top:auto;bottom:calc(16px + env(safe-area-inset-bottom));left:12px;right:12px;transform:none;max-width:none;justify-content:space-between} .linkbanner .btn{min-height:44px} }
+body.link-mode .doc{cursor:text}
+body.link-mode .selbar{display:none}
+/* back pill after following a link */
+.backpill{position:fixed;z-index:44;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom));min-height:44px;padding:0 18px;border:1px solid var(--line);border-radius:22px;background:var(--paper);color:var(--ink);font:inherit;font-size:var(--fs-sm);box-shadow:var(--shadow-float);cursor:pointer;letter-spacing:.03em}
+.backpill[hidden]{display:none}
+.backpill:hover{border-color:var(--shu)}
+/* links in the notes panel */
+.lk-sec{margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.lk-h{margin:2px 4px 6px;font-size:var(--fs-xs);font-weight:500;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.lk-list{list-style:none;margin:0;padding:0}
+.lk-item{display:flex;align-items:center;gap:4px;padding:2px 0}
+.lk-go{flex:1 1 0;min-width:0;min-height:40px;border:0;background:transparent;text-align:left;font:inherit;font-size:var(--fs-sm);color:var(--ink-soft);padding:4px 6px;border-radius:var(--radius);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--font-zh)}
+.lk-go[data-go=src]{text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--shu) 60%,transparent);text-underline-offset:.25em}
+.lk-go:hover{background:var(--accent-soft);color:var(--ink)}
+.lk-arrow{color:var(--shu);flex:none}
+.lk-del{flex:none;min-width:40px;min-height:40px;border:0;background:transparent;color:var(--muted);border-radius:var(--radius);cursor:pointer}
+.lk-del:hover{color:var(--ink);background:var(--accent-soft)}
+@media (pointer:coarse){ .lk-go,.lk-del{min-height:44px} .lk-del{min-width:44px} }

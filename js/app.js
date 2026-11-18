@@ -2,6 +2,7 @@ import { store, files, uid, grade, isDue, BOX_DAYS, startOfNextDay, startOfDayPl
 import { rangeToParts, partsText, paint, containerText, sentenceAround, tidyCJK } from './anchor.js';
 import { setupTapSelect } from './tapselect.js';
 import { textToc, pdfOutline, pdfDetect, renderTocList } from './toc.js';
+import { paintLinks, unpaintLinks } from './links.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -166,14 +167,22 @@ document.addEventListener('focusout', () => setTimeout(() => { if (!document.act
 // offline + install (P5)
 if ('serviceWorker' in navigator && location.protocol !== 'file:') addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(e => console.warn('sw', e)));
 
+// ---- collapsible top bar. Outside the reader it has its own tab; in the reader one control folds both bars (one tab, not two).
+function applyTop(inReader = /^#\/read\//.test(location.hash)) {
+  const min = inReader ? !!store.data.settings.barCollapsed : !!store.data.settings.topCollapsed;
+  document.body.classList.toggle('top-min', min);
+  const b = $('#topToggle'), lbl = min ? 'Show top bar 展開頂列' : 'Hide top bar 收合頂列';
+  b.setAttribute('aria-expanded', String(!min)); b.setAttribute('aria-label', lbl); b.title = lbl;
+}
+$('#topToggle').onclick = () => { store.data.settings.topCollapsed = !store.data.settings.topCollapsed; store.save(); applyTop(); announce(store.data.settings.topCollapsed ? 'Top bar hidden' : 'Top bar shown'); };
 // The due count lives on the Flashcards page only (next to Review), not in the nav or the reader: no badge to update.
 function updateBadge() {}
 
 // ---------- router ----------
 function route() {
   const h = location.hash || '#/library';
-  if (reader) { reader.destroy(); reader = null; }
-  hideBar();
+  if (reader) { if (reader.linkSrc) endLink(); reader.destroy(); reader = null; }
+  hideBar(); $('#backPill').hidden = true; $('#ctxMenu').hidden = true;
   if (toast.keep) toast.keep = false; else { $('#toast').classList.remove('show'); clearTimeout(toast.t); } // P9
   const [, name, arg] = h.split('/');
   $$('.nav a').forEach(a => a.classList.toggle('on', a.dataset.nav === (name === 'review' ? 'cards' : name)));
@@ -182,7 +191,7 @@ function route() {
   else if (name === 'cards') renderCards();
   else if (name === 'review') renderReview(arg ? decodeURIComponent(arg) : null);
   else renderLibrary();
-  updateBadge();
+  updateBadge(); applyTop(name === 'read');
   $('[data-skip=notes]').hidden = name !== 'read';
   if (name !== 'read') { document.title = (name === 'cards' ? 'Flashcards 單字卡' : name === 'review' ? 'Review 複習' : 'Library 書房') + ' · Reading Web'; focusHeading(); }
 }
@@ -245,7 +254,7 @@ function renderLibrary() {
       <h3 class="section">Texts &amp; licenses</h3>
       <ul>${META.filter(m => !m.userFile).map(m => `<li><b>${esc(m.short)}</b> — ${esc(m.subtitle)}. Source: ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a>` : esc(m.source)}. ${esc(m.license)}</li>`).join('')}
       <li><b>刻意練習 Peak</b> is copyrighted, so it isn't included. Upload a copy you own.</li>
-      <li><b>Ink art 水墨</b> — pines from Hasegawa Tōhaku's <i>Pine Trees</i> screen (16th c., <a href="https://commons.wikimedia.org/wiki/File:Hasegawa_Tohaku_-_Pine_Trees_(Sh%C5%8Drin-zu_by%C5%8Dbu)_-_right_hand_screen.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain); ensō and brush dividers drawn for this app (CC0). <a href="CREDITS.txt" target="_blank" rel="noopener">Credits</a></li></ul>
+      <li><b>Ink art 水墨</b> — pines from Hasegawa Tōhaku's <i>Pine Trees</i> screen (16th c., <a href="https://commons.wikimedia.org/wiki/File:Hasegawa_Tohaku_-_Pine_Trees_(Sh%C5%8Drin-zu_by%C5%8Dbu)_-_right_hand_screen.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain); ensō drawn for this app and hairline section marks (CC0). <a href="CREDITS.txt" target="_blank" rel="noopener">Credits</a></li></ul>
       <p class="hint">Backups (資料 Your data, above) hold your highlights, notes, cards and settings. Uploaded PDF files stay in this browser only; after restoring on another device, re-attach each PDF and its highlights reappear.</p>
     </div></div>`;
   $$('[data-upload]', view).forEach(b => b.onclick = () => pickFile(b.dataset.upload));
@@ -324,6 +333,7 @@ async function openReader(id) {
   const barCollapsed = !!store.data.settings.barCollapsed;
   const tapOn = !!store.data.settings.tapSelect;
   const tocTab = store.data.settings.panelTab === 'toc';
+  const headMin = !!store.data.settings.panelHeadMin;
   view.innerHTML = `<div class="reader ${closed ? 'panel-closed' : ''}${barCollapsed ? ' bar-collapsed' : ''}" data-lang="${info.kind === 'text' ? info.lang : ''}"${zh ? ' lang="zh-Hant"' : ''}>
     <div class="reader-main">
       <div class="rbar" id="rbar"><a class="btn small ghost rb-back" href="#/library" aria-label="Back to library">←</a>
@@ -333,18 +343,25 @@ async function openReader(id) {
         <div class="land-tools only-land"><button class="btn small ghost" id="landAa" aria-label="Text size and theme" aria-expanded="false">Aa</button>
           <div class="land-pop" id="landPop" role="group" aria-label="Text size and theme"><button class="icon-btn" data-size="-1" aria-label="Smaller text">A−</button><button class="icon-btn" data-size="1" aria-label="Larger text">A+</button><button class="icon-btn" data-theme aria-label="Toggle dark mode">◐</button></div></div>
         <button class="btn small" id="panelBtn" aria-controls="panel" aria-expanded="${!closed}">${L.notes} <span id="hlCount"></span></button>
-        <div class="rb-tab">${info.kind === 'text' ? `<button type="button" class="rb-notes ts-btn" id="tabTapSel" aria-pressed="${tapOn}" aria-label="點選 Tap-select" title="點選 Tap-select"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}<button type="button" class="rb-notes" id="tabNotes" aria-controls="panel" aria-label="Notes 筆記" title="Notes 筆記">✎</button><button type="button" class="rb-toggle" id="barToggle" aria-controls="rbar" aria-expanded="${!barCollapsed}" aria-label="${barCollapsed ? 'Show reader bar 展開工具列' : 'Hide reader bar 收合工具列'}" title="${barCollapsed ? 'Show reader bar 展開工具列' : 'Hide reader bar 收合工具列'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        <div class="rb-tab">${info.kind === 'text' ? `<button type="button" class="rb-notes ts-btn" id="tabTapSel" aria-pressed="${tapOn}" aria-label="點選 Tap-select" title="點選 Tap-select"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}<button type="button" class="rb-notes" id="tabNotes" aria-controls="panel" aria-label="Notes 筆記" title="Notes 筆記">✎</button><button type="button" class="rb-toggle" id="barToggle" aria-controls="rbar" aria-expanded="${!barCollapsed}" aria-label="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}" title="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
         <div class="progress" id="prog"></div></div>
       <div id="docRoot"></div>
     </div>
-    <aside class="panel" id="panel" aria-label="Highlights and notes" tabindex="-1">
+    <aside class="panel${headMin ? ' head-min' : ''}" id="panel" aria-label="Highlights and notes" tabindex="-1">
+      <div class="prail" role="group" aria-label="Side panel 側欄">
+        <button type="button" class="icon-btn" id="railOpen" aria-controls="panel" aria-expanded="false" aria-label="Open the side panel 展開側欄" title="Open the side panel 展開側欄"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3 L9 7 L5 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button type="button" class="icon-btn rail-t" id="railNotes" aria-label="Notes 筆記" title="Notes 筆記"><span lang="zh-Hant">筆記</span><span class="rail-n" id="railCount"></span></button>
+        <button type="button" class="icon-btn rail-t" id="railToc" aria-label="Contents 目錄" title="Contents 目錄"><span lang="zh-Hant">目錄</span></button>
+      </div>
       <div class="panel-head" id="panelHead"><h4>${esc(L.head)}</h4>
         <button class="btn small" id="exportBtn" title="Download notes as Markdown (.md)">${L.exp}</button>
         <a class="btn small ghost" href="#/review/${encodeURIComponent(id)}" title="Review flashcards from this text">${L.rev}</a>
-        <button class="btn small ghost only-mobile" id="panelClose" aria-label="Close notes">✕</button></div>
+        <button class="btn small ghost only-mobile" id="panelClose" aria-label="Close notes">✕</button>
+        <button type="button" class="icon-btn only-desk p-collapse" id="panelCollapse" aria-controls="panel" aria-label="Fold the panel to the edge 收合側欄" title="Fold to the edge 收合側欄"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3 L9 7 L5 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
       <div class="ptabs" role="tablist" aria-label="Panel">
         <button type="button" role="tab" id="ptNotes" aria-controls="hlPane" aria-selected="${!tocTab}" tabindex="${tocTab ? -1 : 0}">${zh ? '筆記 Notes' : 'Notes 筆記'}</button>
-        <button type="button" role="tab" id="ptToc" aria-controls="tocPane" aria-selected="${tocTab}" tabindex="${tocTab ? 0 : -1}">${zh ? '目錄 Contents' : 'Contents 目錄'}</button></div>
+        <button type="button" role="tab" id="ptToc" aria-controls="tocPane" aria-selected="${tocTab}" tabindex="${tocTab ? 0 : -1}">${zh ? '目錄 Contents' : 'Contents 目錄'}</button>
+        <button type="button" class="icon-btn ph-min" id="phMin" aria-expanded="${!headMin}" aria-label="${headMin ? 'Show panel header 展開標題' : 'Compact panel header 精簡標題'}" title="${headMin ? 'Show panel header 展開標題' : 'Compact panel header 精簡標題'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
       <div id="tocPane" role="tabpanel" aria-labelledby="ptToc" class="toc-pane"${tocTab ? '' : ' hidden'}><div id="tocList"></div></div>
       <div id="hlPane" role="tabpanel" aria-labelledby="ptNotes" class="hl-pane"${tocTab ? ' hidden' : ''}>
       <div class="psearch"><input type="search" class="field" id="hlSearch" placeholder="${zh ? '搜尋 Search highlights & notes' : 'Search highlights & notes 搜尋'}" aria-label="Search highlights and notes"></div>
@@ -357,13 +374,14 @@ async function openReader(id) {
   R.destroy = () => { R.dead = true; R.cleanup.forEach(f => f()); $$('#fontUp').forEach(b => { b.removeAttribute('aria-disabled'); b.title = 'Larger text'; }); };
   R.hls = () => store.hls(id);
   R.containers = () => $$('[data-anchor]', R.root);
-  R.paint = c => { paint(c, R.hls()); decorateCards(c, R); rove(R); };
+  R.links = () => { const a = (store.data.links ||= []).filter(l => l.doc === id); return R.tempSrc ? a.concat(R.tempSrc) : a; };
+  R.paint = c => { unpaintLinks(c); paint(c, R.hls()); paintLinks(c, R.links()); decorateCards(c, R); rove(R); };
   R.repaint = (keys) => { for (const c of R.containers()) if (!keys || keys.includes(c.dataset.anchor)) R.paint(c); };
   const toggle = (open) => {
     const el = $('.reader'); if (!el) return;
     const isClosed = open === undefined ? !el.classList.contains('panel-closed') : !open;
     el.classList.toggle('panel-closed', isClosed);
-    $$('#panelBtn, #tabNotes').forEach(b => b.setAttribute('aria-expanded', String(!isClosed)));
+    $$('#panelBtn, #tabNotes, #railOpen').forEach(b => b.setAttribute('aria-expanded', String(!isClosed)));
     if (!isClosed) $('.vcoach button')?.click();
     if (innerWidth >= 860) { store.data.settings.panelClosed = isClosed; store.save(); } // the phone sheet is transient
     if (R.kind === 'pdf' && innerWidth >= 860) setTimeout(() => R.relayout(), 260);
@@ -397,12 +415,25 @@ async function openReader(id) {
     document.addEventListener('pointerdown', off); R.cleanup.push(() => document.removeEventListener('pointerdown', off)); }
   $('#panelBtn').onclick = () => toggle();
   $('#tabNotes').onclick = () => toggle();
+  // desktop: the closed panel stays as a slim rail at the edge (expand, 筆記, 目錄)
+  $('#railOpen').onclick = () => { toggle(true); setTimeout(() => $('#panelCollapse').focus(), 30); };
+  $('#railNotes').onclick = () => { R.showTab('notes'); toggle(true); setTimeout(() => $('#ptNotes').focus(), 30); };
+  $('#railToc').onclick = () => { R.showTab('toc'); toggle(true); setTimeout(() => $('#ptToc').focus(), 30); };
+  $('#panelCollapse').onclick = () => { toggle(false); setTimeout(() => $('#railOpen').focus(), 30); };
+  // compact header: hide title / Export / filters so the list gets the room
+  $('#phMin').onclick = () => {
+    const min = !$('#panel').classList.contains('head-min'); $('#panel').classList.toggle('head-min', min);
+    store.data.settings.panelHeadMin = min; store.save();
+    const lbl = min ? 'Show panel header 展開標題' : 'Compact panel header 精簡標題';
+    const b = $('#phMin'); b.setAttribute('aria-expanded', String(!min)); b.setAttribute('aria-label', lbl); b.title = lbl;
+  };
   // collapsible reader bar: the choice is remembered; the reading place is kept across the layout change
   R.setBar = collapsed => {
     const el = $('.reader'), tb = $('#barToggle'); if (!el) return;
     const keep = R.firstVisible();
     el.classList.toggle('bar-collapsed', collapsed);
-    const lbl = collapsed ? 'Show reader bar 展開工具列' : 'Hide reader bar 收合工具列';
+    store.data.settings.barCollapsed = collapsed; applyTop();
+    const lbl = collapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列';
     tb.setAttribute('aria-expanded', String(!collapsed)); tb.setAttribute('aria-label', lbl); tb.title = lbl;
     store.data.settings.barCollapsed = collapsed; store.save();
     $('#landPop')?.classList.remove('open');
@@ -489,7 +520,7 @@ async function renderTextDoc(R) {
   if (!window.RW_TEXTS?.[R.id]) await loadScript(`texts/${R.id}.js`);
   const blocks = window.RW_TEXTS[R.id];
   const m = R.info;
-  // Zen ink art for the sutras: a sumi-e header (Tōhaku's pines, public domain), brush dividers, a closing ensō.
+  // Zen ink art for the sutras: a sumi-e header (Tōhaku's pines, public domain), hairline section marks (CSS), a closing ensō.
   // Decorative only (aria-hidden, outside every [data-anchor]), so highlight offsets are untouched.
   const art = /^(diamond|medicine)-/.test(R.id);
   R.root.innerHTML = `<article class="doc${art ? ' art' : ''}${R.tapOn() ? ' tapsel' : ''}" lang="${m.lang}">
@@ -546,7 +577,8 @@ function setupVertical(R) {
   const apply = (on, keep = true) => {
     const anchor = keep ? R.firstVisible() : null;
     doc.classList.toggle('vertical', on);
-    $('.reader')?.classList.toggle('is-vertical', on); // the bar reads right → left in 直排
+    const rd = $('.reader'); if (rd) { rd.style.transition = 'none'; requestAnimationFrame(() => requestAnimationFrame(() => { rd.style.transition = ''; })); } // the panel swaps sides at once, no grid animation
+    rd?.classList.toggle('is-vertical', on); // the bar reads right → left in 直排
     R.fitVertical();
     $$('button', seg).forEach(b => b.setAttribute('aria-pressed', String((b.dataset.v === '1') === on)));
     hideBar();
@@ -724,12 +756,20 @@ function renderPanel() {
   const R = reader; if (!R) return;
   const all = R.hls().slice().sort((a, b) => { const x = orderKey(a), y = orderKey(b); return x[0] - y[0] || x[1] - y[1]; });
   $('#hlCount').textContent = all.length ? `(${all.length})` : '';
+  $('#railCount').textContent = all.length || '';
   const q = R.q || '';
   const list = all.filter(h => !R.hidden.has(h.color) && (!R.onlyNotes || h.note) && (!q || (tidyCJK(h.quote) + ' ' + (h.note || '')).toLowerCase().includes(q)));
   $$('#filters [data-f]').forEach(b => { $('.n', b).textContent = all.filter(h => h.color === b.dataset.f).length; });
   const el = $('#hlList');
   // P6: an empty panel shows only a quiet hint; search appears from 6 highlights on
   const panel = $('#panel'); panel.classList.toggle('is-empty', !all.length); panel.classList.toggle('few', all.length < 6);
+  const links = R.links().filter(l => l.id !== '__pending' && (!q || (tidyCJK(l.src.quote) + ' ' + tidyCJK(l.dst.quote)).toLowerCase().includes(q)));
+  const where2 = p => R.kind === 'pdf' ? `p. ${p.c.slice(1)}` : '';
+  const linksHtml = links.length ? `<section class="lk-sec" aria-label="Links 連結"><h5 class="lk-h">連結 Links <span class="hint">${links.length}</span></h5><ul class="lk-list">${links.map(l => `<li class="lk-item" data-lid="${l.id}">
+      <button type="button" class="lk-go" data-go="src" title="Go to the link 前往連結">${esc(clip(l.src.quote))}${where2(l.src.parts[0]) ? ` <span class="hint">${where2(l.src.parts[0])}</span>` : ''}</button><span class="lk-arrow" aria-hidden="true">→</span>
+      <button type="button" class="lk-go" data-go="dst" title="Go to the target 前往目標">${esc(clip(l.dst.quote))}${where2(l.dst.parts[0]) ? ` <span class="hint">${where2(l.dst.parts[0])}</span>` : ''}</button>
+      <button type="button" class="lk-del" aria-label="Remove link: ${esc(clip(l.src.quote))}" title="Remove link 移除連結">✕</button></li>`).join('')}</ul></section>` : '';
+  if (!all.length && links.length) { panel.classList.remove('is-empty'); el.innerHTML = linksHtml; wireLinks(el); return; }
   if (!all.length) { el.innerHTML = `<div class="empty-state">${ENSO}<p lang="zh-Hant">選取文字即可畫螢光筆</p><p>Select text to highlight</p>
     <p class="hint">Then add a note or make a flashcard 單字卡. Keyboard: Tab to the first highlight, arrows move between them, Enter opens its tools.</p></div>`; return; }
   const sec = R.kind === 'text' ? sectionMap(R) : {};
@@ -748,6 +788,7 @@ function renderPanel() {
       <div class="meta">${Object.keys(COLORS).map(c => `<button class="dot sw-${c}" data-color="${c}" title="${COLOR_NAMES[c]}" aria-label="Color: ${COLOR_NAMES[c]}" aria-pressed="${c === h.color}">${c === h.color ? '●' : '○'}</button>`).join('')}
         <span class="grow"></span><button data-act="card">＋ Card</button><button data-act="del">Delete</button></div>
     </div>`; }).join('') || `<p class="empty">${q || R.onlyNotes ? 'No highlights match. 沒有符合的筆記。' : 'No highlights in the selected colors.'}</p>`;
+  if (linksHtml) { el.insertAdjacentHTML('afterbegin', linksHtml); wireLinks(el); }
   $$('.hl-item', el).forEach(item => {
     const h = R.hls().find(x => x.id === item.dataset.id);
     $$('.meta [data-color]', item).forEach(b => { b.onclick = () => { h.color = b.dataset.color; store.touch(h); store.save(); R.repaint(h.parts.map(p => p.c)); renderPanel(); }; });
@@ -767,6 +808,15 @@ function renderPanel() {
   if (focusId) { const f = $(`.hl-item[data-id="${focusId}"] .more`, el); if (f && el.contains(f)) f.focus({ preventScroll: true }); }
 }
 
+function wireLinks(el) {
+  $$('.lk-item', el).forEach(li => {
+    const lid = li.dataset.lid;
+    $$('.lk-go', li).forEach(b => b.onclick = () => { const L = reader.links().find(l => l.id === lid); if (!L) return;
+      const src = b.dataset.go === 'src'; if (innerWidth < 860) reader.closePanel();
+      showParts(reader, src ? L.src.parts : L.dst.parts, src ? 'xl' : 'xt', lid); });
+    $('.lk-del', li).onclick = () => removeLink(lid);
+  });
+}
 async function jumpTo(h) {
   const R = reader; const p = h.parts[0];
   if (R.kind === 'pdf') {
@@ -829,6 +879,13 @@ function exportMarkdown(R) {
     md += `${EMOJI[h.color]}${R.kind === 'pdf' ? ` **p. ${h.parts[0].c.slice(1)}**` : ''}\n> ${tidyCJK(h.quote).replace(/\n/g, '\n> ')}\n\n`;
     if (h.note) md += `**Note:** ${h.note.replace(/\n/g, '  \n')}\n\n`;
   }
+  const links = R.links();
+  if (links.length) {
+    md += `## Links 連結 (${links.length})\n\n`;
+    const pg = p => R.kind === 'pdf' ? ` (p. ${p.c.slice(1)})` : '';
+    for (const l of links) md += `- 「${tidyCJK(l.src.quote)}」${pg(l.src.parts[0])} → 「${tidyCJK(l.dst.quote)}」${pg(l.dst.parts[0])}\n`;
+    md += '\n';
+  }
   if (cards.length) {
     md += `## Flashcards 單字卡 (${cards.length})\n\n| Term | Definition | Context |\n|---|---|---|\n`;
     const cell = s => (s || '').replace(/\|/g, '\\|').replace(/\n/g, '<br>');
@@ -873,6 +930,7 @@ function readSelection() {
 }
 const onSelChange = debounce(() => {
   const s = readSelection();
+  if (reader?.linkSrc) { reader.linkDst = s; updateBanner(); if (s) bar.hidden = true; return; }
   if (!s) { if (!activeHl && !bar.matches(':hover')) { bar.hidden = true; pending = null; } return; }
   pending = s; activeHl = null; barReturn = null;
   $('[data-act=remove]', bar).hidden = true; $$('.sw', bar).forEach(b => b.classList.remove('cur'));
@@ -885,6 +943,9 @@ bar.addEventListener('pointerdown', e => e.preventDefault()); // keep selection 
 bar.addEventListener('mousedown', e => e.preventDefault());
 document.addEventListener('click', e => {
   if (bar.contains(e.target)) return;
+  if (!$('#ctxMenu').hidden && !e.target.closest('#ctxMenu')) closeCtx();
+  const lk = e.target.closest?.('.xl, .xt');
+  if (lk && reader && getSelection().isCollapsed && !reader.linkSrc) { followLink(lk); return; }
   const m = e.target.closest?.('mark.hl');
   if (m && reader && getSelection().isCollapsed) { openMarkBar(m); return; }
   if (getSelection().isCollapsed) hideBar();
@@ -922,6 +983,10 @@ bar.addEventListener('click', e => {
     R.openPanel(); R.hidden.delete(h.color); renderPanel();
     setTimeout(() => openNote(h.id), 280);
   }
+  if (act === 'link') {
+    const src = activeHl ? { parts: activeHl.parts, quote: activeHl.quote } : pending ? { parts: pending.parts, quote: pending.quote } : null;
+    getSelection().removeAllRanges(); hideBar(); if (src) startLink(src); return;
+  }
   if (act === 'card') {
     if (activeHl) openCardDialog({ term: activeHl.quote, context: activeHl.context || activeHl.quote, docId: R.id, origin: { R, hlId: activeHl.id } });
     else if (pending) openCardDialog({ term: pending.quote, context: pending.context, docId: R.id, origin: { R, sel: pending } });
@@ -931,12 +996,18 @@ bar.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if (dlg.open) return;
+    if (!$('#ctxMenu').hidden) { closeCtx(); return; }
+    if (reader?.linkSrc) { cancelLink(); return; }
+    if (!$('#backPill').hidden) { $('#backPill').hidden = true; return; }
     if (!bar.hidden) { const back = barReturn; hideBar(); if (back) focusMark(back); return; }
     if (reader && reader.sheetOpen && reader.sheetOpen()) { reader.closePanel(); return; }
     return;
   }
   if (!reader || dlg.open || e.ctrlKey || e.metaKey || e.altKey) return;
   const tag = document.activeElement?.tagName; if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  // links: Enter on a focused link follows it
+  const lk = document.activeElement?.closest?.('.xl, .xt');
+  if (lk && e.key === 'Enter' && !reader.linkSrc) { e.preventDefault(); followLink(lk); return; }
   // keyboard path to highlights (L6): Enter/Space on a focused mark opens the toolbar
   const m = document.activeElement?.closest?.('mark.hl');
   if (m && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openMarkBar(m); return; }
@@ -949,9 +1020,98 @@ document.addEventListener('keydown', e => {
   // with a text selection (or an active highlight): 1–4 colours, N note, C card
   if (bar.hidden || !(pending || activeHl)) return;
   const k = e.key.toLowerCase(); const map = { 1: 'yellow', 2: 'green', 3: 'pink', 4: 'blue' };
-  const btn = map[k] ? $(`.sw[data-color="${map[k]}"]`, bar) : k === 'n' ? $('[data-act=note]', bar) : k === 'c' ? $('[data-act=card]', bar) : null;
+  const btn = map[k] ? $(`.sw[data-color="${map[k]}"]`, bar) : k === 'n' ? $('[data-act=note]', bar) : k === 'c' ? $('[data-act=card]', bar) : k === 'l' ? $('[data-act=link]', bar) : null;
   if (btn) { e.preventDefault(); btn.click(); }
 });
+
+// ---------- cross-reference links (連結) ----------
+const banner = $('#linkBanner'), ctx = $('#ctxMenu'), pill = $('#backPill');
+const clip = s => { s = tidyCJK(s || '').replace(/\s+/g, ' ').trim(); return s.length > 24 ? s.slice(0, 24) + '…' : s; };
+function startLink(src) {
+  const R = reader; if (!R) return;
+  R.linkSrc = src; R.linkDst = null; document.body.classList.add('link-mode');
+  banner.hidden = false; updateBanner();
+  R.tempSrc = { id: '__pending', doc: R.id, src, dst: { parts: [], quote: '' } };
+  R.repaint(src.parts.map(p => p.c));   // preview the source while picking (in memory only, never saved)
+  $('[data-lb=cancel]', banner).focus({ preventScroll: true });
+}
+function dropTemp(R) { const keys = R.tempSrc?.src.parts.map(p => p.c); R.tempSrc = null; if (keys) R.repaint(keys); }
+function endLink() { const R = reader; if (R) { dropTemp(R); R.linkSrc = R.linkDst = null; } banner.hidden = true; document.body.classList.remove('link-mode'); }
+function cancelLink() { endLink(); getSelection().removeAllRanges(); announce('Linking cancelled'); }
+function updateBanner() {
+  const R = reader; if (!R?.linkSrc) return;
+  const d = R.linkDst;
+  $('.lb-text', banner).innerHTML = d ? `「${esc(clip(R.linkSrc.quote))}」<span class="lb-arrow">→</span>「${esc(clip(d.quote))}」`
+    : `<b>選取目標文字</b> Select the target text <span class="hint">· from 「${esc(clip(R.linkSrc.quote))}」</span>`;
+  $('[data-lb=ok]', banner).hidden = !d;
+}
+banner.addEventListener('pointerdown', e => { if (e.target.closest('button')) e.preventDefault(); }); // keep the target selection alive
+banner.addEventListener('mousedown', e => { if (e.target.closest('button')) e.preventDefault(); });
+banner.addEventListener('click', e => {
+  const b = e.target.closest('[data-lb]'); if (!b || !reader) return;
+  if (b.dataset.lb === 'cancel') cancelLink();
+  else if (b.dataset.lb === 'toc') { reader.openPanel(); reader.showTab('toc'); }
+  else if (b.dataset.lb === 'ok') {
+    const R = reader, d = R.linkDst || readSelection(); if (!d) return;
+    dropTemp(R);
+    const L = store.touch({ id: 'lk' + uid(), doc: R.id, src: R.linkSrc, dst: { parts: d.parts, quote: d.quote }, created: Date.now() });
+    store.data.links.push(L);
+    if (!store.save()) { store.data.links.pop(); toast('Storage is full — the link was not saved 空間已滿'); return; }
+    R.linkSrc = R.linkDst = null; banner.hidden = true; document.body.classList.remove('link-mode');
+    getSelection().removeAllRanges();
+    R.repaint([...L.src.parts, ...L.dst.parts].map(p => p.c)); renderPanel();
+    toast('已連結 Linked — tap the underlined text to jump');
+  }
+});
+async function showParts(R, parts, cls, lid) {
+  if (R.kind === 'pdf') { const n = +parts[0].c.slice(1); $(`.page[data-page="${n}"]`)?.scrollIntoView({ block: 'center' }); await R.renderPage(n); }
+  const els = $$(`.${cls}[data-lid="${lid}"]`, R.root); if (!els.length) return null;
+  // smooth only for short hops; long jumps go instantly so the flash is seen
+  const b = els[0].getBoundingClientRect(), far = Math.abs(b.top - innerHeight / 2) > innerHeight * 1.5 || Math.abs(b.left - innerWidth / 2) > innerWidth * 1.5;
+  els[0].scrollIntoView({ block: 'center', inline: 'center', behavior: far || matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  els.forEach(x => { x.classList.remove('flash'); void x.offsetWidth; x.classList.add('flash'); setTimeout(() => x.classList.remove('flash'), 1600); });
+  return els[0];
+}
+async function followLink(el) {
+  const R = reader; if (!R) return;
+  const L = R.links().find(l => l.id === el.dataset.lid); if (!L) return;
+  const toTarget = el.classList.contains('xl');
+  const dest = await showParts(R, toTarget ? L.dst.parts : L.src.parts, toTarget ? 'xt' : 'xl', L.id);
+  if (innerWidth < 860 && R.sheetOpen()) R.closePanel();
+  // Back returns to where the jump started
+  pill.hidden = false; pill.textContent = toTarget ? '← 返回 Back to the link' : '← 返回 Back';
+  pill.onclick = () => { pill.hidden = true; showParts(R, toTarget ? L.src.parts : L.dst.parts, toTarget ? 'xl' : 'xt', L.id).then(x => x?.focus({ preventScroll: true })); };
+  dest?.focus({ preventScroll: true });
+  announce(toTarget ? 'Jumped to the linked passage. Back button available.' : 'Jumped back to the link source.');
+}
+function removeLink(lid) {
+  const R = reader; const i = store.data.links.findIndex(l => l.id === lid); if (i < 0) return;
+  const [L] = store.data.links.splice(i, 1); store.tomb(lid); store.save();
+  R?.repaint([...L.src.parts, ...L.dst.parts].map(p => p.c)); renderPanel(); toast('連結已移除 Link removed');
+}
+// custom context menu, only when text is selected in the reader (otherwise the browser's own menu)
+function closeCtx() { ctx.hidden = true; }
+document.addEventListener('contextmenu', e => {
+  if (!reader || reader.linkSrc || !reader.root.contains(e.target)) return;
+  const s = readSelection(); if (!s) return;
+  e.preventDefault(); pending = s; bar.hidden = true;
+  ctx.hidden = false;
+  const w = ctx.offsetWidth, h = ctx.offsetHeight;
+  ctx.style.left = Math.max(8, Math.min(innerWidth - w - 8, e.clientX)) + 'px'; ctx.style.top = Math.max(8, Math.min(innerHeight - h - 8, e.clientY)) + 'px';
+  $('button', ctx).focus({ preventScroll: true });
+});
+ctx.addEventListener('pointerdown', e => e.preventDefault()); ctx.addEventListener('mousedown', e => e.preventDefault());
+ctx.addEventListener('keydown', e => { const b = $$('button', ctx), i = b.indexOf(document.activeElement);
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); b[(i + (e.key === 'ArrowDown' ? 1 : -1) + b.length) % b.length].focus(); }
+  if (e.key === 'Tab') { e.preventDefault(); closeCtx(); } });
+ctx.addEventListener('click', async e => {
+  const b = e.target.closest('[data-ctx]'); if (!b) return; closeCtx();
+  const s = pending || readSelection(); if (!s || !reader) return;
+  if (b.dataset.ctx === 'link') { getSelection().removeAllRanges(); startLink({ parts: s.parts, quote: s.quote }); }
+  else if (b.dataset.ctx === 'hl') { addHighlight('yellow', s); getSelection().removeAllRanges(); announce('Highlighted'); }
+  else if (b.dataset.ctx === 'copy') { try { await navigator.clipboard.writeText(tidyCJK(getSelection().toString() || s.quote)); toast('已複製 Copied'); } catch { toast('Copy failed — use Ctrl/⌘+C'); } }
+});
+addEventListener('scroll', () => { if (!ctx.hidden) closeCtx(); }, { passive: true });
 
 // ---------- flashcard dialog ----------
 const dlg = $('#cardDlg'), form = $('#cardForm');
