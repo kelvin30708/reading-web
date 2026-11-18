@@ -721,17 +721,20 @@ table.cards{border-top:1px solid var(--line-strong)}
 /* active tool (e.g. tap-select): vermilion so a mode that's on is still visible */
 .reader.bar-collapsed.tool-on:not(.bar-peek) .rb-dot::after{background:var(--shu);opacity:.55}
 @media (hover:hover){ .reader.bar-collapsed.tool-on:not(.bar-peek) .rb-dot:hover::after{opacity:.75} }
-/* peeked: the hanging mini-tool tab (expand, notes, tap-select) */
+/* peeked: three faint icons in the corner, same weight as the dot — no box, fill, border, or shadow */
 .reader.bar-collapsed.bar-peek .rb-dot{display:none !important}
-.reader.bar-collapsed.bar-peek .rb-tab{background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-top:0;border-radius:0 0 var(--radius-lg) var(--radius-lg);padding:0 2px;box-shadow:0 4px 14px rgba(43,43,43,.05)}
-.reader.bar-collapsed.bar-peek .rb-tab button{min-height:44px;min-width:44px;position:relative}
+.reader.bar-collapsed.bar-peek .rb-tab{background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0}
+.reader.bar-collapsed.bar-peek .rb-tab button{min-height:44px;min-width:44px;position:relative;background:transparent !important;box-shadow:none !important;color:var(--ink);opacity:.5}
 .reader.bar-collapsed.bar-peek .rb-notes{display:inline-grid !important}
-[data-theme=dark] .reader.bar-collapsed.bar-peek .rb-tab{box-shadow:none}
-/* smaller top inset now the hanging tab is gone until peeked (peek overlays the corner; no layout jump) */
-.reader.bar-collapsed .doc.vertical{padding-top:16px}
-.reader.bar-collapsed .doc:not(.vertical){padding-top:8px}
-@media (max-width:860px){ .reader.bar-collapsed .rb-tab{right:calc(10px + env(safe-area-inset-right,0px))} .reader.is-vertical.bar-collapsed .rb-tab{left:calc(10px + env(safe-area-inset-left,0px))} .reader.bar-collapsed .doc:not(.vertical){padding-top:8px} .reader.bar-collapsed .doc.vertical{padding-top:12px} }
-@media (max-height:500px) and (orientation:landscape) and (pointer:coarse){ .reader.bar-collapsed .doc:not(.vertical){padding-top:6px} .reader.bar-collapsed .doc.vertical{padding-top:8px} }
+.reader.bar-collapsed.bar-peek .rb-tab button:hover,
+.reader.bar-collapsed.bar-peek .rb-tab button:active{background:transparent !important;opacity:.8}
+.reader.bar-collapsed.bar-peek .ts-btn[aria-pressed=true]{color:var(--shu);opacity:.7}
+[data-theme=dark] .reader.bar-collapsed.bar-peek .rb-tab{background:transparent;box-shadow:none}
+/* padding-top applies to every 直排 column, so mid-reading text stays clear of the corner controls */
+.reader.bar-collapsed .doc.vertical{padding-top:52px}
+.reader.bar-collapsed .doc:not(.vertical){padding-top:48px}
+@media (max-width:860px){ .reader.bar-collapsed .rb-tab{right:calc(10px + env(safe-area-inset-right,0px))} .reader.is-vertical.bar-collapsed .rb-tab{left:calc(10px + env(safe-area-inset-left,0px))} .reader.bar-collapsed .doc:not(.vertical){padding-top:48px} .reader.bar-collapsed .doc.vertical{padding-top:52px} }
+@media (max-height:500px) and (orientation:landscape) and (pointer:coarse){ .reader.bar-collapsed .doc:not(.vertical){padding-top:44px} .reader.bar-collapsed .doc.vertical{padding-top:48px} }
 /* narrow phones: "筆記" alone keeps room for the title */
 @media (max-width:400px){ .pb-long{display:none} .rbar{gap:4px} }
 

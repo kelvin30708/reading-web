@@ -165,7 +165,29 @@ addEventListener('storage', e => {
 function refreshView() { if (reader && refreshView.pending) { refreshView.pending = false; renderPanel(); } }
 document.addEventListener('focusout', () => setTimeout(() => { if (!document.activeElement || !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) refreshView(); }, 0));
 // offline + install (P5)
-if ('serviceWorker' in navigator && location.protocol !== 'file:') addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(e => console.warn('sw', e)));
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  // Reload once when a new SW takes control, so phones pick up cache bumps without a manual refresh.
+  // First install (no previous controller) does not reload; a sessionStorage guard stops reload loops.
+  const hadSW = !!navigator.serviceWorker.controller;
+  const armed = sessionStorage.getItem('rw-sw-reloaded') === '1';
+  const reloadOnce = () => {
+    if (sessionStorage.getItem('rw-sw-reloaded') === '1') return;
+    sessionStorage.setItem('rw-sw-reloaded', '1');
+    location.reload();
+  };
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadSW && !armed) reloadOnce(); });
+  navigator.serviceWorker.addEventListener('message', e => { if (e.data?.type === 'rw-sw-updated') reloadOnce(); });
+  addEventListener('load', () => {
+    if (armed) sessionStorage.removeItem('rw-sw-reloaded');
+    // Drop the SW bump query after a forced navigate so the address bar stays clean.
+    { const u = new URL(location.href); if (u.searchParams.has('rwsw')) { u.searchParams.delete('rwsw'); history.replaceState(null, '', u.href); } }
+    navigator.serviceWorker.register('sw.js').then(reg => {
+      const poke = () => reg.update().catch(() => {});
+      poke();
+      document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') poke(); });
+    }).catch(e => console.warn('sw', e));
+  });
+}
 
 // ---- collapsible top bar. Outside the reader it has its own tab; in the reader one control folds both bars (one tab, not two).
 function applyTop(inReader = /^#\/read\//.test(location.hash)) {

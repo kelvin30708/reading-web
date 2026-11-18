@@ -1,6 +1,6 @@
 // Reading Web service worker: offline reading + install (analysis-3 P5).
 // Bump CACHE on every release so the new files replace the old ones (old caches are deleted on activate).
-const CACHE = 'rw-v6';
+const CACHE = 'rw-v7';
 const RUNTIME = 'rw-runtime-v3';   // pdf.js cmaps / standard fonts, filled on first use
 const FONTS = 'rw-gfonts-v1';      // Google Fonts CSS + files, stale-while-revalidate
 const SHELL = [
@@ -19,7 +19,25 @@ self.addEventListener('install', e => {
 });
 self.addEventListener('activate', e => {
   const keep = new Set([CACHE, RUNTIME, FONTS]);
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('rw-') && !keep.has(k)).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  e.waitUntil((async () => {
+    const keys = await caches.keys();
+    const stale = keys.filter(k => k.startsWith('rw-') && !keep.has(k));
+    await Promise.all(stale.map(k => caches.delete(k)));
+    await self.clients.claim();
+    // Old tabs still have the previous JS in memory (and may lack the client reload hook).
+    // When we replace a stale cache, navigate those windows so the new shell loads once.
+    if (!stale.length) return;
+    const pages = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    const go = Promise.all(pages.map(c => {
+      if (typeof c.navigate !== 'function') { c.postMessage({ type: 'rw-sw-updated' }); return Promise.resolve(); }
+      // Same-URL navigate can be a no-op (and hang); bump a query so the tab actually reloads and keeps the hash.
+      const u = new URL(c.url);
+      if (u.searchParams.get('rwsw') === CACHE) { c.postMessage({ type: 'rw-sw-updated' }); return Promise.resolve(); }
+      u.searchParams.set('rwsw', CACHE);
+      return c.navigate(u.href);
+    }));
+    await Promise.race([go, new Promise(r => setTimeout(r, 4000))]);
+  })());
 });
 
 const cacheFirst = async (req, name) => {
