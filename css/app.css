@@ -684,3 +684,95 @@ table.cards{border-top:1px solid var(--line-strong)}
   .flip-inner{min-height:max(200px,calc(100dvh - 260px))}
   .face{padding:24px 28px}
 }
+
+/* ===== reader bar: collapsible + right-to-left in 直排 ===== */
+/* --rbar is the bar's height; the vertical page uses it, so collapsing hands the space to the text */
+.reader{--rbar:53px}
+.doc.vertical{height:calc(100dvh - 60px - var(--rbar))}
+@media (max-height:500px) and (orientation:landscape) and (pointer:coarse){
+  .reader{--rbar:45px}
+  .doc.vertical{height:calc(100dvh - var(--rbar))}
+}
+.rb-tab{display:flex;align-items:center;flex:none}
+.rb-tab button{display:inline-grid;place-items:center;min-width:var(--tap);min-height:var(--tap);border:0;background:transparent;color:var(--muted);border-radius:var(--radius);cursor:pointer;padding:0;font-size:var(--fs-sm);transition:color var(--dur) var(--ease),background-color var(--dur) var(--ease)}
+@media (hover:hover){ .rb-tab button:hover{color:var(--ink);background:var(--accent-soft)} }
+.rb-tab button:active{color:var(--ink);background:var(--accent-soft)}
+.rb-tab svg{transition:transform var(--dur) var(--ease)}
+.rb-notes{display:none !important}
+/* 直排: mirror the bar — ← at the right edge, then the title, 直|橫 and Notes on the left, collapse at the far left */
+.reader.is-vertical .rbar{flex-direction:row-reverse}
+.reader.is-vertical .progress{left:auto;right:0}
+.reader.is-vertical .rbar .land-pop{right:auto;left:0}
+/* collapsed: the bar becomes a hairline strip with a small hanging tab (notes + expand) */
+.reader.bar-collapsed{--rbar:1px}
+.reader.bar-collapsed .rbar{min-height:0;height:1px;padding:0;border-bottom:1px solid var(--line);background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.reader.bar-collapsed .rbar > :not(.rb-tab):not(.progress){display:none !important}
+.reader.bar-collapsed .rb-tab{position:absolute;top:0;right:16px;z-index:21;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-top:0;border-radius:0 0 var(--radius-lg) var(--radius-lg);padding:0 2px;box-shadow:0 4px 14px rgba(43,43,43,.05)}
+.reader.is-vertical.bar-collapsed .rb-tab{right:auto;left:16px;flex-direction:row-reverse}
+.reader.bar-collapsed .rb-tab button{min-height:32px;min-width:40px;position:relative}
+.reader.bar-collapsed .rb-tab button::before{content:"";position:absolute;inset:-6px 0}  /* 44px tap height */
+.reader.bar-collapsed .rb-notes{display:inline-grid !important}
+.reader.bar-collapsed .rb-toggle svg{transform:rotate(180deg)}
+.reader.bar-collapsed .progress{bottom:-1px}
+/* keep the first column / line clear of the tab */
+.reader.bar-collapsed .doc.vertical{padding-top:48px}
+@media (max-width:860px){ .reader.bar-collapsed .rb-tab{right:10px} .reader.is-vertical.bar-collapsed .rb-tab{left:10px} .reader.bar-collapsed .doc:not(.vertical){padding-top:44px} .reader.bar-collapsed .doc.vertical{padding-top:40px} }
+@media (max-height:500px) and (orientation:landscape) and (pointer:coarse){ .reader.bar-collapsed .doc:not(.vertical){padding-top:40px} .reader.bar-collapsed .doc.vertical{padding-top:36px} }
+/* narrow phones: "筆記" alone keeps room for the title */
+@media (max-width:400px){ .pb-long{display:none} .rbar{gap:4px} }
+[data-theme=dark] .reader.bar-collapsed .rb-tab{box-shadow:none}
+
+/* ===== 點選 tap-select ===== */
+.ts-btn{min-width:var(--tap);padding:0;display:inline-grid;place-items:center}
+.ts-btn[aria-pressed=true]{color:var(--shu);background:var(--accent-soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--shu) 45%,transparent)}
+.rb-tab .ts-btn[aria-pressed=true]{color:var(--shu)}
+.doc.tapsel{cursor:pointer;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.doc.tapsel [data-anchor]{cursor:text}
+.ts-handle{position:fixed;left:0;top:0;z-index:45;width:0;height:0;pointer-events:none}
+.ts-handle[hidden]{display:none}
+.ts-handle::before{content:"";position:absolute;width:44px;height:44px;left:-22px;top:-22px;pointer-events:auto;cursor:grab;touch-action:none}
+.ts-handle::after{content:"";position:absolute;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px var(--bg),0 1px 4px rgba(0,0,0,.2);left:-7px;top:-7px;transition:transform .12s}
+/* 直排: knobs sit just above the first character and just below the last; 橫排: before / after the line */
+.ts-handle.v.ts-start::after{top:-16px}.ts-handle.v.ts-end::after{top:2px}
+.ts-handle:not(.v).ts-start::after{left:-12px}.ts-handle:not(.v).ts-end::after{left:-2px}
+.ts-handle.drag::after{transform:scale(1.25)}
+.ts-handle::before{pointer-events:auto}
+@media (max-width:400px){ .rbar .ts-btn{min-width:36px} .rbar .seg button{min-width:34px;padding:0 6px} }
+
+/* ===== panel tabs: 筆記 Notes | 目錄 Contents ===== */
+.ptabs{display:flex;gap:2px;margin:0 16px 8px;border-bottom:1px solid var(--line)}
+.ptabs [role=tab]{flex:1;min-height:var(--tap);border:0;background:transparent;color:var(--muted);font:inherit;font-size:var(--fs-sm);letter-spacing:.04em;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.ptabs [role=tab][aria-selected=true]{color:var(--ink);border-bottom-color:var(--shu)}
+.ptabs [role=tab]:hover{color:var(--ink)}
+.hl-pane,.toc-pane{display:flex;flex-direction:column;flex:1;min-height:0}
+.hl-pane[hidden],.toc-pane[hidden]{display:none}
+#tocList{overflow:auto;flex:1;padding:4px 10px 48px;overscroll-behavior:contain}
+.toc{list-style:none;margin:0;padding:0}
+.toc li{padding-left:calc(var(--lvl,0) * 16px)}
+.toc-item{display:grid;grid-template-columns:1fr auto;column-gap:10px;width:100%;text-align:left;border:0;background:transparent;color:var(--ink-soft);font:inherit;font-size:var(--fs-sm);line-height:1.45;padding:9px 10px;min-height:var(--tap);border-radius:var(--radius);cursor:pointer;border-left:2px solid transparent}
+.toc-item:hover{background:var(--accent-soft);color:var(--ink)}
+.toc-item.cur{color:var(--ink);border-left-color:var(--shu);background:color-mix(in srgb,var(--shu) 6%,transparent)}
+.toc-item:disabled{opacity:.5;cursor:default}
+.toc-l{font-family:var(--font-zh)}
+.toc-s{grid-column:1;color:var(--muted);font-size:var(--fs-xs)}
+.toc-p{grid-row:1;grid-column:2;color:var(--muted);font-size:var(--fs-xs);font-variant-numeric:tabular-nums}
+.toc-note{padding:6px 10px;margin:0}
+.flash-sec{animation:secflash 1.4s var(--ease)}
+@keyframes secflash{0%{background:color-mix(in srgb,var(--shu) 14%,transparent)}100%{background:transparent}}
+
+/* ===== Zen ink art (sutras) ===== */
+.art-head{margin:0 auto 28px;text-align:center;pointer-events:none;user-select:none}
+.art-head img{display:block;margin:0 auto;opacity:.82}
+.art-wide{width:100%;height:auto;max-height:240px;object-fit:contain}
+.art-tall{display:none !important}
+.doc.vertical .art-head{margin:0 0 0 2.4em;align-self:start}
+.doc.vertical .art-wide{display:none !important}
+.doc.vertical .art-tall{display:block !important;height:min(52%,440px);width:auto;max-width:none;margin:0}
+.art-end{margin:56px auto 8px;text-align:center;pointer-events:none;user-select:none}
+.art-end img{width:132px;height:auto;opacity:.7}
+.doc.vertical .art-end{margin:0 3em;display:flex;align-items:center}
+.doc.art h3:not(:first-of-type)::before{content:"";display:block;width:min(220px,55%);height:22px;margin:30px auto 18px;background:url(../img/art/divider.webp) center/contain no-repeat;opacity:.5}
+.doc.vertical.art h3:not(:first-of-type)::before{width:22px;height:min(200px,40%);margin:auto 1.4em auto 1em;background-image:url(../img/art/divider-v.webp)}
+/* dark mode: the same ink turns to soft silver */
+[data-theme=dark] .art-head img,[data-theme=dark] .art-end img,[data-theme=dark] .doc.art h3::before{filter:invert(1) sepia(.15);opacity:.55}
+@media print{.art-head,.art-end{display:none}}

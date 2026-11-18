@@ -1,5 +1,7 @@
 import { store, files, uid, grade, isDue, BOX_DAYS, startOfNextDay, startOfDayPlus, mergeInto } from './store.js';
 import { rangeToParts, partsText, paint, containerText, sentenceAround, tidyCJK } from './anchor.js';
+import { setupTapSelect } from './tapselect.js';
+import { textToc, pdfOutline, pdfDetect, renderTocList } from './toc.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -164,10 +166,8 @@ document.addEventListener('focusout', () => setTimeout(() => { if (!document.act
 // offline + install (P5)
 if ('serviceWorker' in navigator && location.protocol !== 'file:') addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(e => console.warn('sw', e)));
 
-function updateBadge() {
-  const n = store.data.cards.filter(c => isDue(c)).length; const b = $('#dueBadge');
-  b.hidden = !n; b.textContent = n;
-}
+// The due count lives on the Flashcards page only (next to Review), not in the nav or the reader: no badge to update.
+function updateBadge() {}
 
 // ---------- router ----------
 function route() {
@@ -244,7 +244,8 @@ function renderLibrary() {
     <div class="about">
       <h3 class="section">Texts &amp; licenses</h3>
       <ul>${META.filter(m => !m.userFile).map(m => `<li><b>${esc(m.short)}</b> — ${esc(m.subtitle)}. Source: ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a>` : esc(m.source)}. ${esc(m.license)}</li>`).join('')}
-      <li><b>刻意練習 Peak</b> is copyrighted, so it isn't included. Upload a copy you own.</li></ul>
+      <li><b>刻意練習 Peak</b> is copyrighted, so it isn't included. Upload a copy you own.</li>
+      <li><b>Ink art 水墨</b> — pines from Hasegawa Tōhaku's <i>Pine Trees</i> screen (16th c., <a href="https://commons.wikimedia.org/wiki/File:Hasegawa_Tohaku_-_Pine_Trees_(Sh%C5%8Drin-zu_by%C5%8Dbu)_-_right_hand_screen.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain); ensō and brush dividers drawn for this app (CC0). <a href="CREDITS.txt" target="_blank" rel="noopener">Credits</a></li></ul>
       <p class="hint">Backups (資料 Your data, above) hold your highlights, notes, cards and settings. Uploaded PDF files stay in this browser only; after restoring on another device, re-attach each PDF and its highlights reappear.</p>
     </div></div>`;
   $$('[data-upload]', view).forEach(b => b.onclick = () => pickFile(b.dataset.upload));
@@ -317,17 +318,22 @@ async function openReader(id) {
   const closed = innerWidth < 860 ? true : (store.data.settings.panelClosed ?? false);
   store.data.settings.lastDoc = id; store.save();
   const zh = info.kind === 'text' && info.lang.startsWith('zh');
-  const L = zh ? { notes: '筆記 Notes', exp: '匯出 Export', rev: '複習 Review', ph: '寫下筆記… Add a note', head: '筆記 · Highlights & notes', filter: '篩選 Filter' }
-               : { notes: 'Notes 筆記', exp: 'Export .md', rev: 'Review 複習', ph: 'Add a note… 寫下筆記', head: 'Highlights & notes · 筆記', filter: 'Filter' };
+  const L = zh ? { notes: '筆記<span class="pb-long"> Notes</span>', exp: '匯出 Export', rev: '複習 Review', ph: '寫下筆記… Add a note', head: '筆記 · Highlights & notes', filter: '篩選 Filter' }
+               : { notes: 'Notes<span class="pb-long"> 筆記</span>', exp: 'Export .md', rev: 'Review 複習', ph: 'Add a note… 寫下筆記', head: 'Highlights & notes · 筆記', filter: 'Filter' };
   document.title = `${info.short} · Reading Web`;
-  view.innerHTML = `<div class="reader ${closed ? 'panel-closed' : ''}" data-lang="${info.kind === 'text' ? info.lang : ''}"${zh ? ' lang="zh-Hant"' : ''}>
+  const barCollapsed = !!store.data.settings.barCollapsed;
+  const tapOn = !!store.data.settings.tapSelect;
+  const tocTab = store.data.settings.panelTab === 'toc';
+  view.innerHTML = `<div class="reader ${closed ? 'panel-closed' : ''}${barCollapsed ? ' bar-collapsed' : ''}" data-lang="${info.kind === 'text' ? info.lang : ''}"${zh ? ' lang="zh-Hant"' : ''}>
     <div class="reader-main">
-      <div class="rbar"><a class="btn small ghost" href="#/library" aria-label="Back to library">←</a>
+      <div class="rbar" id="rbar"><a class="btn small ghost rb-back" href="#/library" aria-label="Back to library">←</a>
         <h1 class="title" data-heading>${esc(info.short)}</h1>
+        ${info.kind === 'text' ? `<button type="button" class="btn small ghost ts-btn" id="tapSelBtn" aria-pressed="${tapOn}" aria-label="點選 Tap-select: tap a phrase to select it" title="點選 Tap-select — tap a phrase, tap again to extend, double-tap for the sentence"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}
         <div class="seg only-zh" id="vertSeg" role="group" aria-label="Text direction 排版方向"><button type="button" data-v="1" aria-pressed="true" title="直排 Vertical" aria-label="直排 Vertical">直</button><button type="button" data-v="0" aria-pressed="false" title="橫排 Horizontal" aria-label="橫排 Horizontal">橫</button></div>
         <div class="land-tools only-land"><button class="btn small ghost" id="landAa" aria-label="Text size and theme" aria-expanded="false">Aa</button>
           <div class="land-pop" id="landPop" role="group" aria-label="Text size and theme"><button class="icon-btn" data-size="-1" aria-label="Smaller text">A−</button><button class="icon-btn" data-size="1" aria-label="Larger text">A+</button><button class="icon-btn" data-theme aria-label="Toggle dark mode">◐</button></div></div>
         <button class="btn small" id="panelBtn" aria-controls="panel" aria-expanded="${!closed}">${L.notes} <span id="hlCount"></span></button>
+        <div class="rb-tab">${info.kind === 'text' ? `<button type="button" class="rb-notes ts-btn" id="tabTapSel" aria-pressed="${tapOn}" aria-label="點選 Tap-select" title="點選 Tap-select"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}<button type="button" class="rb-notes" id="tabNotes" aria-controls="panel" aria-label="Notes 筆記" title="Notes 筆記">✎</button><button type="button" class="rb-toggle" id="barToggle" aria-controls="rbar" aria-expanded="${!barCollapsed}" aria-label="${barCollapsed ? 'Show reader bar 展開工具列' : 'Hide reader bar 收合工具列'}" title="${barCollapsed ? 'Show reader bar 展開工具列' : 'Hide reader bar 收合工具列'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
         <div class="progress" id="prog"></div></div>
       <div id="docRoot"></div>
     </div>
@@ -336,9 +342,14 @@ async function openReader(id) {
         <button class="btn small" id="exportBtn" title="Download notes as Markdown (.md)">${L.exp}</button>
         <a class="btn small ghost" href="#/review/${encodeURIComponent(id)}" title="Review flashcards from this text">${L.rev}</a>
         <button class="btn small ghost only-mobile" id="panelClose" aria-label="Close notes">✕</button></div>
+      <div class="ptabs" role="tablist" aria-label="Panel">
+        <button type="button" role="tab" id="ptNotes" aria-controls="hlPane" aria-selected="${!tocTab}" tabindex="${tocTab ? -1 : 0}">${zh ? '筆記 Notes' : 'Notes 筆記'}</button>
+        <button type="button" role="tab" id="ptToc" aria-controls="tocPane" aria-selected="${tocTab}" tabindex="${tocTab ? 0 : -1}">${zh ? '目錄 Contents' : 'Contents 目錄'}</button></div>
+      <div id="tocPane" role="tabpanel" aria-labelledby="ptToc" class="toc-pane"${tocTab ? '' : ' hidden'}><div id="tocList"></div></div>
+      <div id="hlPane" role="tabpanel" aria-labelledby="ptNotes" class="hl-pane"${tocTab ? ' hidden' : ''}>
       <div class="psearch"><input type="search" class="field" id="hlSearch" placeholder="${zh ? '搜尋 Search highlights & notes' : 'Search highlights & notes 搜尋'}" aria-label="Search highlights and notes"></div>
       <div class="filters" id="filters"><span class="hint flabel">${L.filter}</span>${Object.keys(COLORS).map(c => `<button class="sw sw-${c}" data-f="${c}" title="Show/hide ${COLOR_NAMES[c]}" aria-label="Show or hide ${COLOR_NAMES[c]}" aria-pressed="true"><span class="n">0</span></button>`).join('')}<button class="chip" id="noteChip" aria-pressed="false" title="Only highlights with a note">筆記 With notes</button></div>
-      <div class="hl-list" id="hlList"></div>
+      <div class="hl-list" id="hlList"></div></div>
     </aside>
     <div class="sheet-scrim" id="sheetScrim" aria-hidden="true"></div></div>`;
   const R = { id, info, kind: info.kind, root: $('#docRoot'), hidden: new Set(), cleanup: [], L };
@@ -352,7 +363,7 @@ async function openReader(id) {
     const el = $('.reader'); if (!el) return;
     const isClosed = open === undefined ? !el.classList.contains('panel-closed') : !open;
     el.classList.toggle('panel-closed', isClosed);
-    $('#panelBtn').setAttribute('aria-expanded', String(!isClosed));
+    $$('#panelBtn, #tabNotes').forEach(b => b.setAttribute('aria-expanded', String(!isClosed)));
     if (!isClosed) $('.vcoach button')?.click();
     if (innerWidth >= 860) { store.data.settings.panelClosed = isClosed; store.save(); } // the phone sheet is transient
     if (R.kind === 'pdf' && innerWidth >= 860) setTimeout(() => R.relayout(), 260);
@@ -385,6 +396,62 @@ async function openReader(id) {
     const off = e => { if (pop.classList.contains('open') && !e.target.closest('.land-tools')) { pop.classList.remove('open'); aa.setAttribute('aria-expanded', 'false'); } };
     document.addEventListener('pointerdown', off); R.cleanup.push(() => document.removeEventListener('pointerdown', off)); }
   $('#panelBtn').onclick = () => toggle();
+  $('#tabNotes').onclick = () => toggle();
+  // collapsible reader bar: the choice is remembered; the reading place is kept across the layout change
+  R.setBar = collapsed => {
+    const el = $('.reader'), tb = $('#barToggle'); if (!el) return;
+    const keep = R.firstVisible();
+    el.classList.toggle('bar-collapsed', collapsed);
+    const lbl = collapsed ? 'Show reader bar 展開工具列' : 'Hide reader bar 收合工具列';
+    tb.setAttribute('aria-expanded', String(!collapsed)); tb.setAttribute('aria-label', lbl); tb.title = lbl;
+    store.data.settings.barCollapsed = collapsed; store.save();
+    $('#landPop')?.classList.remove('open');
+    if (R.fitVertical) R.fitVertical();
+    if (keep) requestAnimationFrame(() => { R.restoreTo(keep); R.edge && R.edge(); });
+    announce(collapsed ? 'Reader bar hidden' : 'Reader bar shown');
+  };
+  $('#barToggle').onclick = () => R.setBar(!$('.reader').classList.contains('bar-collapsed'));
+  // 點選 tap-select mode (texts): remembered per device
+  R.tapOn = () => !!store.data.settings.tapSelect;
+  const setTap = on => {
+    store.data.settings.tapSelect = on; store.save();
+    $$('.ts-btn').forEach(b => b.setAttribute('aria-pressed', String(on)));
+    $('.doc', R.root)?.classList.toggle('tapsel', on);
+    if (!on) R.tapSel?.clear();
+    toast(on ? '點選：點一下選一句，再點延伸，雙擊或長按選整句 · Tap a phrase, tap again to extend, double-tap / long-press for the sentence' : '點選已關閉 · Tap-select off');
+    if (on) { $('.vcoach button')?.click(); }
+  };
+  $$('.ts-btn').forEach(b => b.onclick = () => setTap(!R.tapOn()));
+  // panel tabs: 筆記 Notes | 目錄 Contents
+  const showTab = (t, focus) => {
+    const toc = t === 'toc';
+    $('#ptNotes').setAttribute('aria-selected', String(!toc)); $('#ptToc').setAttribute('aria-selected', String(toc));
+    $('#ptNotes').tabIndex = toc ? -1 : 0; $('#ptToc').tabIndex = toc ? 0 : -1;
+    $('#hlPane').hidden = toc; $('#tocPane').hidden = !toc;
+    $('#panel').classList.toggle('on-toc', toc);
+    store.data.settings.panelTab = toc ? 'toc' : 'notes'; store.save();
+    if (toc) R.loadToc?.();
+    if (focus) $(toc ? '#ptToc' : '#ptNotes').focus();
+  };
+  R.showTab = showTab;
+  $('#ptNotes').onclick = () => showTab('notes'); $('#ptToc').onclick = () => showTab('toc');
+  $('.ptabs').addEventListener('keydown', e => { if (/^Arrow(Left|Right)$|^Home$|^End$/.test(e.key)) { e.preventDefault(); showTab($('#ptToc').getAttribute('aria-selected') === 'true' ? 'notes' : 'toc', true); } });
+  R.toc = null;
+  R.renderToc = () => {
+    const el = $('#tocList'); if (!el) return;
+    renderTocList(el, R.toc, { auto: R.tocAuto, landmark: R.toc?.some(e => e.landmark), empty: R.tocMsg || 'Loading…' });
+    R.markToc?.(true);
+  };
+  $('#tocList').addEventListener('click', e => { const b = e.target.closest('.toc-item'); if (!b || !R.toc) return; R.gotoToc(R.toc[+b.dataset.i]); });
+  // which entry are we reading? (aria-current, kept in view inside the list)
+  R.markToc = (scrollList) => {
+    if (!R.toc || !R.toc.length || !R.curToc) return; const i = R.curToc();
+    $$('#tocList .toc-item').forEach(b => { const on = +b.dataset.i === i; b.classList.toggle('cur', on); on ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current'); });
+    if (scrollList) { const b = $('#tocList .toc-item.cur'); if (b && !$('#tocPane').hidden) b.scrollIntoView({ block: 'center' }); }
+  };
+  const tocTick = debounce(() => { if (!R.dead && !$('#tocPane').hidden) R.markToc(); }, 120);
+  addEventListener('scroll', tocTick, { passive: true }); R.cleanup.push(() => removeEventListener('scroll', tocTick));
+  R.tocTick = tocTick;
   $('#panelClose').onclick = () => toggle(false);
   $('#exportBtn').onclick = () => exportMarkdown(R);
   R.q = ''; R.onlyNotes = false;
@@ -404,6 +471,7 @@ async function openReader(id) {
   } catch (e) { console.error(e); R.root.innerHTML = `<div class="pdf-empty"><p>Could not open this document: ${esc(e.message)}</p></div>`; }
   if (R.dead) return;
   renderPanel();
+  if (!$('#tocPane').hidden) R.loadToc?.();
   focusHeading();
   const p = store.data.pos[id];
   requestAnimationFrame(() => {
@@ -421,13 +489,39 @@ async function renderTextDoc(R) {
   if (!window.RW_TEXTS?.[R.id]) await loadScript(`texts/${R.id}.js`);
   const blocks = window.RW_TEXTS[R.id];
   const m = R.info;
-  R.root.innerHTML = `<article class="doc" lang="${m.lang}">
+  // Zen ink art for the sutras: a sumi-e header (Tōhaku's pines, public domain), brush dividers, a closing ensō.
+  // Decorative only (aria-hidden, outside every [data-anchor]), so highlight offsets are untouched.
+  const art = /^(diamond|medicine)-/.test(R.id);
+  R.root.innerHTML = `<article class="doc${art ? ' art' : ''}${R.tapOn() ? ' tapsel' : ''}" lang="${m.lang}">
+    ${art ? `<figure class="art-head" aria-hidden="true"><img class="art-wide" src="img/art/pines-wide.webp" width="1400" height="606" alt="" loading="lazy" decoding="async"><img class="art-tall" src="img/art/pines-tall.webp" width="460" height="825" alt="" loading="lazy" decoding="async"></figure>` : ''}
     <h1>${esc(m.title)}</h1><div class="sub">${esc(m.subtitle)}</div>
     ${blocks.map((b, i) => b[0] === 'h' ? `<h3 data-anchor="b${i}">${esc(b[1])}</h3>` : `<p data-anchor="b${i}" class="${b[0] === 'v' ? 'verse' : ''}">${esc(b[1])}</p>`).join('')}
+    ${art ? `<div class="art-end" aria-hidden="true"><img src="img/art/enso.webp" width="560" height="560" alt="" loading="lazy" decoding="async"></div>` : ''}
     <div class="colophon">Source: ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a>` : esc(m.source)}<br>License: ${esc(m.license)}</div>
   </article>`;
   R.repaint();
   if (m.lang.startsWith('zh')) setupVertical(R);
+  R.tapSel = setupTapSelect(R, { isOn: R.tapOn, onCleared: () => hideBar() });
+  // 目錄: section headings (or landmarks); jump keeps the place in 直排 and 橫排
+  R.toc = textToc(R); R.tocMsg = '';
+  // the current entry is the last heading the reader has reached (past the right edge in 直排, under the bar in 橫排)
+  R.curToc = () => {
+    const d = R.vdoc && R.vdoc(); let cur = 0;
+    const lim = d ? d.getBoundingClientRect().right - parseFloat(getComputedStyle(d).paddingRight) - 24 : $('.rbar').getBoundingClientRect().bottom + 48;
+    R.toc.forEach((e, i) => { const el = R.root.querySelector(`[data-anchor="${e.anchor}"]`); if (!el) return; const r = el.getBoundingClientRect(); if (d ? r.right >= lim : r.top <= lim) cur = i; });
+    return cur;
+  };
+  R.gotoToc = e => {
+    const el = R.root.querySelector(`[data-anchor="${e.anchor}"]`); if (!el) return;
+    const d = R.vdoc && R.vdoc();
+    if (d) { const dr = d.getBoundingClientRect(), r = el.getBoundingClientRect(); d.scrollLeft += r.right - (dr.right - parseFloat(getComputedStyle(d).paddingRight)); }
+    else { const top = $('.rbar').getBoundingClientRect().bottom; scrollTo(0, scrollY + el.getBoundingClientRect().top - top - 16); }
+    el.classList.add('flash-sec'); setTimeout(() => el.classList.remove('flash-sec'), 1400);
+    if (innerWidth < 860) R.closePanel();
+    setTimeout(() => R.markToc(), 60);
+  };
+  R.loadToc = () => R.renderToc();
+  $('.doc', R.root).addEventListener('scroll', () => R.tocTick(), { passive: true });
 }
 
 // Optional vertical writing (直排) for Chinese sutras. Highlights are DOM-based, so they keep working.
@@ -452,6 +546,7 @@ function setupVertical(R) {
   const apply = (on, keep = true) => {
     const anchor = keep ? R.firstVisible() : null;
     doc.classList.toggle('vertical', on);
+    $('.reader')?.classList.toggle('is-vertical', on); // the bar reads right → left in 直排
     R.fitVertical();
     $$('button', seg).forEach(b => b.setAttribute('aria-pressed', String((b.dataset.v === '1') === on)));
     hideBar();
@@ -474,7 +569,7 @@ function setupVertical(R) {
   let t0 = null;
   doc.addEventListener('touchstart', e => { t0 = R.vdoc() && e.touches.length === 1 ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : null; }, { passive: true });
   doc.addEventListener('touchmove', e => {
-    if (!t0 || !R.vdoc() || !getSelection().isCollapsed) return;
+    if (!t0 || !R.vdoc() || (!getSelection().isCollapsed && !R.tapOn())) return;
     const x = e.touches[0].clientX, y = e.touches[0].clientY, dx = x - t0.x, dy = y - t0.y;
     if (Math.abs(dy) > Math.abs(dx)) { e.preventDefault(); doc.scrollLeft += dy; }
     t0 = { x, y };
@@ -572,6 +667,36 @@ async function renderPdfDoc(R) {
     rendered.set(n, pr); return pr;
   }
   R.renderPage = renderPage;
+  R.pageSize = n => pageSizes[n] || base;
+  // 目錄 for PDFs: the outline if there is one, else headings detected from the text layer (on first open of the tab)
+  R.tocMsg = 'Reading the outline… 讀取目錄中';
+  R.loadToc = async () => {
+    if (R.tocLoading || R.toc) { R.renderToc(); return; }
+    R.tocLoading = true; R.renderToc();
+    let t = await pdfOutline(pdf);
+    if (R.dead) return;
+    if (!t) { R.tocAuto = true; R.tocMsg = 'No outline in this PDF — looking for headings… 自動偵測標題中'; R.renderToc();
+      t = await pdfDetect(pdf, (n, N) => { R.tocMsg = `No outline in this PDF — looking for headings… ${n}/${N}`; if (!R.toc) R.renderToc(); }, () => R.dead); }
+    if (R.dead || !t) return;
+    R.toc = t; R.tocLoading = false; R.renderToc();
+  };
+  const pageAt = () => { const top = $('.rbar').getBoundingClientRect().bottom + 24; const pg = $$('.page', host).find(p => p.getBoundingClientRect().bottom > top); return pg ? [+pg.dataset.page, pg] : [1, null]; };
+  R.curToc = () => {
+    const [n, pg] = pageAt(); const vp = R.pageSize(n); const s = pg ? pg.offsetHeight / vp.height : 1;
+    const y = pg ? ($('.rbar').getBoundingClientRect().bottom + 24 - pg.getBoundingClientRect().top) / s : 0; // points from the page top
+    let cur = 0; R.toc.forEach((e, i) => { if (e.page != null && (e.page < n || (e.page === n && (e.top == null || vp.height - e.top <= y + 4)))) cur = i; }); return cur;
+  };
+  R.gotoToc = async e => {
+    if (e.page == null) return;
+    const pg = $(`.page[data-page="${e.page}"]`, host); if (!pg) return;
+    await R.renderPage(e.page); if (R.dead) return;
+    const vp = R.pageSize(e.page), s = pg.offsetHeight / vp.height;
+    const off = e.top != null ? Math.max(0, (vp.height - e.top) * s - 12) : 0;
+    const top = $('.rbar').getBoundingClientRect().bottom;
+    scrollTo(0, scrollY + pg.getBoundingClientRect().top + off - top - 8);
+    if (innerWidth < 860) R.closePanel();
+    setTimeout(() => R.markToc(), 80);
+  };
   R.relayout = debounce(() => { const p = scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight); layout(); scrollTo(0, p * (document.documentElement.scrollHeight - innerHeight)); }, 150);
   const onResize = debounce(() => R.relayout(), 300);
   addEventListener('resize', onResize); R.cleanup.push(() => removeEventListener('resize', onResize));

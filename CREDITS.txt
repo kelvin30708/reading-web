@@ -1,0 +1,19 @@
+Reading Web — image credits and licences
+========================================
+
+img/art/pines-wide.webp, img/art/pines-tall.webp
+  Hasegawa Tōhaku (1539–1610), "Pine Trees" (Shōrin-zu byōbu 松林図屏風), right-hand screen,
+  ink on paper, late 16th century. Tokyo National Museum (National Treasure).
+  Source file: https://commons.wikimedia.org/wiki/File:Hasegawa_Tohaku_-_Pine_Trees_(Sh%C5%8Drin-zu_by%C5%8Dbu)_-_right_hand_screen.jpg
+  Licence: Public domain (Wikimedia Commons "PD-Art": the artist died more than 100 years ago and the
+  work is a faithful reproduction of a two-dimensional public-domain artwork).
+  Changes: cropped, paper tone removed so only the ink remains (transparent WebP), edges faded,
+  resized. The changes are dedicated to the public domain (CC0).
+
+img/art/enso.webp, img/art/divider.webp, img/art/divider-v.webp
+  Ensō circle and ink-brush section dividers drawn procedurally for this app
+  (ux-rounds/make_art.py). Original work, dedicated to the public domain (CC0 1.0).
+
+vendor/fonts/  Noto Serif TC subset — SIL Open Font License 1.1 (see the OFL file beside the fonts).
+vendor/pdfjs/  PDF.js — Apache License 2.0 (Mozilla).
+Texts: see the "Texts & licenses" section on the library page and texts/meta.js.
