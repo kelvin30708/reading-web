@@ -20,3 +20,12 @@ designed for this app; no image file. CC0 1.0.
 vendor/fonts/  Noto Serif TC subset — SIL Open Font License 1.1 (see the OFL file beside the fonts).
 vendor/pdfjs/  PDF.js — Apache License 2.0 (Mozilla).
 Texts: see the "Texts & licenses" section on the library page and texts/meta.js.
+
+texts/diamond-zh.js  — 金剛般若波羅蜜經 (鳩摩羅什譯)
+  Transcribed from the NTU Digital Library of Buddhist Studies PDF:
+  https://dlbs.liberal.ntu.edu.tw/FULLTEXT/sutra/chi_pdf/sutra3/T08n0235.pdf
+  The PDF is a CBETA 電子佛典集成 Version 2023.Q4 ebook hosted by NTU
+  (non-commercial use, distribute with the CBETA header intact).
+  The app keeps the traditional 昭明太子 32-section headings for navigation;
+  those headings are not in the NTU PDF.
+

@@ -4,9 +4,9 @@ window.RW_META = [
     id: 'diamond-zh', kind: 'text', lang: 'zh-Hant', group: 'diamond',
     title: '金剛般若波羅蜜經', short: '金剛經 · 中文',
     subtitle: '姚秦 鳩摩羅什 譯（大正藏 T0235）',
-    source: 'Wikisource 維基文庫：金剛般若波羅蜜經 (鳩摩羅什) — 江味農校定本，昭明太子三十二分科',
-    url: 'https://zh.wikisource.org/wiki/金剛般若波羅蜜經_(鳩摩羅什)',
-    license: 'Public domain (5th-century translation).'
+    source: '臺大佛學數位圖書館 NTU Digital Library of Buddhist Studies PDF of T0235（CBETA 電子佛典集成 2023.Q4）。昭明太子三十二分科為本應用於目錄的標題，不在該 PDF 中。',
+    url: 'https://dlbs.liberal.ntu.edu.tw/FULLTEXT/sutra/chi_pdf/sutra3/T08n0235.pdf',
+    license: 'Fifth-century translation in the public domain; this e-text follows the NTU-hosted CBETA 2023.Q4 ebook (non-commercial use, keep the CBETA header intact).'
   },
   {
     id: 'diamond-en', kind: 'text', lang: 'en', group: 'diamond',
