@@ -7,6 +7,42 @@ import { paintLinks, unpaintLinks } from './links.js';
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+// Fullscreen (documentElement + webkit). Hidden when the API is missing (e.g. iPhone Safari).
+const fsIcon = on => on
+  ? `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3v3H3M13 6h-3V3M10 13v-3h3M3 10h3v3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+  : `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6V3h3M10 3h3v3M13 10v3h-3M6 13H3v-3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const canFullscreen = () => {
+  const el = document.documentElement;
+  const req = el.requestFullscreen || el.webkitRequestFullscreen || el.webkitRequestFullScreen;
+  if (typeof req !== 'function') return false;
+  if (document.fullscreenEnabled === false || document.webkitFullscreenEnabled === false) return false;
+  return true;
+};
+const isFullscreen = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+const requestFullscreen = () => {
+  const el = document.documentElement;
+  const fn = el.requestFullscreen || el.webkitRequestFullscreen || el.webkitRequestFullScreen;
+  try { const p = fn?.call(el); if (p && p.catch) p.catch(() => {}); } catch {}
+};
+const exitFullscreen = () => {
+  const fn = document.exitFullscreen || document.webkitExitFullscreen || document.webkitCancelFullScreen;
+  try { const p = fn?.call(document); if (p && p.catch) p.catch(() => {}); } catch {}
+};
+const syncFullscreenBtns = () => {
+  const on = isFullscreen();
+  const lbl = on ? 'Exit full screen 結束全螢幕' : 'Full screen 全螢幕';
+  const ok = canFullscreen();
+  $$('.fs-btn').forEach(b => {
+    b.hidden = !ok;
+    if (!ok) return;
+    b.innerHTML = fsIcon(on);
+    b.setAttribute('aria-pressed', String(on));
+    b.setAttribute('aria-label', lbl);
+    b.title = lbl;
+  });
+  document.documentElement.classList.toggle('is-fs', on);
+};
+
 const COLORS = { yellow: 'var(--sw-yellow)', green: 'var(--sw-green)', pink: 'var(--sw-pink)', blue: 'var(--sw-blue)' };
 const COLOR_NAMES = { yellow: 'Yamabuki 山吹 (yellow)', green: 'Matcha 抹茶 (green)', pink: 'Sakura 櫻 (pink)', blue: 'Ai 藍 (blue)' };
 const EMOJI = { yellow: '🟨 山吹', green: '🟩 抹茶', pink: '🌸 櫻', blue: '🟦 藍' };
@@ -365,7 +401,7 @@ async function openReader(id) {
         <div class="land-tools only-land"><button class="btn small ghost" id="landAa" aria-label="Text size and theme" aria-expanded="false">Aa</button>
           <div class="land-pop" id="landPop" role="group" aria-label="Text size and theme"><button class="icon-btn" data-size="-1" aria-label="Smaller text">A−</button><button class="icon-btn" data-size="1" aria-label="Larger text">A+</button><button class="icon-btn" data-theme aria-label="Toggle dark mode">◐</button></div></div>
         <button class="btn small" id="panelBtn" aria-controls="panel" aria-expanded="${!closed}">${L.notes} <span id="hlCount"></span></button>
-        <div class="rb-tab"><button type="button" class="rb-dot" id="rbDot" aria-expanded="false" aria-label="Show reader tools 顯示小工具" title="Show reader tools 顯示小工具"></button>${info.kind === 'text' ? `<button type="button" class="rb-notes ts-btn" id="tabTapSel" aria-pressed="${tapOn}" aria-label="點選 Tap-select" title="點選 Tap-select"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}<button type="button" class="rb-notes" id="tabNotes" aria-controls="panel" aria-label="Notes 筆記" title="Notes 筆記">✎</button><button type="button" class="rb-toggle" id="barToggle" aria-controls="rbar" aria-expanded="${!barCollapsed}" aria-label="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}" title="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        <div class="rb-tab"><button type="button" class="rb-dot" id="rbDot" aria-expanded="false" aria-label="Show reader tools 顯示小工具" title="Show reader tools 顯示小工具"></button>${info.kind === 'text' ? `<button type="button" class="rb-notes ts-btn" id="tabTapSel" aria-pressed="${tapOn}" aria-label="點選 Tap-select" title="點選 Tap-select"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}<button type="button" class="rb-notes" id="tabNotes" aria-controls="panel" aria-label="Notes 筆記" title="Notes 筆記">✎</button><button type="button" class="fs-btn" id="fsBtn" ${canFullscreen() ? '' : 'hidden '}aria-pressed="false" aria-label="Full screen 全螢幕" title="Full screen 全螢幕">${fsIcon(false)}</button><button type="button" class="rb-toggle" id="barToggle" aria-controls="rbar" aria-expanded="${!barCollapsed}" aria-label="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}" title="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
         <div class="progress" id="prog"></div></div>
       <div id="docRoot"></div>
     </div>
@@ -465,6 +501,20 @@ async function openReader(id) {
     announce(collapsed ? 'Reader bar hidden' : 'Reader bar shown');
   };
   $('#barToggle').onclick = () => R.setBar(!$('.reader').classList.contains('bar-collapsed'));
+  // full screen: same control in the expanded bar and in the collapsed peek tools
+  const fsBtn = $('#fsBtn');
+  if (fsBtn) {
+    if (!canFullscreen()) fsBtn.hidden = true;
+    else { syncFullscreenBtns(); fsBtn.onclick = () => { isFullscreen() ? exitFullscreen() : requestFullscreen(); }; }
+  }
+  const onFsChange = () => { syncFullscreenBtns(); if (R.fitVertical) R.fitVertical(); if (R.edge) R.edge(); };
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
+  R.cleanup.push(() => {
+    document.removeEventListener('fullscreenchange', onFsChange);
+    document.removeEventListener('webkitfullscreenchange', onFsChange);
+    if (isFullscreen()) exitFullscreen();
+  });
   // collapsed corner: a faint dot peeks the mini tools; idle or a tap outside hides them again
   const PEEK_MS = 3200;
   let peekT = 0;

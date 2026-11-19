@@ -698,6 +698,8 @@ table.cards{border-top:1px solid var(--line-strong)}
 @media (hover:hover){ .rb-tab button:hover{color:var(--ink);background:var(--accent-soft)} }
 .rb-tab button:active{color:var(--ink);background:var(--accent-soft)}
 .rb-tab svg{transition:transform var(--dur) var(--ease)}
+.rb-tab .fs-btn{flex:none}
+.rb-tab .fs-btn svg{display:block}
 .rb-notes{display:none !important}
 /* 直排: mirror the bar — ← at the right edge, then the title, 直|橫 and Notes on the left, collapse at the far left */
 .reader.is-vertical .rbar{flex-direction:row-reverse}
@@ -721,7 +723,7 @@ table.cards{border-top:1px solid var(--line-strong)}
 /* active tool (e.g. tap-select): vermilion so a mode that's on is still visible */
 .reader.bar-collapsed.tool-on:not(.bar-peek) .rb-dot::after{background:var(--shu);opacity:.55}
 @media (hover:hover){ .reader.bar-collapsed.tool-on:not(.bar-peek) .rb-dot:hover::after{opacity:.75} }
-/* peeked: three faint icons in the corner, same weight as the dot — no box, fill, border, or shadow */
+/* peeked: faint icons in the corner (expand, fullscreen, notes, tap-select), same weight as the dot — no box */
 .reader.bar-collapsed.bar-peek .rb-dot{display:none !important}
 .reader.bar-collapsed.bar-peek .rb-tab{background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0}
 .reader.bar-collapsed.bar-peek .rb-tab button{min-height:44px;min-width:44px;position:relative;background:transparent !important;box-shadow:none !important;color:var(--ink);opacity:.5}
