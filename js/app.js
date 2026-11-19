@@ -1,5 +1,5 @@
 import { store, files, uid, grade, isDue, BOX_DAYS, startOfNextDay, startOfDayPlus, mergeInto } from './store.js';
-import { rangeToParts, partsText, paint, containerText, sentenceAround, tidyCJK } from './anchor.js';
+import { rangeToParts, partsText, paint, containerText, sentenceAround, tidyCJK, healForContainer } from './anchor.js';
 import { setupTapSelect } from './tapselect.js';
 import { textToc, pdfOutline, pdfDetect, renderTocList } from './toc.js';
 import { paintLinks, unpaintLinks } from './links.js';
@@ -433,7 +433,23 @@ async function openReader(id) {
   R.hls = () => store.hls(id);
   R.containers = () => $$('[data-anchor]', R.root);
   R.links = () => { const a = (store.data.links ||= []).filter(l => l.doc === id); return R.tempSrc ? a.concat(R.tempSrc) : a; };
-  R.paint = c => { unpaintLinks(c); paint(c, R.hls()); paintLinks(c, R.links()); decorateCards(c, R); rove(R); };
+  R.paint = c => {
+    const recs = [], owners = new Map();
+    for (const h of R.hls()) { recs.push(h); owners.set(h, h); }
+    for (const L of R.links()) {
+      if (L.src) { recs.push(L.src); owners.set(L.src, L.id ? L : null); }
+      if (L.dst) { recs.push(L.dst); owners.set(L.dst, L.id ? L : null); }
+    }
+    for (const card of store.data.cards || []) {
+      if ((card.docId === id || card.doc === id) && card.parts?.length) { recs.push(card); owners.set(card, card); }
+    }
+    const moved = healForContainer(c, recs);
+    if (moved.length) {
+      for (const rec of moved) { const o = owners.get(rec); if (o?.id && o.id !== '__pending') store.touch(o); }
+      store.save();
+    }
+    unpaintLinks(c); paint(c, R.hls()); paintLinks(c, R.links()); decorateCards(c, R); rove(R);
+  };
   R.repaint = (keys) => { for (const c of R.containers()) if (!keys || keys.includes(c.dataset.anchor)) R.paint(c); };
   const toggle = (open) => {
     const el = $('.reader'); if (!el) return;
@@ -622,6 +638,24 @@ async function openReader(id) {
   });
 }
 
+// Presentational phrase wrappers for Chinese typography. Characters (including
+// typographic \n already in the source) are preserved in the same order, so
+// highlight / link offsets inside [data-anchor] stay valid. The .ph-nl span
+// keeps those newlines in the DOM but takes no space, so a column can fill
+// until the next clause no longer fits, instead of breaking at every comma.
+const PHRASE_RE = /(\n+)|([^，、；：。！？\n]*[，、；：。！？]+[」』”’]*)|([^，、；：。！？\n]+)/g;
+function phraseHTML(s) {
+  if (!s) return '';
+  PHRASE_RE.lastIndex = 0;
+  let out = '', m, ok = false;
+  while ((m = PHRASE_RE.exec(s))) {
+    ok = true;
+    if (m[1]) out += `<span class="ph-nl">${m[1]}</span>`;
+    else out += `<span class="ph">${esc(m[0])}</span>`;
+  }
+  return ok ? out : esc(s);
+}
+
 async function renderTextDoc(R) {
   if (!window.RW_TEXTS?.[R.id]) await loadScript(`texts/${R.id}.js`);
   const blocks = window.RW_TEXTS[R.id];
@@ -632,7 +666,7 @@ async function renderTextDoc(R) {
   R.root.innerHTML = `<article class="doc${art ? ' art' : ''}${R.id.startsWith('diamond-') ? ' div-plain' : ''}${R.tapOn() ? ' tapsel' : ''}" lang="${m.lang}">
     ${art ? `<figure class="art-head" aria-hidden="true"><img class="art-wide" src="img/art/pines-wide.webp" width="1400" height="606" alt="" loading="lazy" decoding="async"><img class="art-tall" src="img/art/pines-tall.webp" width="460" height="825" alt="" loading="lazy" decoding="async"></figure>` : ''}
     <h1>${esc(m.title)}</h1><div class="sub">${esc(m.subtitle)}</div>
-    ${blocks.map((b, i) => b[0] === 'h' ? `<h3 data-anchor="b${i}">${esc(b[1])}</h3>` : `<p data-anchor="b${i}" class="${b[0] === 'v' ? 'verse' : ''}">${esc(b[1])}</p>`).join('')}
+    ${blocks.map((b, i) => { const t = m.lang.startsWith('zh') ? phraseHTML(b[1]) : esc(b[1]); return b[0] === 'h' ? `<h3 data-anchor="b${i}">${t}</h3>` : `<p data-anchor="b${i}" class="${b[0] === 'v' ? 'verse' : ''}">${t}</p>`; }).join('')}
     ${art ? `<div class="art-end" aria-hidden="true"><img src="img/art/enso.webp" width="560" height="560" alt="" loading="lazy" decoding="async"></div>` : ''}
     <div class="colophon">Source: ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a>` : esc(m.source)}<br>License: ${esc(m.license)}</div>
   </article>`;
@@ -666,6 +700,21 @@ function setupVertical(R) {
   const doc = $('.doc', R.root), seg = $('#vertSeg');
   R.vdoc = () => (doc.classList.contains('vertical') ? doc : null);
   // N14: in 直排 a column should hold at least 10 characters; cap the size for this layout only
+  // If a nowrap clause is longer than the column / line, let it wrap normally so it cannot overflow.
+  R.fitPhrases = () => {
+    const d = doc; if (!d || !/^zh/i.test(d.getAttribute('lang') || '')) return;
+    const vert = d.classList.contains('vertical');
+    const cs = getComputedStyle(d);
+    const room = vert
+      ? d.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom)
+      : d.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    if (!(room > 0)) return;
+    for (const s of d.querySelectorAll('.ph')) {
+      s.classList.remove('ph-long');
+      const size = vert ? s.offsetHeight : s.offsetWidth;
+      if (size > room + 0.5) s.classList.add('ph-long');
+    }
+  };
   R.fitVertical = () => {
     doc.style.fontSize = ''; R.vCap = null; R.vMax = null;
     if (R.vdoc()) {
@@ -675,6 +724,7 @@ function setupVertical(R) {
     }
     const at = !!R.vMax && (store.data.settings.fs || 19) >= R.vMax;
     $$('#fontUp, #landPop [data-size="1"]').forEach(b => { b.setAttribute('aria-disabled', String(at)); b.title = at ? '直排 size limit reached · switch to 橫排 for larger text' : 'Larger text'; });
+    R.fitPhrases();
   };
   const onRs = debounce(() => { if (!R.dead) R.fitVertical(); }, 200);
   addEventListener('resize', onRs); R.cleanup.push(() => removeEventListener('resize', onRs));

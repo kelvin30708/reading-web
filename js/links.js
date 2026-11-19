@@ -1,3 +1,4 @@
+import { isUnlocated } from './anchor.js';
 // Cross-reference links between passages. Stored separately from highlights (store.data.links),
 // anchored with the same {c, s, e} parts; painted as <span> wrappers that never add or remove text,
 // so highlight offsets and every other anchor stay exactly as they were.
@@ -23,6 +24,7 @@ const short = s => { s = (s || '').replace(/\s+/g, ' ').trim(); return s.length 
 export function paintLinks(container, links) {
   const key = container.dataset.anchor;
   for (const L of links) for (const [side, cls] of [['src', 'xl'], ['dst', 'xt']]) {
+    if (isUnlocated(L[side])) continue;
     const parts = L[side]?.parts || []; const lastIdx = parts.length - 1;
     parts.forEach((p, pi) => {
       if (p.c !== key) return;

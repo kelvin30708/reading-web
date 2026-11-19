@@ -166,6 +166,16 @@ mark.hl.has-note{background-image:linear-gradient(to right,var(--shu) 50%,transp
 mark.hl.flash{outline:1px solid var(--shu);outline-offset:3px}
 .textLayer mark.hl{color:transparent;padding:0;border-radius:0}
 
+
+/* phrase-aware CJK wrapping: a punctuation-terminated clause stays together and
+   moves as a unit to the next column/line when it would not fit. Source \n is
+   kept in the DOM (offsets) but takes no space. Clauses longer than the column
+   (.ph-long) wrap normally. */
+.doc[lang^=zh] p{white-space:normal}
+.doc[lang^=zh] .ph{display:inline-block;white-space:nowrap;vertical-align:top}
+.doc[lang^=zh] .ph.ph-long{white-space:normal}
+.doc[lang^=zh] .ph-nl{display:inline-block;width:0;height:0;overflow:hidden;font-size:0;line-height:0;letter-spacing:0}
+
 /* vertical writing (直排) for Chinese texts */
 .doc.vertical{writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;width:100%;max-width:none;max-height:none;height:calc(100vh - var(--top) - 53px);height:calc(100dvh - var(--top) - 53px);margin:0;padding:48px 56px 40px;overflow-x:auto;overflow-y:hidden;line-height:2.1;letter-spacing:.12em;text-align:start;scrollbar-width:thin;overscroll-behavior-x:contain}
 .doc.vertical h1{margin:0 0 0 1.2em}
