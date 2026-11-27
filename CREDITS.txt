@@ -37,5 +37,11 @@ texts/diamond-xz.js  — 大般若波羅蜜多經 卷第五百七十七 第九�
   CBETA header: "Available for non-commercial use when distributed with this header intact."
   Punctuation provided by 眾生出版社 via CBETA. The translation itself (7th c.) is in the public domain.
   The 對話 Dialogue view (speaker turns 世尊 / 善現 / narration) is this app's own arrangement of that text:
-  RW_DIALOGUE in the same file; chat-bubble avatars (ensō + vermilion seal) are inline SVG drawn for this app (CC0).
+  RW_DIALOGUE in the same file (passages: one speaker turn, long ones cut at clause punctuation to fit a phone screen).
+  
   The reading-marker titles in the 目錄 are this app's, not traditional 分 titles.
+
+vendor/fonts/RWBrush-subset.woff2  — brush-script face of the 對話 Dialogue mode
+  Subset (542 characters, glyphs unaltered) of MasaFont 正風毛筆 Regular v2.1 by Chun yu Yao,
+  https://github.com/max32002/MasaFont , which is based on 衡山毛筆フォント行書 by Aoyagi Kouzan 青柳衡山.
+  SIL Open Font License 1.1 — see vendor/fonts/OFL-MasaFont.txt. Used under the CSS name "RW Brush".
