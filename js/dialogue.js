@@ -1,10 +1,18 @@
 // 對話 Dialogue mode — "ink in the dark": one passage (one speaker turn, or a screen-sized part of a long one)
 // writes itself character by character in brush script on a near-black screen, holds, then dissolves like ink.
-// 世尊 and 善現 (須菩提) are marked by a small vermilion seal; narration is smaller and dimmer.
-// Passages come from window.RW_DIALOGUE[id] = [speaker n|b|s, text, reading-block index].
+// 世尊 and 須菩提 (or 善現, in the Xuanzang text) are marked by a small vermilion seal; narration is smaller and dimmer.
+// Passages come from window.RW_DIALOGUE[id] = [speaker t|n|b|s, text, reading-block index].
+// t = title card (昭明太子 分 headings); n = narration (no seal); b = 世尊; s = Subhūti.
 // The reading view (.doc) stays in the DOM untouched, so highlights, notes, cards and links keep their anchors;
 // the dark stage is a read-only presentation (no [data-anchor]) — mark text in 閱讀 Reading.
-const SPK = { b: { name: '世尊', seal: ['世', '尊'], en: 'The Buddha' }, s: { name: '善現', seal: ['善', '現'], en: 'Subhūti' } };
+const SPK_BY = {
+  'diamond-xz': { b: { name: '世尊', seal: ['世', '尊'], en: 'The Buddha' }, s: { name: '善現', seal: ['善', '現'], en: 'Subhūti' } },
+  'diamond-zh': { b: { name: '世尊', seal: ['世', '尊'], en: 'The Buddha' }, s: { name: '須菩提', seal: ['須', '菩', '提'], en: 'Subhūti' } },
+};
+const INTRO = {
+  'diamond-xz': ['能斷金剛分', '玄奘譯'],
+  'diamond-zh': ['金剛般若波羅蜜經', '鳩摩羅什譯'],
+};
 const SPEEDS = [{ k: 0.7, step: 150, t: '慢', en: 'slow' }, { k: 1, step: 110, t: '中', en: 'normal' }, { k: 1.7, step: 75, t: '快', en: 'fast' }];
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ico = {
@@ -17,6 +25,8 @@ const ico = {
 export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBar, fs }) {
   const turns = window.RW_DIALOGUE?.[R.id];
   if (!turns || !turns.length) return;
+  const SPK = SPK_BY[R.id] || SPK_BY['diamond-xz'];
+  const introLines = INTRO[R.id] || INTRO['diamond-xz'];
   const N = turns.length, st = store.data.settings;
   const posMap = (st.dlgPos ||= {});
   const modeMap = (st.modeByDoc ||= {});
@@ -57,7 +67,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   let idx = -1, phase = 'idle', playing = false, tWrite = 0, tHold = 0, tOut = 0, tPeek = 0, tHint = 0, pendingNext = null, started = false;
   let speedI = SPEEDS.findIndex(s => s.k === st.dlgSpeed); if (speedI < 0) speedI = 1;
   const cur = () => field.firstElementChild;
-  const lenOf = i => (i < 0 ? 5 : turns[i][1].replace(/\n/g, '').length);
+  const lenOf = i => (i < 0 ? introLines.join('').length : turns[i][1].replace(/\n/g, '').length);
   const savePos = debounce(() => { if (!R.dead) { posMap[R.id] = idx + 1; store.save(); } }, 300);
 
   // ---------- building a passage ----------
@@ -68,10 +78,14 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     let n = 0;
     const chars = s => [...s].map(c => `<span class="ch" style="--i:${n++}">${esc(c)}</span>`).join('');
     let body;
-    if (intro) body = `<span class="ln t1">${chars('能斷金剛分')}</span><br><span class="ln t2">${chars('玄奘譯')}</span>`;
-    else body = t[1].split('\n').map(line => chars(line)).join('<br>');
+    if (intro) body = `<span class="ln t1">${chars(introLines[0])}</span><br><span class="ln t2">${chars(introLines[1])}</span>`;
+    else if (k === 't') {
+      const [a, b] = t[1].split('\n');
+      body = `<span class="ln t1">${chars(a)}</span>` + (b ? `<br><span class="ln t2">${chars(b)}</span>` : '');
+    } else body = t[1].split('\n').map(line => chars(line)).join('<br>');
     el.dataset.n = String(n);
-    el.innerHTML = `<p class="ink-text" aria-hidden="true">${body}</p>` + (SPK[k] ? `<span class="ink-seal" aria-hidden="true"><b>${SPK[k].seal[0]}</b><b>${SPK[k].seal[1]}</b></span>` : '');
+    const seal = SPK[k];
+    el.innerHTML = `<p class="ink-text" aria-hidden="true">${body}</p>` + (seal ? `<span class="ink-seal${seal.seal.length > 2 ? ' seal-3' : ''}" aria-hidden="true">${seal.seal.map(ch => `<b>${esc(ch)}</b>`).join('')}</span>` : '');
     return el;
   }
   // font size: large and calligraphic, shrunk until the passage fits the screen without scrolling
@@ -81,9 +95,10 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     const aw = field.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     const ah = field.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
     const seal = !!$('.ink-seal', el);
-    const AW = aw - (seal && vert ? 52 : 0), AH = ah - (seal && !vert ? 78 : 0);
-    const len = +el.dataset.n, verse = el.textContent !== '' && el.querySelector('br') && k !== 'i';
-    const f = k === 'i' ? 1.0 : len <= 8 ? 1.32 : len <= 16 ? 1.2 : len <= 30 ? 1.08 : 1;
+    const sealN = seal ? $('.ink-seal', el).querySelectorAll('b').length : 0;
+    const AW = aw - (seal && vert ? 52 : 0), AH = ah - (seal && !vert ? (sealN > 2 ? 104 : 78) : 0);
+    const len = +el.dataset.n, verse = el.textContent !== '' && el.querySelector('br') && k !== 'i' && k !== 't';
+    const f = (k === 'i' || k === 't') ? 1.0 : len <= 8 ? 1.32 : len <= 16 ? 1.2 : len <= 30 ? 1.08 : 1;
     const kf = k === 'n' ? 0.66 : 1;
     let S = (vert ? 56 : Math.min(aw / 12, ah / 15) * f) * kf;
     S = Math.max(17, Math.min(vert ? 56 : 46, S));
@@ -95,7 +110,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     let guard = 0;
     while (!measure() && S > 16 && guard++ < 40) { S -= 1.5; apply(S); }
     // balance the columns so a short passage is not one long column plus a stub
-    if (vert && !verse && len > 10 && k !== 'i') {
+    if (vert && !verse && len > 10 && k !== 'i' && k !== 't') {
       const r = t.getBoundingClientRect(), pitch = S * (1 + ls) * 1.0, linePitch = S * (vert ? 1.75 : 1.85);
       const cols = Math.max(1, Math.round(r.width / linePitch));
       if (cols > 1) {
@@ -280,7 +295,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       peek(false); tocEl.hidden = true;
       let start = idx;
       if (keepEl && keepEl.dataset.anchor) { const t = firstTurnOfBlock(num(keepEl.dataset.anchor)); if (t > Math.max(idx, 0)) start = t; }
-      const ready = Promise.race([document.fonts?.load('40px "RW Brush"', '世尊善現能斷金剛分').catch(() => {}), new Promise(r => setTimeout(r, 1800))]);
+      const ready = Promise.race([document.fonts?.load('40px "RW Brush"', '世尊善現須菩提能斷金剛分金剛般若波羅蜜經玄奘譯鳩摩羅什').catch(() => {}), new Promise(r => setTimeout(r, 1800))]);
       requestAnimationFrame(async () => {
         await ready;
         if (R.dead || R.mode !== 'dlg') return;

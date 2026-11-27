@@ -31,6 +31,10 @@ texts/diamond-zh.js  — 金剛般若波羅蜜經 (鳩摩羅什譯)
   (non-commercial use, distribute with the CBETA header intact).
   The app keeps the traditional 昭明太子 32-section headings for navigation;
   those headings are not in the NTU PDF.
+  The 對話 Dialogue view (speaker turns 世尊 / 須菩提 / narration, plus a title card
+  for each of the 32 分 headings) is this app's own arrangement of that text:
+  RW_DIALOGUE in the same file (passages: one speaker turn, long ones cut at clause
+  punctuation to fit a phone screen; 偈 stay whole with the Buddha).
 
 
 texts/diamond-xz.js  — 大般若波羅蜜多經 卷第五百七十七 第九能斷金剛分 (玄奘譯, T0220 / T07n0220 juan 577)
@@ -44,7 +48,7 @@ texts/diamond-xz.js  — 大般若波羅蜜多經 卷第五百七十七 第九�
   The reading-marker titles in the 目錄 are this app's, not traditional 分 titles.
 
 vendor/fonts/RWBrush-subset.woff2  — brush-script face of the 對話 Dialogue mode
-  Subset (542 characters, glyphs unaltered) of MasaFont 正風毛筆 Regular v2.1 by Chun yu Yao,
+  Subset (654 characters, glyphs unaltered) of MasaFont 正風毛筆 Regular v2.1 by Chun yu Yao,
   https://github.com/max32002/MasaFont , which is based on 衡山毛筆フォント行書 by Aoyagi Kouzan 青柳衡山.
   SIL Open Font License 1.1 — see vendor/fonts/OFL-MasaFont.txt. Used under the CSS name "RW Brush".
 

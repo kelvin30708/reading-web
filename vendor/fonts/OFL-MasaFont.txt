@@ -3,7 +3,7 @@ with Reserved Font Name KouzanBrushFontGyousyo.
 MasaFont is based on the 衡山毛筆フォント行書 (Kouzan Brush Font Gyousyo) by Aoyagi Kouzan 青柳衡山 (https://opentype.jp/kouzangyousho.htm).
 Source: https://github.com/max32002/MasaFont (tw/MasaFont-Regular.ttf, v2.1)
 
-vendor/fonts/RWBrush-subset.woff2 is a subset of MasaFont Regular (542 characters used by the Dialogue mode,
+vendor/fonts/RWBrush-subset.woff2 is a subset of MasaFont Regular (654 characters used by the Dialogue mode,
 no glyphs altered; vertical-forms 'vert' feature kept). It is a Modified Version under the OFL and is used
 here under the CSS name "RW Brush"; it does not use the Reserved Font Name.
 
