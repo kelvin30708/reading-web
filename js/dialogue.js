@@ -1,7 +1,7 @@
 // 對話 Dialogue mode — "ink in the dark": one passage (one speaker turn, or a screen-sized part of a long one)
 // writes itself character by character in brush script on a near-black screen, holds, then dissolves like ink.
 // Speakers are told apart by ink colour only — there is no vermilion name-seal, so the screen stays quiet.
-// The sutra's own speaker leads (佛告須菩提、須菩提白佛言、佛告具壽善現曰, and so on) stay at the start of the passage; punctuation is still not drawn.
+// The sutra's own speaker leads (佛告須菩提、須菩提白佛言、佛告具壽善現曰, and so on) stay at the start of the same page as the speech: the lead is drawn in the narration colour, the speech in the speaker's colour. Punctuation is still not drawn. Classic four-phrase 偈 are one page, one line per phrase.
 // Passages come from window.RW_DIALOGUE[id] = [speaker, text, reading-block index].
 // t = title card; n = narration; b = 世尊; s = Subhūti / 善現;
 // m = 曼殊室利; a = 阿難; j = 救脫; y = 十二藥叉大將; i = intro.
@@ -26,6 +26,8 @@ const INTRO = {
 };
 const SPEEDS = [{ k: 0.7, step: 150, t: '慢', en: 'slow' }, { k: 1, step: 110, t: '中', en: 'normal' }, { k: 1.7, step: 75, t: '快', en: 'fast' }];
 const MINOR = /[，、；：,;:]/, MAJOR = /[。！？!?．\s\u3000]/, DROP = /[「」『』《》〈〉（）()\[\]【】"'“”‘’·・—–…～~﹁﹂﹃﹄]/;
+// Narrator frames spoken by Ānanda (佛告須菩提, 須菩提白佛言, 佛言, 曼殊室利言, 阿難白言, 而說偈言, …).
+const LEAD_RE = /^((?:說是語已[，、]?|作是語已[，、]?)?(?:爾時[，、]?)?(?:(?:佛復告|佛告|世尊[，、]?復告|世尊告|世尊讚諸?)[^「」：:。！？，、；\n]{0,16}(?:曰|言)?|佛言|世尊而說(?:偈言|頌曰)|(?:同時舉聲)?[^「」：:。！？，、；\n]{0,16}(?:復|即)?(?:白佛言|白言|答言|問[^「」：:。！？，、；\n]{0,12}言|言曰|言[「：:]))[「：:]?)/;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ico = {
   prev: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 L5 8 L10 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -52,7 +54,8 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   stage.dataset.vert = st.dlgVert === false ? '0' : '1';
   stage.innerHTML = `<div class="ink-bg" aria-hidden="true"></div>
     <div class="ink-field" id="inkField"></div>
-    <p class="ink-hint" id="inkHint" aria-hidden="true">輕點繼續 · Tap, Space or → · ← back · P plays</p>
+    <p class="ink-hint" id="inkHint" aria-hidden="true"><span class="ink-hint-phone">左上一頁 · 右下一頁</span><span class="ink-hint-desk">輕點繼續 · Tap, Space or → · ← back · P plays</span></p>
+    <div class="ink-edges" aria-hidden="true"><span class="ink-edge ink-edge-prev">‹</span><span class="ink-edge ink-edge-next">›</span></div>
     <div class="ink-line" aria-hidden="true"><i id="inkProg"></i></div>
     <div class="ink-tools" id="inkTools">
       <button type="button" class="ink-dot" id="inkDot" aria-expanded="false" aria-label="Show dialogue tools 顯示工具" title="Show dialogue tools 顯示工具"></button>
@@ -90,23 +93,28 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     let n = 0, gapW = 0;
     // Calligraphy has no punctuation marks: 「」『』 and other marks are dropped; ，、；： leave a small gap and 。！？ or a space a larger one,
     // as spacing on the preceding character (padding-inline-end works in vertical and horizontal writing). Display only: RW_DIALOGUE and the reading text keep their punctuation.
-    const chars = s => {
+    const raw = intro ? introLines.join('\n') : t[1];
+    const leadEnd = (!intro && k !== 't' && k !== 'n') ? ((raw.match(LEAD_RE) || ['',''])[1].length) : 0;
+    const chars = (s, base = 0) => {
       const toks = [];
+      let i = base;
       for (const c of s) {
         if (MINOR.test(c)) { if (toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); }
         else if (MAJOR.test(c)) { if (toks.length) toks[toks.length - 1].g = 2; }
-        else if (DROP.test(c)) continue;
-        else toks.push({ c, g: 0 });
+        else if (DROP.test(c)) { i += c.length; continue; }
+        else toks.push({ c, g: 0, lead: i < leadEnd });
+        i += c.length;
       }
       if (toks.length) toks[toks.length - 1].g = 0;
-      return toks.map(t => { gapW += t.g === 2 ? 0.7 : t.g === 1 ? 0.3 : 0; return `<span class="ch${t.g ? ' g' + t.g : ''}" style="--i:${n++}">${esc(t.c)}</span>`; }).join('');
+      return toks.map(t => { gapW += t.g === 2 ? 0.7 : t.g === 1 ? 0.3 : 0; return `<span class="ch${t.lead ? ' lead' : ''}${t.g ? ' g' + t.g : ''}" style="--i:${n++}">${esc(t.c)}</span>`; }).join('');
     };
-    let body;
-    if (intro) body = `<span class="ln t1">${chars(introLines[0])}</span><br><span class="ln t2">${chars(introLines[1])}</span>`;
+    let body, off = 0;
+    const linesOf = s => s.split('\n').map(line => { const html = chars(line, off); off += line.length + 1; return html; });
+    if (intro) body = `<span class="ln t1">${chars(introLines[0])}</span><br><span class="ln t2">${chars(introLines[1], introLines[0].length + 1)}</span>`;
     else if (k === 't') {
       const [a, b] = t[1].split('\n');
-      body = `<span class="ln t1">${chars(a)}</span>` + (b ? `<br><span class="ln t2">${chars(b)}</span>` : '');
-    } else body = t[1].split('\n').map(line => chars(line)).join('<br>');
+      body = `<span class="ln t1">${chars(a)}</span>` + (b ? `<br><span class="ln t2">${chars(b, a.length + 1)}</span>` : '');
+    } else body = linesOf(t[1]).join('<br>');
     el.dataset.n = String(n); el.dataset.w = String(n + gapW);
     el.innerHTML = `<p class="ink-text" aria-hidden="true">${body}</p>`;
     return el;
@@ -125,8 +133,15 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     S = Math.max(17, Math.min(vert ? 56 : 46, S));
     const ls = k === 'n' ? 0.16 : 0.1;
     t.style.letterSpacing = ls + 'em';
-    const measure = () => { const r = t.getBoundingClientRect(); return r.width <= AW + 0.5 && r.height <= AH + 0.5; };
-    const apply = s => { t.style.fontSize = s + 'px'; if (vert) { t.style.maxHeight = AH + 'px'; t.style.maxWidth = ''; } else { t.style.maxWidth = AW + 'px'; t.style.maxHeight = ''; } };
+    const measure = () => {
+      // Paint of the characters against the visible stage. A title's .t1/.t2 columns (1.3em, line-height 2.1)
+      // can overflow a narrow phone while .ink-text's own box, stretched by maxHeight in vertical-rl, reports as fitting.
+      const f = field.getBoundingClientRect();
+      const boxes = [...t.querySelectorAll('.ch')].map(el => el.getBoundingClientRect());
+      const r = (boxes.length ? boxes : [t.getBoundingClientRect()]).reduce((a, b) => ({ left: Math.min(a.left, b.left), right: Math.max(a.right, b.right), top: Math.min(a.top, b.top), bottom: Math.max(a.bottom, b.bottom) }));
+      return r.left >= f.left - 0.5 && r.right <= f.right + 0.5 && r.top >= f.top - 0.5 && r.bottom <= f.bottom + 0.5;
+    };
+    const apply = s => { t.style.fontSize = s + 'px'; if (vert) { t.style.maxHeight = AH + 'px'; t.style.maxWidth = ''; } else { t.style.maxWidth = AW + 'px'; t.style.maxHeight = ''; } void t.offsetWidth; };
     apply(S);
     let guard = 0;
     while (!measure() && S > 16 && guard++ < 40) { S -= 1.5; apply(S); }
@@ -155,6 +170,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     const el = build(i);
     field.appendChild(el);
     fit(el);
+    requestAnimationFrame(() => requestAnimationFrame(() => { if (!R.dead && R.mode === 'dlg' && cur() === el) fit(el); }));
     el.style.setProperty('--step', stepMs() + 'ms');
     if (how === 'write' && !reduced()) {
       el.classList.add('writing'); phase = 'writing';
@@ -242,11 +258,30 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   };
   $('.ink-row', stage).addEventListener('click', e => { const b = e.target.closest('button[data-a]'); if (!b) return; e.stopPropagation(); act[b.dataset.a]?.(); if (b.dataset.a !== 'close' && b.dataset.a !== 'read' && b.dataset.a !== 'toc') bump(); });
   $('.ink-row', stage).addEventListener('pointerdown', bump);
-  stage.addEventListener('pointerdown', e => { if (tools.classList.contains('open') && !e.target.closest('.ink-tools')) peek(false); });
-  // tap anywhere else = next
+  // Phone / narrow / coarse-pointer: left half = previous, right half = next.
+  // Desktop (wide + fine pointer): click anywhere still goes next, as before.
+  // A tap while the passage is still being revealed always finishes the writing first.
+  // Taps on the dot, tool row or contents do not navigate; a swipe is ignored; a tap
+  // that only closes the tools or contents does not also turn the page.
+  const sideNav = () => matchMedia('(max-width: 860px), (pointer: coarse)').matches;
+  let ptr0 = null, suppressNav = false;
+  stage.addEventListener('pointerdown', e => {
+    if (e.target.closest('.ink-tools, .ink-toc')) { ptr0 = null; return; }
+    if (tools.classList.contains('open')) { peek(false); suppressNav = true; }
+    if (!tocEl.hidden) { toc(false); suppressNav = true; }
+    ptr0 = { x: e.clientX, y: e.clientY };
+  });
   stage.addEventListener('click', e => {
-    if (e.target.closest('.ink-tools, .ink-toc')) return;
-    next();
+    if (e.target.closest('.ink-tools, .ink-toc')) { suppressNav = false; return; }
+    if (suppressNav) { suppressNav = false; return; }
+    if (ptr0 && Math.hypot(e.clientX - ptr0.x, e.clientY - ptr0.y) > 28) { ptr0 = null; return; }
+    ptr0 = null;
+    if (phase === 'writing') { finish(); return; }
+    if (sideNav()) {
+      const r = stage.getBoundingClientRect();
+      if (e.clientX < r.left + r.width / 2) prev();
+      else next();
+    } else next();
   });
   const onKey = e => {
     if (R.dead || R.mode !== 'dlg' || e.ctrlKey || e.metaKey || e.altKey) return;
@@ -344,7 +379,8 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
 
   // state for tests / debugging
   R.dlg = { next, prev, play, pause, restart, goto: R.dlgGoto, finish, show: i => { pause(); mount(i, 'instant'); },
-    get shown() { return idx + 1; }, get idx() { return idx; }, get total() { return N; }, get playing() { return playing; }, get phase() { return phase; }, turns };
+    get shown() { return idx + 1; }, get idx() { return idx; }, get total() { return N; }, get playing() { return playing; }, get phase() { return phase; },
+    sideNav, turns };
   // start where we left off (the stage is drawn when the mode is entered)
   const saved = Math.min(N, Math.max(0, +posMap[R.id] || 0));
   idx = saved - 1;

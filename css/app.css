@@ -984,6 +984,8 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
 .ch.g1{padding-inline-end:.3em}
 .ch.g2{padding-inline-end:.7em}
 .k-n .ink-text{--ink-c:rgba(196,190,180,.7);--glow:rgba(200,190,170,.08)}
+/* narrator leads (佛告須菩提, 須菩提白佛言, …) share the narration ink, on the same page as the speech */
+.ink-pass .ch.lead{--ink-c:rgba(196,190,180,.7);--glow:rgba(200,190,170,.08);--halo:196,190,180;--tsh:0 0 .5em var(--glow)}
 .k-i .ink-text .t1,.k-t .ink-text .t1{font-size:1.3em}
 .k-i .ink-text .t2,.k-t .ink-text .t2{font-size:.46em;letter-spacing:.3em;color:rgba(214,206,190,.7)}
 .k-i .ink-text .t2.ln,.k-t .ink-text .t2.ln{display:inline-block}
@@ -1015,9 +1017,25 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
 /* chrome: only a faint dot (like the reader's dot toolbar), a hairline of progress, and a hint at the very start */
 .ink-line{position:absolute;left:0;right:0;bottom:0;height:2px;pointer-events:none}
 .ink-line i{display:block;height:100%;width:0;background:#a93a27;opacity:.42;transition:width .6s ease}
-.ink-hint{position:absolute;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom,0px));margin:0;text-align:center;font:400 .75rem/1.4 var(--font-ui);letter-spacing:.14em;color:rgba(240,231,213,.42);opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+.ink-hint{position:absolute;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom,0px));margin:0;text-align:center;font:400 .75rem/1.4 var(--font-ui);letter-spacing:.14em;color:rgba(240,231,213,.42);opacity:0;transition:opacity 1.4s ease;pointer-events:none;z-index:2}
+.ink-hint-phone{display:none}
+.ink-hint-desk{display:inline}
 .ink.show-hint .ink-hint{opacity:1;animation:ink-pulse 3.2s ease-in-out infinite}
 @keyframes ink-pulse{0%,100%{opacity:.35}50%{opacity:.8}}
+/* first-time side-tap hint: faint ‹ › at the edges, shown once and then faded */
+.ink-edges{position:absolute;inset:0;z-index:2;pointer-events:none}
+.ink-edge{position:absolute;top:50%;transform:translateY(-50%);font:300 1.85rem/1 var(--font-ui);color:rgba(240,231,213,.38);opacity:0;letter-spacing:0}
+.ink-edge-prev{left:calc(10px + env(safe-area-inset-left,0px))}
+.ink-edge-next{right:calc(10px + env(safe-area-inset-right,0px))}
+.ink.show-hint .ink-edge{animation:ink-edge-fade 5.6s ease-in-out both}
+@keyframes ink-edge-fade{0%{opacity:0}20%{opacity:.5}70%{opacity:.32}100%{opacity:0}}
+@media (max-width:860px), (pointer:coarse){
+  .ink-hint-phone{display:inline}
+  .ink-hint-desk{display:none}
+}
+@media (min-width:861px) and (pointer:fine){
+  .ink-edge{display:none}
+}
 .ink-tools{position:absolute;z-index:3;top:calc(env(safe-area-inset-top,0px) + 2px);right:calc(6px + env(safe-area-inset-right,0px));display:flex;justify-content:flex-end;max-width:calc(100% - 12px);cursor:default}
 .ink-dot{display:inline-grid;place-items:center;width:44px;height:44px;margin:0;padding:0;border:0;background:transparent;cursor:pointer;position:relative}
 .ink-dot::after{content:"";width:11px;height:11px;border-radius:50%;background:#f0e7d5;opacity:.2;transition:opacity .3s}
@@ -1055,6 +1073,7 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
   .ink-pass.out{animation:ink-out-s .26s linear both}
   .ink-pass.done.fade{animation:ink-fade-s .4s linear both}
   .ink.show-hint .ink-hint{animation:none;opacity:.7}
+  .ink.show-hint .ink-edge{animation:none;opacity:.4}
   .ink-line i{transition:none}
 }
 @keyframes ink-fade-s{from{opacity:0}to{opacity:1}}
