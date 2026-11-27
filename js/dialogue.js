@@ -2,7 +2,7 @@
 // writes itself character by character in brush script on a near-black screen, holds, then dissolves like ink.
 // Speakers are told apart by ink colour only — there is no vermilion name-seal, so the screen stays quiet.
 // The sutra's own speaker leads (佛告須菩提、須菩提白佛言、佛告具壽善現曰, 善現答言, and so on) are their own narration-colour pages, styled like 如是我聞, and sit immediately before the speech page. Punctuation is still not drawn. Classic four-phrase 偈 stay one page, one line per phrase, without the lead.
-// A vocative 須菩提 / 善現 in a 世尊 speech is its own page, in the speaker's colour, before the rest of the speech. Short replies (不也世尊, 如是世尊, 甚多世尊, and similar) are their own page, then the continuation (何以故…) follows. Long passages stay at the largest size step and split across pages at phrase breaks; the type shrinks only when a single phrase cannot fit.
+// A vocative 須菩提 / 善現 in a 世尊 speech is its own page, in the speaker's colour, before the rest of the speech. Short replies (不也世尊, 如是世尊, 甚多世尊, and similar) are their own page. The formula questions 於意云何 / 於汝意云何 and 何以故 / 所以者何 are each their own page, in the speaker's colour, then the rest of the speech follows. Long passages stay at the largest size step and split across pages at phrase breaks; the type shrinks only when a single phrase cannot fit.
 // Passages come from window.RW_DIALOGUE[id] = [speaker, text, reading-block index].
 // t = title card; n = narration; b = 世尊; s = Subhūti / 善現;
 // m = 曼殊室利; a = 阿難; j = 救脫; y = 十二藥叉大將; i = intro.
@@ -26,7 +26,7 @@ const INTRO = {
   'qixin-zh': ['大乘起信論', '馬鳴菩薩造 · 真諦譯']
 };
 const SPEEDS = [{ k: 0.7, step: 150, t: '慢', en: 'slow' }, { k: 1, step: 110, t: '中', en: 'normal' }, { k: 1.7, step: 75, t: '快', en: 'fast' }];
-const MINOR = /[，、；：,;:]/, MAJOR = /[。！？!?．\s\u3000]/, DROP = /[「」『』《》〈〉（）()\[\]【】"'“”‘’·・—–…～~﹁﹂﹃﹄]/;
+const MINOR = /[，；：,;:]/, ENUM = /[、､]/, MAJOR = /[。！？!?．\s\u3000]/, DROP = /[「」『』《》〈〉（）()\[\]【】"'“”‘’·・—–…～~﹁﹂﹃﹄]/;
 const OPEN = /[「『（《〈【“‘﹁﹃(\[]/;
 // Narrator frames spoken by Ānanda (佛告須菩提, 須菩提白佛言, 佛言, 曼殊室利言, 阿難白言, 而說偈言, …).
 const LEAD_RE = /^((?:說是語已[，、]?|作是語已[，、]?)?(?:爾時[，、]?)?(?:(?:佛復告|佛告|世尊[，、]?復告|世尊告|世尊讚諸?)[^「」：:。！？，、；\n]{0,16}(?:曰|言)?|佛言|世尊而說(?:偈言|頌曰)|(?:同時舉聲)?[^「」：:。！？，、；\n]{0,16}(?:復|即)?(?:白佛言|白言|答言|問[^「」：:。！？，、；\n]{0,12}言|言曰|言[「：:]))[「：:]?)/;
@@ -34,9 +34,10 @@ const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Short Subhūti (or similar) replies: 不也，世尊！ / 如是！世尊！如是！善逝！ / 甚多，世尊！ …
 const REPLY_HEAD = /^(?:(?:不也|不爾|否也|不然|如是|甚多|唯然|希有)[，、！!]?\s*)+(?:世尊|善逝)[！!。]?(?:(?:不也|不爾|否也|不然|如是|甚多|唯然|希有)[，、！!]?\s*(?:世尊|善逝)[！!。]?)*/;
 const VOC_TOKEN = /(?:須菩提|善現)[！!]/g;
+const FORMULA_TOKEN = /(?:於汝意云何|於意云何|所以者何|何以故)[？?]?/g;
 const displayGlyphs = s => {
   let n = 0;
-  for (const c of s) if (!DROP.test(c) && !MINOR.test(c) && !MAJOR.test(c) && c !== '\n') n++;
+  for (const c of s) if (!DROP.test(c) && !ENUM.test(c) && !MINOR.test(c) && !MAJOR.test(c) && c !== '\n') n++;
   return n;
 };
 const splitVocatives = text => {
@@ -66,7 +67,23 @@ const splitContent = (k, text) => {
     });
   }
   if (k === 'b') parts = parts.flatMap(splitVocatives);
+  if (k !== 't' && k !== 'n' && k !== 'i') parts = parts.flatMap(splitFormulas);
   return parts;
+};
+const splitFormulas = text => {
+  const segs = [];
+  let last = 0;
+  FORMULA_TOKEN.lastIndex = 0;
+  let m;
+  while ((m = FORMULA_TOKEN.exec(text))) {
+    const at = m.index, prev = at > 0 ? text[at - 1] : '';
+    if (at > 0 && !/[。！？!?．\n、，』」]/.test(prev)) continue;
+    if (at > last && displayGlyphs(text.slice(last, at))) segs.push(text.slice(last, at));
+    segs.push(m[0]);
+    last = at + m[0].length;
+  }
+  if (last < text.length && displayGlyphs(text.slice(last))) segs.push(text.slice(last));
+  return segs.length ? segs : [text];
 };
 export function expandDialogue(src) {
   const out = [];
@@ -78,15 +95,16 @@ const phraseUnits = text => {
   let cur = '';
   for (const c of text) {
     cur += c;
+    if (ENUM.test(c)) continue; // enumeration list stays one phrase (no gap, no page-split)
     if (MINOR.test(c) || MAJOR.test(c)) { units.push(cur); cur = ''; }
   }
   if (cur) units.push(cur);
   const glued = [];
   for (const u of units) {
-    if (glued.length && displayGlyphs(u) < 2) glued[glued.length - 1] += u;
+    if (glued.length && displayGlyphs(u) <= 2) glued[glued.length - 1] += u;
     else glued.push(u);
   }
-  if (glued.length > 1 && displayGlyphs(glued[0]) < 2) { glued[1] = glued[0] + glued[1]; glued.shift(); }
+  if (glued.length > 1 && displayGlyphs(glued[0]) <= 2) { glued[1] = glued[0] + glued[1]; glued.shift(); }
   return glued.length ? glued : [text];
 };
 
@@ -122,7 +140,20 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     <div class="ink-lotus-finale" id="inkLotusFinale" hidden></div>
     <p class="ink-hint" id="inkHint" aria-hidden="true"><span class="ink-hint-phone">左／中 下一頁 · 右 上一頁</span><span class="ink-hint-desk">輕點繼續 · Tap, Space or → · ← back · P plays</span></p>
     <div class="ink-edges" aria-hidden="true"><span class="ink-edge ink-edge-next">‹</span><span class="ink-edge ink-edge-prev">›</span></div>
-    <div class="ink-line" aria-hidden="true"><i id="inkProg"></i></div>
+    <div class="ink-scrub" id="inkScrub">
+      <p class="ink-scrub-lab" id="inkScrubLab" hidden></p>
+      <div class="ink-scrub-hit" id="inkScrubHit">
+        <div class="ink-scrub-track">
+          <span class="ink-scrub-ticks" id="inkScrubTicks" aria-hidden="true"></span>
+          <i class="ink-scrub-fill" id="inkProg"></i>
+          <i class="ink-scrub-thumb" id="inkScrubThumb"></i>
+        </div>
+      </div>
+    </div>
+    <div class="ink-playbar" id="inkPlaybar">
+      <button type="button" class="ink-playbtn" data-a="play" aria-pressed="false" aria-label="自動播放 Auto-play" title="自動播放 Auto-play">${ico.play}</button>
+      <button type="button" class="ink-speedbtn" data-a="speed" aria-label="速度 Speed: normal" title="速度 Speed">中</button>
+    </div>
     <div class="ink-tools" id="inkTools">
       <button type="button" class="ink-dot" id="inkDot" aria-expanded="false" aria-label="Show dialogue tools 顯示工具" title="Show dialogue tools 顯示工具"></button>
       <div class="ink-row" id="inkRow" role="toolbar" aria-label="Dialogue tools 對話工具">
@@ -147,7 +178,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   const btn = a => $(`[data-a="${a}"]`, stage);
 
   // ---------- state ----------
-  let idx = -1, phase = 'idle', playing = false, tWrite = 0, tHold = 0, tOut = 0, tPeek = 0, tHint = 0, tFinale = 0, tLotusTip = 0, tLotusLong = 0, pendingNext = null, started = false;
+  let idx = -1, phase = 'idle', playing = false, tWrite = 0, tHold = 0, tOut = 0, tPeek = 0, tHint = 0, tFinale = 0, tLotusTip = 0, tLotusLong = 0, tScrub = 0, pendingNext = null, started = false;
   let speedI = SPEEDS.findIndex(s => s.k === st.dlgSpeed); if (speedI < 0) speedI = 1;
   const cur = () => field.firstElementChild;
   const lenOf = i => (i < 0 ? introLines.join('').length : turns[i][1].replace(/\n/g, '').length);
@@ -254,6 +285,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     lotusBtn.style.transform = '';
     lotusBtn.style.opacity = '';
     lotusBtn.style.transition = '';
+    if (playing) held();
   };
   const playFinale = ({ replay = false } = {}) => {
     if (!hasLotus || finalePlaying) return;
@@ -353,7 +385,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     const el = document.createElement('div');
     el.className = `ink-pass k-${k}`; el.dataset.i = String(i); el.dataset.k = k;
     let n = 0, gapW = 0;
-    // Calligraphy has no punctuation marks: 「」『』 and other marks are dropped; ，、；： leave a small gap and 。！？ or a space a larger one,
+    // Calligraphy has no punctuation marks: 「」『』 and other marks are dropped; ，；： leave a small gap and 。！？ or a space a larger one; enumeration 、 is dropped with no gap and keeps the list as one phrase,
     // as spacing on the preceding character (padding-inline-end works in vertical and horizontal writing). Display only: RW_DIALOGUE and the reading text keep their punctuation.
     const raw = intro ? introLines.join('\n') : t[1];
     const leadEnd = (!intro && k !== 't' && k !== 'n') ? ((raw.match(LEAD_RE) || ['',''])[1].length) : 0;
@@ -361,14 +393,15 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       const toks = [];
       let i = base;
       for (const c of s) {
-        if (MINOR.test(c)) { if (toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); }
+        if (ENUM.test(c)) { if (toks.length) toks[toks.length - 1].item = true; }
+        else if (MINOR.test(c)) { if (toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); }
         else if (MAJOR.test(c)) { if (toks.length) toks[toks.length - 1].g = 2; }
         else if (DROP.test(c)) { if (OPEN.test(c) && toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); i += c.length; continue; }
         else toks.push({ c, g: 0, lead: i < leadEnd });
         i += c.length;
       }
       if (toks.length) toks[toks.length - 1].g = 0;
-      return toks.map(t => { gapW += t.g === 2 ? 0.7 : t.g === 1 ? 0.3 : 0; return `<span class="ch${t.lead ? ' lead' : ''}${t.g ? ' g' + t.g : ''}" style="--i:${n++}">${esc(t.c)}</span>`; }).join('');
+      return toks.map(t => { gapW += t.g === 2 ? 0.7 : t.g === 1 ? 0.3 : 0; return `<span class="ch${t.lead ? ' lead' : ''}${t.g ? ' g' + t.g : ''}${t.item ? ' item' : ''}"${t.item ? ' data-item="1"' : ''} style="--i:${n++}">${esc(t.c)}</span>`; }).join('');
     };
     let body, off = 0;
     const linesOf = s => s.split('\n').map(line => { const html = chars(line, off); off += line.length + 1; return html; });
@@ -444,7 +477,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
         let g = +n.dataset.g0;
         if (i === L.length - 1 || (g === 1 && run < MIN_PHRASE)) g = 0;
         if (g) run = 0;
-        return { n, g };
+        return { n, g, item: n.dataset.item === '1' };
       });
     });
     const tags0 = el._inkTags.slice();
@@ -499,10 +532,10 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       if (cur.length) u.push(cur);
       const glued = [];
       for (const ph of u) {
-        if (ph.length < 2 && glued.length) glued[glued.length - 1] = glued[glued.length - 1].concat(ph);
+        if (ph.length <= 2 && glued.length) glued[glued.length - 1] = glued[glued.length - 1].concat(ph);
         else glued.push(ph.slice());
       }
-      if (glued.length > 1 && glued[0].length < 2) {
+      if (glued.length > 1 && glued[0].length <= 2) {
         glued[1] = glued[0].concat(glued[1]);
         glued.shift();
       }
@@ -538,9 +571,10 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
         for (let b = a + 1; b <= n; b++) {
           if (lenRange(L, a, b) > cap + 1e-6) break;
           const left = n - b;
-          if (left && left < 3 && b - a > 3) continue; // don't leave a 1–2 glyph stub
+          if (b - a <= 2 && n > 2) continue; // don't start a 1–2 glyph stub column
+          if (left && left < 3 && n > 2) continue; // don't leave a 1–2 glyph stub
           const d = Math.abs((b - a) - (n - a) / Math.max(1, Math.ceil(lenRange(L, a, n) / cap)));
-          const nat = prefer.includes(b) ? -8 : 0;
+          const nat = prefer.includes(b) ? -8 : (L[b - 1] && L[b - 1].item ? -6 : 0);
           if (d + nat <= bc) { bc = d + nat; best = b; }
         }
         if (best < 0) { // at least one glyph, even if slightly over (emergency)
@@ -592,10 +626,76 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       }
       return best;
     };
+    const itemCutsOf = u => {
+      const cuts = [];
+      for (let i = 0; i < u.length - 1; i++) if (u[i].item) cuts.push(i + 1);
+      return cuts;
+    };
+    const packItemCuts = (u, cap) => {
+      const cuts = itemCutsOf(u);
+      if (!cuts.length) return null;
+      const em = n => n * ADV + Math.max(0, n - 1) * ls;
+      const points = [0, ...cuts, u.length];
+      const items = [];
+      for (let i = 0; i < points.length - 1; i++) {
+        const it = u.slice(points[i], points[i + 1]);
+        if (em(it.length) > cap + 1e-6) return null; // a single item is itself longer than the column
+        items.push(it);
+      }
+      const parts = [];
+      let cur = [];
+      const glen = arr => arr.reduce((n, it) => n + it.length, 0);
+      const flush = () => { if (cur.length) { parts.push(cur); cur = []; } };
+      for (const it of items) {
+        if (!cur.length || em(glen(cur) + it.length) <= cap + 1e-6) cur.push(it);
+        else { flush(); cur.push(it); }
+      }
+      flush();
+      // no 1–2 glyph leftover: steal whole items from the previous part so both sides stay >= 3 when possible
+      const steal = (from, to) => {
+        while (from.length > 1 && glen(to) <= 2) {
+          const give = from.pop();
+          if (em(glen(from) + 0) > cap + 1e-6) { from.push(give); break; }
+          if (glen(from) < 3 && glen(to) + give.length <= 2) { from.push(give); break; }
+          to.unshift(give);
+          if (glen(from) < 3 && from.length) {
+            // put it back if we broke the donor into a stub and still have a stub
+            if (glen(to) <= 2) { from.push(to.shift()); break; }
+          }
+        }
+      };
+      for (let i = parts.length - 1; i >= 0; i--) {
+        if (glen(parts[i]) > 2) continue;
+        if (i > 0) steal(parts[i - 1], parts[i]);
+        if (glen(parts[i]) <= 2 && i + 1 < parts.length) {
+          // merge forward (next part starts the combined run)
+          const next = parts[i + 1];
+          if (em(glen(parts[i]) + glen(next)) <= cap + 1e-6 || glen(parts[i]) <= 2) {
+            parts[i + 1] = parts[i].concat(next);
+            parts.splice(i, 1);
+          }
+        } else if (glen(parts[i]) <= 2 && i > 0) {
+          parts[i - 1] = parts[i - 1].concat(parts[i]);
+          parts.splice(i, 1);
+        }
+      }
+      // never leave a 1–2 glyph part: attach it to a neighbour even if the combined run is slightly over cap
+      for (let i = 0; i < parts.length; ) {
+        if (glen(parts[i]) > 2 || parts.length === 1) { i++; continue; }
+        if (i + 1 < parts.length) { parts[i] = parts[i].concat(parts[i + 1]); parts.splice(i + 1, 1); }
+        else if (i > 0) { parts[i - 1] = parts[i - 1].concat(parts[i]); parts.splice(i, 1); }
+        else i++;
+      }
+      // flatten item groups to glyph arrays; drop empty
+      const flat = parts.filter(p => p.length).map(p => p.reduce((a, it) => a.concat(it), []));
+      return flat.length ? flat : null;
+    };
     const splitLongUnits = (units, cap) => {
       const out = [];
       for (const u of units) {
         if ( (u.length * ADV + Math.max(0, u.length - 1) * ls) <= cap + 1e-6) { out.push(u); continue; }
+        const byItem = packItemCuts(u, cap);
+        if (byItem) { out.push(...byItem); continue; }
         const n = u.length, need = Math.max(2, Math.ceil(emLen(n) / cap - 1e-9));
         const prefer = naturalCuts(u);
         let a = 0, ok = true, parts = [];
@@ -864,14 +964,15 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       const toks = [];
       let i0 = base;
       for (const c of s) {
-        if (MINOR.test(c)) { if (toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); }
+        if (ENUM.test(c)) { if (toks.length) toks[toks.length - 1].item = true; }
+        else if (MINOR.test(c)) { if (toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); }
         else if (MAJOR.test(c)) { if (toks.length) toks[toks.length - 1].g = 2; }
         else if (DROP.test(c)) { if (OPEN.test(c) && toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); i0 += c.length; continue; }
         else toks.push({ c, g: 0, lead: i0 < leadEnd });
         i0 += c.length;
       }
       if (toks.length) toks[toks.length - 1].g = 0;
-      return toks.map(o => { gapW += o.g === 2 ? 0.7 : o.g === 1 ? 0.3 : 0; return `<span class="ch${o.lead ? ' lead' : ''}${o.g ? ' g' + o.g : ''}" style="--i:${n++}">${esc(o.c)}</span>`; }).join('');
+      return toks.map(o => { gapW += o.g === 2 ? 0.7 : o.g === 1 ? 0.3 : 0; return `<span class="ch${o.lead ? ' lead' : ''}${o.g ? ' g' + o.g : ''}${o.item ? ' item' : ''}"${o.item ? ' data-item="1"' : ''} style="--i:${n++}">${esc(o.c)}</span>`; }).join('');
     };
     let body, off = 0;
     const linesOf = s => s.split('\n').map(line => { const html = chars(line, off); off += line.length + 1; return html; });
@@ -935,6 +1036,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     turns = next;
     N = turns.length;
     refreshLotusRanges();
+    buildScrubTicks();
     pageVert = stage.dataset.vert || '';
     pageW = field.clientWidth;
     pageH = field.clientHeight;
@@ -959,7 +1061,23 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   // ---------- writing, holding, dissolving ----------
   const stepMs = () => SPEEDS[speedI].step * (cur()?.dataset.k === 'n' ? 0.7 : 1);
   const writeMs = el => (+el.dataset.n) * stepMs() + 900;
-  const holdMs = () => Math.min(7500, Math.max(1500, 1000 + lenOf(idx) * 70)) / SPEEDS[speedI].k;
+  // Reading pause after the ink has finished: ~1.2s + ~0.35s/glyph at 中; title/lead/intro shorter.
+  const holdMs = () => {
+    const k = idx < 0 ? 'i' : (cur()?.dataset.k || (turns[idx] && turns[idx][0]));
+    const n = idx < 0 ? displayGlyphs(introLines.join('')) : displayGlyphs((turns[idx] || ['', ''])[1]);
+    const short = k === 't' || k === 'n' || k === 'i';
+    const ms = (short ? 700 : 1200) + n * (short ? 160 : 350);
+    return Math.min(14000, Math.max(short ? 800 : 1400, ms)) / SPEEDS[speedI].k;
+  };
+  let wakeLock = null;
+  const requestWake = () => {
+    if (!navigator.wakeLock?.request) return;
+    navigator.wakeLock.request('screen').then(l => {
+      wakeLock = l;
+      l.addEventListener?.('release', () => { if (wakeLock === l) wakeLock = null; });
+    }).catch(() => {});
+  };
+  const releaseWake = () => { const l = wakeLock; wakeLock = null; try { l?.release(); } catch {} };
   function mount(i, how) {
     clearTimeout(tWrite); clearTimeout(tHold); clearTimeout(tOut); pendingNext = null;
     if (needsPaginate()) i = paginateToFit(i);
@@ -974,9 +1092,10 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       el.classList.add('writing'); phase = 'writing';
       tWrite = setTimeout(() => finish(), writeMs(el));
     } else {
-      el.classList.add('done', how === 'instant' ? 'instant' : 'fade'); phase = 'held'; held();
+      el.classList.add('done', (how === 'instant' || how === 'scrub') ? 'instant' : 'fade'); phase = 'held'; held();
     }
-    paint(); savePos(); notePin(i, how);
+    paint(); savePos();
+    if (how !== 'scrub') notePin(i, how);
     if (i >= 0) live.textContent = turns[i][1].replace(/\n/g, '');
     if (i >= 0 && !started) { started = true; stage.classList.remove('show-hint'); clearTimeout(tHint); }
   }
@@ -988,8 +1107,9 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   function held() {
     clearTimeout(tHold);
     if (!playing) return;
-    if (idx >= N - 1) { tHold = setTimeout(() => pause(), 900); return; }
-    tHold = setTimeout(() => next(), idx < 0 ? 1600 : holdMs());
+    if (finalePlaying) return; // finish the lotus first; endFinale resumes held()
+    if (idx >= N - 1) { tHold = setTimeout(() => pause(), Math.min(1200, holdMs())); return; }
+    tHold = setTimeout(() => next(), holdMs());
   }
   function dissolveThen(cb) {
     const el = cur();
@@ -1012,27 +1132,37 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   }
   function restart() { pause(); mount(-1, 'write'); }
   function play() {
-    if (idx >= N - 1 && phase !== 'out') { pause(); mount(-1, 'write'); }
-    playing = true; paint(); if (phase === 'held') held();
-    announce('Auto-play on');
+    if (idx >= N - 1 && phase !== 'out') mount(-1, 'write');
+    playing = true; requestWake(); paint(); if (phase === 'held') held();
+    announce('自動播放 Auto-play on');
   }
-  function pause() { playing = false; clearTimeout(tHold); paint(); }
+  function pause() { playing = false; clearTimeout(tHold); releaseWake(); paint(); }
 
   // ---------- chrome: the faint dot, tools, contents ----------
   function paint() {
-    prog.style.width = ((idx + 1) / N * 100).toFixed(2) + '%';
-    const pl = btn('play'); pl.setAttribute('aria-pressed', String(playing)); pl.title = playing ? '暫停 Pause (P)' : '自動播放 Auto-play (P)'; pl.setAttribute('aria-label', playing ? '暫停 Pause auto-play' : '自動播放 Auto-play');
-    const sp = SPEEDS[speedI], sb = btn('speed'); sb.textContent = sp.t; sb.setAttribute('aria-label', `速度 Speed: ${sp.en}`); sb.title = `速度 Speed: ${sp.en}`;
+    /* progress width + thumb are painted in paintScrub() */
+    const sp = SPEEDS[speedI];
+    $$('[data-a="play"]', stage).forEach(pl => {
+      pl.setAttribute('aria-pressed', String(playing));
+      const lab = playing ? '暫停 Pause auto-play' : '自動播放 Auto-play';
+      pl.title = lab; pl.setAttribute('aria-label', lab);
+    });
+    $$('[data-a="speed"]', stage).forEach(sb => {
+      sb.textContent = sp.t;
+      const lab = `速度 Speed: ${sp.en}`;
+      sb.setAttribute('aria-label', lab); sb.title = lab;
+    });
     const vb = btn('vert'), v = stage.dataset.vert === '1'; vb.textContent = v ? '直' : '橫'; vb.setAttribute('aria-pressed', String(v)); vb.title = v ? '直排 Vertical · 點擊改橫排' : '橫排 Horizontal · 點擊改直排';
     $('#inkDot', stage).setAttribute('aria-label', `Show dialogue tools 顯示工具 (${idx + 1} / ${N})`);
     stage.classList.toggle('is-playing', playing);
+    paintScrub();
     R.markToc?.();
   }
   const peek = on => {
     clearTimeout(tPeek);
     tools.classList.toggle('open', !!on);
     $('#inkDot', stage).setAttribute('aria-expanded', String(!!on));
-    if (on) tPeek = setTimeout(() => peek(false), 3800);
+    if (on) { revealScrub(3800); tPeek = setTimeout(() => peek(false), 3800); }
   };
   const bump = () => { if (tools.classList.contains('open')) { clearTimeout(tPeek); tPeek = setTimeout(() => peek(false), 3800); } };
   $('#inkDot', stage).onclick = e => { e.stopPropagation(); peek(true); if (e.detail === 0) btn('read').focus(); };
@@ -1057,6 +1187,98 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   };
   $('.ink-row', stage).addEventListener('click', e => { const b = e.target.closest('button[data-a]'); if (!b) return; e.stopPropagation(); act[b.dataset.a]?.(); if (b.dataset.a !== 'close' && b.dataset.a !== 'read' && b.dataset.a !== 'toc') bump(); });
   $('.ink-row', stage).addEventListener('pointerdown', bump);
+  const scrubEl = $('#inkScrub', stage), scrubLab = $('#inkScrubLab', stage), scrubHit = $('#inkScrubHit', stage), scrubThumb = $('#inkScrubThumb', stage);
+  let scrubbing = false;
+  const pinTitleAt = i => {
+    if (i < 0) return introLines[0] || '';
+    let title = '';
+    for (let j = 0; j <= Math.min(i, N - 1); j++) if (turns[j][0] === 't') title = turns[j][1].split('\n')[0];
+    return title;
+  };
+  const scrubLabel = i => {
+    const title = pinTitleAt(i);
+    if (i < 0) return (title || introLines[0] || '序') + ' · 序';
+    return (title ? title + ' · ' : '') + (i + 1) + ' / ' + N;
+  };
+  const buildScrubTicks = () => {
+    const box = $('#inkScrubTicks', stage);
+    if (!box) return;
+    box.textContent = '';
+    for (let i = 0; i < N; i++) {
+      if (turns[i][0] !== 't') continue;
+      const tick = document.createElement('i');
+      tick.className = 'ink-scrub-tick';
+      tick.style.left = ((i + 1) / N * 100).toFixed(3) + '%';
+      box.appendChild(tick);
+    }
+  };
+  const paintScrub = () => {
+    const pct = N ? ((idx + 1) / N * 100) : 0;
+    const p = pct.toFixed(2) + '%';
+    prog.style.width = p;
+    if (scrubThumb) scrubThumb.style.left = p;
+    if (scrubEl) {
+      scrubEl.setAttribute('aria-valuenow', String(idx + 1));
+      scrubEl.setAttribute('aria-valuemax', String(N));
+      scrubEl.setAttribute('aria-valuetext', scrubLabel(idx));
+    }
+    if (scrubbing && scrubLab) { scrubLab.hidden = false; scrubLab.textContent = scrubLabel(idx); }
+  };
+  const revealScrub = (hold = 2800) => {
+    if (!scrubEl) return;
+    scrubEl.classList.add('show');
+    clearTimeout(tScrub);
+    if (!scrubbing) tScrub = setTimeout(() => { if (!scrubbing) scrubEl.classList.remove('show'); }, hold);
+  };
+  const idxFromClientX = x => {
+    const track = $('.ink-scrub-track', stage);
+    if (!track || !N) return idx;
+    const r = track.getBoundingClientRect();
+    const t = r.width ? (x - r.left) / r.width : 0;
+    return Math.max(-1, Math.min(N - 1, Math.round(t * N) - 1));
+  };
+  const jumpScrub = i => {
+    if (i === idx && phase !== 'out') { paintScrub(); return; }
+    mount(i, 'scrub');
+  };
+  if (scrubEl) {
+    scrubEl.setAttribute('role', 'slider');
+    scrubEl.setAttribute('aria-label', '進度 Progress');
+    scrubEl.setAttribute('aria-valuemin', '0');
+  }
+  const onScrubPtr = e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    e.preventDefault();
+    e.stopPropagation();
+    ptr0 = null;
+    suppressNav = true;
+    scrubbing = true;
+    if (playing) pause();
+    scrubEl.classList.add('dragging');
+    revealScrub(60000);
+    if (scrubLab) { scrubLab.hidden = false; }
+    const go = ev => jumpScrub(idxFromClientX(ev.clientX));
+    go(e);
+    const move = ev => { ev.preventDefault(); go(ev); };
+    const up = ev => {
+      go(ev);
+      scrubbing = false;
+      scrubEl.classList.remove('dragging');
+      if (scrubLab) tScrub = setTimeout(() => { if (!scrubbing) scrubLab.hidden = true; }, 900);
+      revealScrub();
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
+  };
+  scrubHit?.addEventListener('pointerdown', onScrubPtr);
+  buildScrubTicks();
+
+  $('#inkPlaybar', stage).addEventListener('click', e => { const b = e.target.closest('button[data-a]'); if (!b) return; e.stopPropagation(); act[b.dataset.a]?.(); revealScrub(); });
+  $('#inkPlaybar', stage).addEventListener('pointerdown', e => { e.stopPropagation(); revealScrub(); });
   // Phone / narrow / coarse-pointer, matching right-to-left vertical reading:
   // left two-thirds (including the centre) = next; right third = previous.
   // Desktop (wide + fine pointer): click anywhere still goes next, as before.
@@ -1066,16 +1288,18 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   const sideNav = () => matchMedia('(max-width: 860px), (pointer: coarse)').matches;
   let ptr0 = null, suppressNav = false;
   stage.addEventListener('pointerdown', e => {
-    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip')) { ptr0 = null; return; }
+    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip, .ink-playbar, .ink-scrub')) { ptr0 = null; return; }
+    suppressNav = false;
     if (tools.classList.contains('open')) { peek(false); suppressNav = true; }
     if (!tocEl.hidden) { toc(false); suppressNav = true; }
     ptr0 = { x: e.clientX, y: e.clientY };
   });
   stage.addEventListener('click', e => {
-    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip')) { suppressNav = false; return; }
+    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip, .ink-playbar, .ink-scrub')) { suppressNav = false; return; }
     if (suppressNav) { suppressNav = false; return; }
     if (ptr0 && Math.hypot(e.clientX - ptr0.x, e.clientY - ptr0.y) > 28) { ptr0 = null; return; }
     ptr0 = null;
+    if (playing) { pause(); return; }
     if (phase === 'writing') { finish(); return; }
     if (sideNav()) {
       const r = stage.getBoundingClientRect();
@@ -1101,7 +1325,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   document.addEventListener('visibilitychange', onVis);
   const onRs = debounce(() => R.fitInk(), 150);
   addEventListener('resize', onRs);
-  R.cleanup.push(() => { document.removeEventListener('keydown', onKey); document.removeEventListener('visibilitychange', onVis); removeEventListener('resize', onRs); [tWrite, tHold, tOut, tPeek, tHint, tFinale, tLotusTip, tLotusLong].forEach(clearTimeout); root.classList.remove('ink-lock'); });
+  R.cleanup.push(() => { document.removeEventListener('keydown', onKey); document.removeEventListener('visibilitychange', onVis); removeEventListener('resize', onRs); [tWrite, tHold, tOut, tPeek, tHint, tFinale, tLotusTip, tLotusLong, tScrub].forEach(clearTimeout); root.classList.remove('ink-lock'); releaseWake(); });
 
   // ---------- going to a place (TOC, switching modes) ----------
   const firstTurnOfBlock = bi => { const i = turns.findIndex(t => t[2] >= bi); return i < 0 ? N - 1 : i; };
@@ -1182,6 +1406,8 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     show: i => { pause(); mount(i, 'instant'); },
     open: (i, how) => { pause(); mount(i, how || 'fade'); },
     get shown() { return idx + 1; }, get idx() { return idx; }, get total() { return N; }, get playing() { return playing; }, get phase() { return phase; },
+    get speed() { return SPEEDS[speedI].t; }, holdMs,
+    scrubTo: i => { pause(); jumpScrub(i); }, revealScrub,
     sideNav, get turns() { return turns; }, paginate: () => paginateToFit(idx),
     lotus: {
       get has() { return hasLotus; },

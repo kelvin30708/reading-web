@@ -1037,10 +1037,8 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height
 @keyframes ink-out{0%{opacity:1;filter:blur(0);-webkit-filter:blur(0)}100%{opacity:0;filter:blur(7px);-webkit-filter:blur(7px);transform:translateY(-6px)}}
 .ink-pass.done.fade{animation:ink-fade .55s ease-out both}
 @keyframes ink-fade{from{opacity:0;filter:blur(5px);-webkit-filter:blur(5px)}to{opacity:1;filter:blur(0);-webkit-filter:blur(0)}}
-/* chrome: only a faint dot (like the reader's dot toolbar), a hairline of progress, and a hint at the very start */
-.ink-line{position:absolute;left:0;right:0;bottom:0;height:2px;pointer-events:none}
-.ink-line i{display:block;height:100%;width:0;background:#a93a27;opacity:.42;transition:width .6s ease}
-.ink-hint{position:absolute;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom,0px));margin:0;text-align:center;font:400 .75rem/1.4 var(--font-ui);letter-spacing:.14em;color:rgba(240,231,213,.42);opacity:0;transition:opacity 1.4s ease;pointer-events:none;z-index:2}
+/* chrome: faint play control, a hairline scrub bar, the tools dot, and a hint at the very start */
+.ink-hint{position:absolute;left:0;right:0;bottom:calc(68px + env(safe-area-inset-bottom,0px));margin:0;text-align:center;font:400 .75rem/1.4 var(--font-ui);letter-spacing:.14em;color:rgba(240,231,213,.42);opacity:0;transition:opacity 1.4s ease;pointer-events:none;z-index:2}
 .ink-hint-phone{display:none}
 .ink-hint-desk{display:inline}
 .ink.show-hint .ink-hint{opacity:1;animation:ink-pulse 3.2s ease-in-out infinite}
@@ -1097,6 +1095,50 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height
   .ink-lotus .pt.bloom,.ink.lotus-finale .pt-r0,.ink.lotus-finale .pt-r1,.ink.lotus-finale .pt-r2{animation:none}
   .ink-lotus{transition:opacity .5s ease}
 }
+
+
+/* quiet scrub / progress bar — hairline always, ticks and thumb fade in with the play chrome */
+.ink-scrub{position:absolute;z-index:3;left:0;right:0;bottom:calc(52px + env(safe-area-inset-bottom,0px));
+  pointer-events:none;opacity:.42;transition:opacity .45s ease}
+.ink-scrub.show,.ink-scrub.dragging,.ink.is-playing .ink-scrub{opacity:.9}
+.ink-scrub-lab{margin:0 12px 2px;text-align:center;font:400 .68rem/1.3 var(--font-ui);letter-spacing:.1em;
+  color:rgba(240,231,213,.62);pointer-events:none;min-height:1.3em}
+.ink-scrub-lab[hidden]{display:none}
+.ink-scrub-hit{pointer-events:auto;padding:18px 18px 6px;touch-action:none;-webkit-user-select:none;user-select:none;cursor:pointer}
+.ink-scrub-track{position:relative;height:2px;background:rgba(240,231,213,.16);border-radius:1px}
+.ink-scrub-fill{position:absolute;left:0;top:0;height:100%;width:0;background:#a93a27;opacity:.5;pointer-events:none;transition:width .6s ease;border-radius:1px}
+.ink-scrub.dragging .ink-scrub-fill{transition:none}
+.ink-scrub-ticks{position:absolute;inset:0;pointer-events:none}
+.ink-scrub-tick{position:absolute;top:-3px;width:1px;height:8px;background:rgba(240,231,213,.28);opacity:0;transition:opacity .4s ease}
+.ink-scrub.show .ink-scrub-tick,.ink-scrub.dragging .ink-scrub-tick{opacity:1}
+.ink-scrub-thumb{position:absolute;top:50%;left:0;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;
+  background:rgba(240,231,213,.7);box-shadow:0 0 0 3px rgba(5,5,6,.35);pointer-events:none;opacity:0;transition:opacity .4s ease,left 0s}
+.ink-scrub.show .ink-scrub-thumb,.ink-scrub.dragging .ink-scrub-thumb{opacity:1}
+.ink-scrub.dragging .ink-scrub-thumb{transition:none}
+@media (prefers-reduced-motion:reduce){
+  .ink-scrub,.ink-scrub-fill,.ink-scrub-tick,.ink-scrub-thumb{transition:none}
+}
+/* quiet always-visible autoplay control — sits in the bottom field margin, away from lotus and the tools dot */
+.ink-playbar{position:absolute;z-index:3;left:50%;bottom:calc(8px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+  display:flex;align-items:center;gap:2px;margin:0;padding:0;background:transparent;pointer-events:auto}
+.ink-playbtn,.ink-speedbtn{margin:0;padding:0;border:0;background:transparent;color:rgba(240,231,213,.38);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transition:color .25s ease,opacity .25s ease}
+.ink-playbtn{display:inline-grid;place-items:center;width:44px;height:44px}
+.ink-playbtn svg{display:block}
+.ink-playbtn .i-pause{display:none}
+.ink-playbtn[aria-pressed=true]{color:rgba(240,231,213,.7)}
+.ink-playbtn[aria-pressed=true] .i-play{display:none}
+.ink-playbtn[aria-pressed=true] .i-pause{display:block}
+.ink-speedbtn{min-width:36px;height:44px;padding:0 6px;font:400 .72rem/1 var(--font-ui);letter-spacing:.16em}
+.ink-playbtn:focus-visible,.ink-speedbtn:focus-visible{outline:2px solid #9DB4D3;outline-offset:-2px;border-radius:50%}
+.ink-speedbtn:focus-visible{border-radius:6px}
+@media (hover:hover){
+  .ink-playbtn:hover,.ink-speedbtn:hover{color:rgba(240,231,213,.72)}
+}
+.ink.is-playing .ink-playbtn{color:rgba(240,231,213,.62)}
+@media (prefers-reduced-motion:reduce){
+  .ink-playbtn,.ink-speedbtn{transition:none}
+}
 .ink-tools{position:absolute;z-index:3;top:calc(env(safe-area-inset-top,0px) + 2px);right:calc(6px + env(safe-area-inset-right,0px));display:flex;justify-content:flex-end;max-width:calc(100% - 12px);cursor:default}
 .ink-dot{display:inline-grid;place-items:center;width:44px;height:44px;margin:0;padding:0;border:0;background:transparent;cursor:pointer;position:relative}
 .ink-dot::after{content:"";width:11px;height:11px;border-radius:50%;background:#f0e7d5;opacity:.2;transition:opacity .3s}
@@ -1136,7 +1178,7 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height
   .ink-pass.done.fade{animation:ink-fade-s .4s linear both}
   .ink.show-hint .ink-hint{animation:none;opacity:.7}
   .ink.show-hint .ink-edge{animation:none;opacity:.4}
-  .ink-line i{transition:none}
+  .ink-scrub-fill{transition:none}
 }
 @keyframes ink-fade-s{from{opacity:0}to{opacity:1}}
 @keyframes ink-out-s{from{opacity:1}to{opacity:0}}
