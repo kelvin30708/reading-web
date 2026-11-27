@@ -2,6 +2,7 @@
 // writes itself character by character in brush script on a near-black screen, holds, then dissolves like ink.
 // Speakers are told apart by ink colour only — there is no vermilion name-seal, so the screen stays quiet.
 // The sutra's own speaker leads (佛告須菩提、須菩提白佛言、佛告具壽善現曰, 善現答言, and so on) are their own narration-colour pages, styled like 如是我聞, and sit immediately before the speech page. Punctuation is still not drawn. Classic four-phrase 偈 stay one page, one line per phrase, without the lead.
+// A vocative 須菩提 / 善現 in a 世尊 speech is its own page, in the speaker's colour, before the rest of the speech. Short replies (不也世尊, 如是世尊, 甚多世尊, and similar) are their own page, then the continuation (何以故…) follows. Long passages stay at the largest size step and split across pages at phrase breaks; the type shrinks only when a single phrase cannot fit.
 // Passages come from window.RW_DIALOGUE[id] = [speaker, text, reading-block index].
 // t = title card; n = narration; b = 世尊; s = Subhūti / 善現;
 // m = 曼殊室利; a = 阿難; j = 救脫; y = 十二藥叉大將; i = intro.
@@ -30,6 +31,65 @@ const OPEN = /[「『（《〈【“‘﹁﹃(\[]/;
 // Narrator frames spoken by Ānanda (佛告須菩提, 須菩提白佛言, 佛言, 曼殊室利言, 阿難白言, 而說偈言, …).
 const LEAD_RE = /^((?:說是語已[，、]?|作是語已[，、]?)?(?:爾時[，、]?)?(?:(?:佛復告|佛告|世尊[，、]?復告|世尊告|世尊讚諸?)[^「」：:。！？，、；\n]{0,16}(?:曰|言)?|佛言|世尊而說(?:偈言|頌曰)|(?:同時舉聲)?[^「」：:。！？，、；\n]{0,16}(?:復|即)?(?:白佛言|白言|答言|問[^「」：:。！？，、；\n]{0,12}言|言曰|言[「：:]))[「：:]?)/;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Short Subhūti (or similar) replies: 不也，世尊！ / 如是！世尊！如是！善逝！ / 甚多，世尊！ …
+const REPLY_HEAD = /^(?:(?:不也|不爾|否也|不然|如是|甚多|唯然|希有)[，、！!]?\s*)+(?:世尊|善逝)[！!。]?(?:(?:不也|不爾|否也|不然|如是|甚多|唯然|希有)[，、！!]?\s*(?:世尊|善逝)[！!。]?)*/;
+const VOC_TOKEN = /(?:須菩提|善現)[！!]/g;
+const displayGlyphs = s => {
+  let n = 0;
+  for (const c of s) if (!DROP.test(c) && !MINOR.test(c) && !MAJOR.test(c) && c !== '\n') n++;
+  return n;
+};
+const splitVocatives = text => {
+  const segs = [];
+  let last = 0;
+  VOC_TOKEN.lastIndex = 0;
+  let m;
+  while ((m = VOC_TOKEN.exec(text))) {
+    const at = m.index, prev = at > 0 ? text[at - 1] : '';
+    // vocative: at start, or after punctuation / close-quote — not mid-word (長老須菩提)
+    if (at > 0 && !/[。！？!?．\n、，』」]/.test(prev)) continue;
+    if (at > last && displayGlyphs(text.slice(last, at))) segs.push(text.slice(last, at));
+    segs.push(m[0]);
+    last = at + m[0].length;
+  }
+  if (last < text.length && displayGlyphs(text.slice(last))) segs.push(text.slice(last));
+  return segs.length ? segs : [text];
+};
+const splitContent = (k, text) => {
+  let parts = [text];
+  if (k !== 't' && k !== 'n' && k !== 'i' && k !== 'b') {
+    parts = parts.flatMap(p => {
+      const m = p.match(REPLY_HEAD);
+      if (!m) return [p];
+      const rest = p.slice(m[0].length);
+      return displayGlyphs(rest) ? [m[0], rest] : [p];
+    });
+  }
+  if (k === 'b') parts = parts.flatMap(splitVocatives);
+  return parts;
+};
+export function expandDialogue(src) {
+  const out = [];
+  for (const [k, text, block] of src) for (const part of splitContent(k, text)) out.push([k, part, block]);
+  return out;
+};
+const phraseUnits = text => {
+  const units = [];
+  let cur = '';
+  for (const c of text) {
+    cur += c;
+    if (MINOR.test(c) || MAJOR.test(c)) { units.push(cur); cur = ''; }
+  }
+  if (cur) units.push(cur);
+  const glued = [];
+  for (const u of units) {
+    if (glued.length && displayGlyphs(u) < 2) glued[glued.length - 1] += u;
+    else glued.push(u);
+  }
+  if (glued.length > 1 && displayGlyphs(glued[0]) < 2) { glued[1] = glued[0] + glued[1]; glued.shift(); }
+  return glued.length ? glued : [text];
+};
+
 const ico = {
   prev: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 L5 8 L10 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   play: '<svg class="i-play" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3 L13 8 L5 13 Z" fill="currentColor"/></svg><svg class="i-pause" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.2 3.5v9M10.8 3.5v9" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>',
@@ -38,11 +98,13 @@ const ico = {
 };
 
 export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBar, fs }) {
-  const turns = window.RW_DIALOGUE?.[R.id];
-  if (!turns || !turns.length) return;
+  const srcDlg = window.RW_DIALOGUE?.[R.id];
+  if (!srcDlg || !srcDlg.length) return;
+  const rawTurns = expandDialogue(srcDlg);
+  let turns = rawTurns, N = turns.length;
   const SPK = SPK_BY[R.id] || {};
   const introLines = INTRO[R.id] || ['', ''];
-  const N = turns.length, st = store.data.settings;
+  const st = store.data.settings;
   const posMap = (st.dlgPos ||= {});
   const modeMap = (st.modeByDoc ||= {});
   const rd = $('.reader');
@@ -94,12 +156,17 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   // ---------- 32-petal lotus (Diamond Sutra 品 progress) ----------
   // A 品 is complete when the reader reaches that 品's last page (the page before the next title, or N-1 for 品 32).
   // Order-independent; persisted per text id. Finale auto-plays once on a user-facing mount (write/fade), not on instant show().
-  const titleIdx = [];
-  for (let i = 0; i < N; i++) if (turns[i][0] === 't') titleIdx.push(i);
-  const lotusRanges = titleIdx.length === 32
-    ? titleIdx.map((start, k) => ({ pin: k + 1, start, end: k + 1 < titleIdx.length ? titleIdx[k + 1] - 1 : N - 1 }))
-    : null;
-  const hasLotus = !!lotusRanges;
+  const hasLotus = rawTurns.filter(t => t[0] === 't').length === 32;
+  let lotusRanges = null;
+  const refreshLotusRanges = () => {
+    if (!hasLotus) { lotusRanges = null; return; }
+    const titleIdx = [];
+    for (let i = 0; i < N; i++) if (turns[i][0] === 't') titleIdx.push(i);
+    lotusRanges = titleIdx.length === 32
+      ? titleIdx.map((start, k) => ({ pin: k + 1, start, end: k + 1 < titleIdx.length ? titleIdx[k + 1] - 1 : N - 1 }))
+      : null;
+  };
+  refreshLotusRanges();
   const pinOfLastPage = i => {
     if (!lotusRanges || i < 0) return 0;
     const r = lotusRanges.find(x => x.end === i);
@@ -315,11 +382,11 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     if (k !== 'i' && k !== 't' && (raw.includes('\n'))) el.querySelector('.ink-text').classList.add('is-verse');
     return el;
   }
-  // typography (rw-v20): 3 size steps, phrase-aware balanced columns, no 1–2 glyph stubs at a column start or end,
+  // typography (rw-v20/v21): 3 size steps, phrase-aware balanced columns, no 1–2 glyph stubs at a column start or end,
   // equal-length parallel phrases kept whole (ideally one column each), title cards shrink to one column or split at a natural break,
   // optical weight for heavy glyphs. Safari measure/centre and per-glyph font-size from v19 are kept.
   const GAP = 0.6, MIN_PHRASE = 2, LADDER = [1, 0.86, 0.73], INK_MEAN = 0.135;
-  const hasSpeakers = turns.some(x => 'bsmajy'.includes(x[0]));
+  const hasSpeakers = rawTurns.some(x => 'bsmajy'.includes(x[0]));
   const inkScale = (() => {
     const memo = new Map(); let cx = null;
     return ch => {
@@ -363,7 +430,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     while (lines.length && !lines.at(-1).length) { lines.pop(); tags.pop(); }
     return { lines, tags };
   }
-  function layoutInk(el, vert, t, k, AW, AH, maxS) {
+  function layoutInk(el, vert, t, k, AW, AH, maxS, probeOnly) {
     if (!el._inkLines) {
       const cap = captureLines(t);
       el._inkLines = cap.lines;
@@ -627,6 +694,10 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       const all = layout(S, atFloor);
       return all && !stubby(all) && stageFits(all, S);
     };
+    if (probeOnly) {
+      const S = steps[0];
+      return okAt(S, false) ? S : 0;
+    }
     const candidates = [];
     for (const s of steps) if (okAt(s, false)) candidates.push(s);
     // also try sizes between the last ladder step and the typographic floor, still keeping phrases whole
@@ -769,7 +840,121 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     el.dataset.fs = String(S);
   }
 
-  R.fitInk = () => { const e = cur(); if (e && R.mode === 'dlg') fit(e); };
+  let pageVert = '', pageW = 0, pageH = 0;
+  const pageKey = () => (stage.dataset.vert || '') + 'x' + field.clientWidth + 'x' + field.clientHeight;
+  const needsPaginate = () => pageVert !== (stage.dataset.vert || '') || pageW !== field.clientWidth || pageH !== field.clientHeight;
+  const fieldBox = () => {
+    const cs = getComputedStyle(field);
+    const padL = parseFloat(cs.paddingLeft), padR = parseFloat(cs.paddingRight);
+    const padT = parseFloat(cs.paddingTop), padB = parseFloat(cs.paddingBottom);
+    return { AW: field.clientWidth - padL - padR, AH: field.clientHeight - padT - padB, padL, padR, padT, padB };
+  };
+  const largestStep = (k, vert, stageW) => {
+    const nk = k === 'n' && hasSpeakers ? 0.75 : 1;
+    const base = vert ? Math.min(56, 4 * Math.round(stageW * 0.031)) : Math.min(44, 4 * Math.round(stageW * 0.024));
+    return 2 * Math.round(base * nk / 2);
+  };
+  const makePass = (k, raw, i = 0) => {
+    const intro = k === 'i';
+    const el = document.createElement('div');
+    el.className = `ink-pass k-${k}`; el.dataset.i = String(i); el.dataset.k = k;
+    let n = 0, gapW = 0;
+    const leadEnd = (!intro && k !== 't' && k !== 'n') ? ((raw.match(LEAD_RE) || ['', ''])[1].length) : 0;
+    const chars = (s, base = 0) => {
+      const toks = [];
+      let i0 = base;
+      for (const c of s) {
+        if (MINOR.test(c)) { if (toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); }
+        else if (MAJOR.test(c)) { if (toks.length) toks[toks.length - 1].g = 2; }
+        else if (DROP.test(c)) { if (OPEN.test(c) && toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); i0 += c.length; continue; }
+        else toks.push({ c, g: 0, lead: i0 < leadEnd });
+        i0 += c.length;
+      }
+      if (toks.length) toks[toks.length - 1].g = 0;
+      return toks.map(o => { gapW += o.g === 2 ? 0.7 : o.g === 1 ? 0.3 : 0; return `<span class="ch${o.lead ? ' lead' : ''}${o.g ? ' g' + o.g : ''}" style="--i:${n++}">${esc(o.c)}</span>`; }).join('');
+    };
+    let body, off = 0;
+    const linesOf = s => s.split('\n').map(line => { const html = chars(line, off); off += line.length + 1; return html; });
+    if (intro) body = `<span class="ln t1">${chars(introLines[0])}</span><br><span class="ln t2">${chars(introLines[1], introLines[0].length + 1)}</span>`;
+    else if (k === 't') {
+      const [a, b] = raw.split('\n');
+      body = `<span class="ln t1">${chars(a)}</span>` + (b ? `<br><span class="ln t2">${chars(b, a.length + 1)}</span>` : '');
+    } else body = linesOf(raw).map(html => `<span class="ln">${html}</span>`).join('<br>');
+    el.dataset.n = String(n); el.dataset.w = String(n + gapW);
+    el.innerHTML = `<p class="ink-text" aria-hidden="true">${body}</p>`;
+    if (k !== 'i' && k !== 't' && raw.includes('\n')) el.querySelector('.ink-text').classList.add('is-verse');
+    return el;
+  };
+  const fitsLargest = (k, text) => {
+    if (!text || !field.clientWidth) return true;
+    if (displayGlyphs(text) <= 8) return true;
+    const vert = stage.dataset.vert === '1';
+    const { AW, AH, padL, padR, padT, padB } = fieldBox();
+    const el = makePass(k, text, -2);
+    el.style.cssText = 'position:absolute;inset:0;visibility:hidden;pointer-events:none;';
+    field.appendChild(el);
+    const te = el.querySelector('.ink-text');
+    const S0 = largestStep(k, vert, field.clientWidth);
+    const laid = layoutInk(el, vert, te, k, AW, AH, S0, true);
+    el.remove();
+    return laid >= S0;
+  };
+  const pagesForTurn = (k, text) => {
+    // titles and four-line 偈 stay one page (they may still shrink); shrink a lone phrase only when it cannot fit
+    if (k === 't' || k === 'i' || (k !== 'n' && text.includes('\n'))) return [text];
+    if (fitsLargest(k, text)) return [text];
+    const units = phraseUnits(text);
+    if (units.length <= 1) return [text];
+    const join = (a, b) => units.slice(a, b).join('');
+    const pages = [];
+    let i = 0;
+    while (i < units.length) {
+      if (fitsLargest(k, join(i, units.length))) { pages.push(join(i, units.length)); break; }
+      if (!fitsLargest(k, units[i])) { pages.push(units[i]); i += 1; continue; } // single phrase may shrink
+      let lo = i + 1, hi = units.length - 1, best = i + 1;
+      while (lo <= hi) {
+        const mid = (lo + hi + 1) >> 1;
+        if (fitsLargest(k, join(i, mid))) { best = mid; lo = mid + 1; } else hi = mid - 1;
+      }
+      // no 1–2 glyph leftover page: back up so the remainder has at least 3 glyphs when possible
+      const rest = displayGlyphs(join(best, units.length));
+      if (rest > 0 && rest < 3 && best > i + 1 && displayGlyphs(join(i, best - 1)) >= 3) best -= 1;
+      pages.push(join(i, best));
+      i = best;
+    }
+    return pages;
+  };
+  const paginateToFit = want => {
+    if (!field.clientWidth) return (want != null ? want : idx);
+    const src = want != null ? want : idx;
+    const keep = src >= 0 && turns[src] ? turns[src][1] : '';
+    const next = [];
+    for (const t0 of rawTurns) {
+      for (const part of pagesForTurn(t0[0], t0[1])) next.push([t0[0], part, t0[2]]);
+    }
+    turns = next;
+    N = turns.length;
+    refreshLotusRanges();
+    pageVert = stage.dataset.vert || '';
+    pageW = field.clientWidth;
+    pageH = field.clientHeight;
+    if (keep) {
+      const j = turns.findIndex(t => t[1] === keep || t[1].startsWith(keep) || keep.startsWith(t[1]));
+      if (j >= 0) { idx = j; return j; }
+    }
+    idx = Math.max(-1, Math.min(src, N - 1));
+    return idx;
+  };
+
+  R.fitInk = () => {
+    if (R.mode !== 'dlg') return;
+    if (needsPaginate()) {
+      const j = paginateToFit();
+      if (cur()) mount(j, 'instant');
+    } else {
+      const e = cur(); if (e) fit(e);
+    }
+  };
 
   // ---------- writing, holding, dissolving ----------
   const stepMs = () => SPEEDS[speedI].step * (cur()?.dataset.k === 'n' ? 0.7 : 1);
@@ -777,6 +962,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   const holdMs = () => Math.min(7500, Math.max(1500, 1000 + lenOf(idx) * 70)) / SPEEDS[speedI].k;
   function mount(i, how) {
     clearTimeout(tWrite); clearTimeout(tHold); clearTimeout(tOut); pendingNext = null;
+    if (needsPaginate()) i = paginateToFit(i);
     field.textContent = '';
     idx = i;
     const el = build(i);
@@ -865,7 +1051,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     read: () => R.setMode('read'), prev: () => prev(), restart: () => restart(),
     play: () => (playing ? pause() : play()),
     speed: () => { speedI = (speedI + 1) % SPEEDS.length; st.dlgSpeed = SPEEDS[speedI].k; store.save(); const e = cur(); if (e) e.style.setProperty('--step', stepMs() + 'ms'); paint(); if (playing && phase === 'held') held(); },
-    vert: () => { stage.dataset.vert = stage.dataset.vert === '1' ? '0' : '1'; st.dlgVert = stage.dataset.vert === '1'; store.save(); const e = cur(); if (e) { fit(e); } paint(); },
+    vert: () => { stage.dataset.vert = stage.dataset.vert === '1' ? '0' : '1'; st.dlgVert = stage.dataset.vert === '1'; store.save(); mount(paginateToFit(idx), 'instant'); paint(); },
     toc: () => toc(true), fs: () => fs.toggle(), close: () => peek(false),
     'lotus-reset': () => resetLotus(),
   };
@@ -922,7 +1108,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   R.dlgGoto = bi => { pause(); mount(firstTurnOfBlock(bi), 'fade'); R.markToc?.(); };
   const num = a => +String(a).slice(1);
   const baseCur = R.curToc, baseGoto = R.gotoToc, baseFit = R.fitVertical;
-  const lastBlock = () => (idx >= 0 ? turns[idx][2] : -1);
+  const lastBlock = () => (idx >= 0 && turns[idx] ? turns[idx][2] : -1);
   R.curToc = () => {
     if (R.mode !== 'dlg') return baseCur();
     const b = Math.max(0, lastBlock()); let c = 0;
@@ -996,13 +1182,13 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     show: i => { pause(); mount(i, 'instant'); },
     open: (i, how) => { pause(); mount(i, how || 'fade'); },
     get shown() { return idx + 1; }, get idx() { return idx; }, get total() { return N; }, get playing() { return playing; }, get phase() { return phase; },
-    sideNav, turns,
+    sideNav, get turns() { return turns; }, paginate: () => paginateToFit(idx),
     lotus: {
       get has() { return hasLotus; },
       done: () => [...lotusState.done].sort((a, b) => a - b),
       get finalePlayed() { return !!lotusState.finale; },
       get finalePlaying() { return finalePlaying; },
-      ranges: lotusRanges,
+      get ranges() { return lotusRanges; },
       pinOf: pinOfLastPage,
       lastPageOf: pin => (lotusRanges && pin >= 1 && pin <= 32) ? lotusRanges[pin - 1].end : -1,
       seed: (pins, { finale = false } = {}) => {

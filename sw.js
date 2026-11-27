@@ -1,6 +1,6 @@
 // Reading Web service worker: offline reading + install (analysis-3 P5).
 // Bump CACHE on every release so the new files replace the old ones (old caches are deleted on activate).
-const CACHE = 'rw-v21';
+const CACHE = 'rw-v22';
 const RUNTIME = 'rw-runtime-v3';   // pdf.js cmaps / standard fonts, filled on first use
 const FONTS = 'rw-gfonts-v1';      // Google Fonts CSS + files, stale-while-revalidate
 const SHELL = [
