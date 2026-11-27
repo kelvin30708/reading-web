@@ -26,6 +26,7 @@ const INTRO = {
 };
 const SPEEDS = [{ k: 0.7, step: 150, t: '慢', en: 'slow' }, { k: 1, step: 110, t: '中', en: 'normal' }, { k: 1.7, step: 75, t: '快', en: 'fast' }];
 const MINOR = /[，、；：,;:]/, MAJOR = /[。！？!?．\s\u3000]/, DROP = /[「」『』《》〈〉（）()\[\]【】"'“”‘’·・—–…～~﹁﹂﹃﹄]/;
+const OPEN = /[「『（《〈【“‘﹁﹃(\[]/;
 // Narrator frames spoken by Ānanda (佛告須菩提, 須菩提白佛言, 佛言, 曼殊室利言, 阿難白言, 而說偈言, …).
 const LEAD_RE = /^((?:說是語已[，、]?|作是語已[，、]?)?(?:爾時[，、]?)?(?:(?:佛復告|佛告|世尊[，、]?復告|世尊告|世尊讚諸?)[^「」：:。！？，、；\n]{0,16}(?:曰|言)?|佛言|世尊而說(?:偈言|頌曰)|(?:同時舉聲)?[^「」：:。！？，、；\n]{0,16}(?:復|即)?(?:白佛言|白言|答言|問[^「」：:。！？，、；\n]{0,12}言|言曰|言[「：:]))[「：:]?)/;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -101,7 +102,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       for (const c of s) {
         if (MINOR.test(c)) { if (toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); }
         else if (MAJOR.test(c)) { if (toks.length) toks[toks.length - 1].g = 2; }
-        else if (DROP.test(c)) { i += c.length; continue; }
+        else if (DROP.test(c)) { if (OPEN.test(c) && toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); i += c.length; continue; }
         else toks.push({ c, g: 0, lead: i < leadEnd });
         i += c.length;
       }
@@ -120,26 +121,400 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     if (k !== 'i' && k !== 't' && (raw.includes('\n'))) el.querySelector('.ink-text').classList.add('is-verse');
     return el;
   }
-  // font size: large and calligraphic, shrunk until the passage fits the screen without scrolling
+  // typography (rw-v20): 3 size steps, phrase-aware balanced columns, no 1–2 glyph stubs at a column start or end,
+  // equal-length parallel phrases kept whole (ideally one column each), title cards shrink to one column or split at a natural break,
+  // optical weight for heavy glyphs. Safari measure/centre and per-glyph font-size from v19 are kept.
+  const GAP = 0.6, MIN_PHRASE = 2, LADDER = [1, 0.86, 0.73], INK_MEAN = 0.135;
+  const hasSpeakers = turns.some(x => 'bsmajy'.includes(x[0]));
+  const inkScale = (() => {
+    const memo = new Map(); let cx = null;
+    return ch => {
+      if (memo.has(ch)) return memo.get(ch);
+      if (!document.fonts.check('64px "RW Brush"', ch)) {
+        if (!inkScale.asked) { inkScale.asked = 1; document.fonts.load('64px "RW Brush"', ch).then(() => R.fitInk()); }
+        return [1, 1];
+      }
+      if (!cx) {
+        const cv = document.createElement('canvas'); cv.width = cv.height = 96;
+        cx = cv.getContext('2d', { willReadFrequently: true });
+        cx.font = '64px "RW Brush"'; cx.textBaseline = 'ideographic';
+      }
+      cx.clearRect(0, 0, 96, 96); cx.fillText(ch, 16, 80);
+      const d = cx.getImageData(0, 0, 96, 96).data; let a = 0;
+      for (let i = 3; i < d.length; i += 4) a += d[i];
+      const r = a / 255 / 4096 / INK_MEAN;
+      const f = 1.2 / r, w = r > 1.2 ? Math.max(0.86, Math.pow(f, 0.35)) : 1;
+      const o = w < 1 ? Math.min(1, Math.max(0.8, f / (w * w))) : 1;
+      memo.set(ch, [w, o]); return [w, o];
+    };
+  })();
+  const scaleOf = tag => tag === 't1' ? 1.3 : tag === 't2' ? 0.46 : 1;
+  function captureLines(t) {
+    const lines = [[]], tags = [''];
+    const tagOf = ln => ln.classList.contains('t1') ? 't1' : ln.classList.contains('t2') ? 't2' : '';
+    const add = (nd, tag) => {
+      nd.dataset.g0 = nd.classList.contains('g2') ? 2 : nd.classList.contains('g1') ? 1 : 0;
+      if (tag) nd.dataset.tag = tag;
+      lines.at(-1).push(nd);
+      if (tag) tags[tags.length - 1] = tag;
+    };
+    const walk = (node, tag) => {
+      for (const nd of [...node.childNodes]) {
+        if (nd.nodeName === 'BR') { if (lines.at(-1).length) { lines.push([]); tags.push(''); } }
+        else if (nd.classList && nd.classList.contains('ln')) walk(nd, tagOf(nd) || tag);
+        else if (nd.classList && nd.classList.contains('ch')) add(nd, tag);
+      }
+    };
+    walk(t, '');
+    while (lines.length && !lines.at(-1).length) { lines.pop(); tags.pop(); }
+    return { lines, tags };
+  }
+  function layoutInk(el, vert, t, k, AW, AH, maxS) {
+    if (!el._inkLines) {
+      const cap = captureLines(t);
+      el._inkLines = cap.lines;
+      el._inkTags = cap.tags;
+    }
+    const ls = k === 'n' && hasSpeakers ? 0.16 : k === 'n' ? 0.12 : 0.1, P = 1 + ls;
+    const rawLines0 = el._inkLines.map(L => {
+      let run = 0;
+      return L.map((n, i) => {
+        run++;
+        let g = +n.dataset.g0;
+        if (i === L.length - 1 || (g === 1 && run < MIN_PHRASE)) g = 0;
+        if (g) run = 0;
+        return { n, g };
+      });
+    });
+    const tags0 = el._inkTags.slice();
+    // a 1–2 glyph source line (e.g. the 真言 label) is folded into the next line so it is not a stub column
+    const rawLines = [], tags = [];
+    for (let i = 0; i < rawLines0.length; i++) {
+      const L = rawLines0[i];
+      if (L.length <= 2 && i < rawLines0.length - 1 && tags0[i] === tags0[i + 1] && (rawLines0[i + 1].length + L.length) > 2) {
+        const last = L[L.length - 1];
+        if (!last.g) last.g = 1;
+        rawLines0[i + 1] = L.concat(rawLines0[i + 1]);
+        continue;
+      }
+      rawLines.push(L); tags.push(tags0[i]);
+    }
+    const isTitle = k === 'i' || k === 't';
+    // RW Brush's ink box is taller/wider than 1em (~1.25em); letter-spacing sits between those boxes.
+    const ADV = 1.25;
+    const emLen = n => n <= 0 ? 0 : n * ADV + Math.max(0, n - 1) * ls;
+    const lenRange = (L, a, b) => {
+      const n = b - a;
+      if (n <= 0) return 0;
+      let g = 0;
+      for (let i = a; i < b - 1; i++) if (L[i].g) g++;
+      return n * ADV + Math.max(0, n - 1) * ls + g * GAP;
+    };
+    const lenCol = col => lenRange(col, 0, col.length);
+    const stageW = field.clientWidth;
+    const base = vert ? Math.min(56, 4 * Math.round(stageW * 0.031)) : Math.min(44, 4 * Math.round(stageW * 0.024));
+    const nk = k === 'n' && hasSpeakers ? 0.75 : 1;
+    let steps = LADDER.map(f => 2 * Math.round(base * f * nk / 2));
+    const typoFloor = vert ? 22 : 18;
+    const floor = maxS != null ? Math.min(typoFloor, maxS) : typoFloor;
+    if (maxS != null) {
+      steps = steps.map(s => Math.min(s, maxS)).filter((s, i, a) => s >= floor && a.indexOf(s) === i);
+      if (!steps.length || steps[steps.length - 1] > maxS) steps.push(Math.max(floor, maxS));
+      steps = [...new Set(steps.filter(s => s <= maxS && s >= floor))].sort((a, b) => b - a);
+      if (!steps.length) steps = [Math.max(floor, maxS)];
+    }
+    const capOf = (S, tag) => {
+      const sc = scaleOf(tag);
+      return vert ? AH / (S * sc) : Math.min(AW / (S * sc), 16);
+    };
+    const pitchOf = S => S * (isTitle ? 2.1 : (vert ? 1.75 : 1.85));
+    const maxColsOf = S => Math.max(1, Math.floor(((vert ? AW : AH) + 0.5) / pitchOf(S)));
+    const unitsOf = L => {
+      const u = []; let cur = [];
+      for (let i = 0; i < L.length; i++) {
+        cur.push(L[i]);
+        if (L[i].g && i < L.length - 1) { u.push(cur); cur = []; }
+      }
+      if (cur.length) u.push(cur);
+      const glued = [];
+      for (const ph of u) {
+        if (ph.length < 2 && glued.length) glued[glued.length - 1] = glued[glued.length - 1].concat(ph);
+        else glued.push(ph.slice());
+      }
+      if (glued.length > 1 && glued[0].length < 2) {
+        glued[1] = glued[0].concat(glued[1]);
+        glued.shift();
+      }
+      return glued;
+    };
+    const unitLen = (units, a, b) => {
+      let glyphs = 0, gaps = 0;
+      for (let i = a; i < b; i++) {
+        glyphs += units[i].length;
+        if (i < b - 1) gaps++;
+      }
+      if (!glyphs) return 0;
+      return glyphs * ADV + Math.max(0, glyphs - 1) * ls + gaps * GAP;
+    };
+    const naturalCuts = L => {
+      const text = L.map(o => o.n.textContent).join('');
+      const cuts = [];
+      for (let i = 3; i <= text.length - 3; i++) {
+        if (text[i - 1] === '分' && text[i] === '第') cuts.push(i);
+        else if (text[i] === '第' && /[一二三四五六七八九十百千]/.test(text[i + 1] || '')) cuts.push(i);
+      }
+      return [...new Set(cuts)];
+    };
+    const evenSplit = (L, cap) => {
+      const n = L.length;
+      if (!n) return [L];
+      if (lenRange(L, 0, n) <= cap + 1e-6) return [L];
+      const prefer = naturalCuts(L);
+      const out = [];
+      let a = 0;
+      while (a < n) {
+        let best = -1, bc = 1e9;
+        for (let b = a + 1; b <= n; b++) {
+          if (lenRange(L, a, b) > cap + 1e-6) break;
+          const left = n - b;
+          if (left && left < 3 && b - a > 3) continue; // don't leave a 1–2 glyph stub
+          const d = Math.abs((b - a) - (n - a) / Math.max(1, Math.ceil(lenRange(L, a, n) / cap)));
+          const nat = prefer.includes(b) ? -8 : 0;
+          if (d + nat <= bc) { bc = d + nat; best = b; }
+        }
+        if (best < 0) { // at least one glyph, even if slightly over (emergency)
+          best = Math.min(n, a + Math.max(1, n - a >= 6 ? n - a - 3 : n - a));
+          while (best > a + 1 && lenRange(L, a, best) > cap + 1e-6) best--;
+          if (best === a) best = a + 1;
+        }
+        out.push(L.slice(a, best));
+        a = best;
+      }
+      return out;
+    };
+    const packUnits = (units, cap, minC0, maxC0) => {
+      const n = units.length;
+      if (!n) return [[]];
+      if (n === 1) return unitLen(units, 0, 1) <= cap + 1e-6 ? [units[0]] : null;
+      const total = unitLen(units, 0, n);
+      const minC = Math.max(minC0 || 1, Math.ceil(total / cap - 1e-9));
+      const maxC = Math.max(minC, Math.min(n, maxC0 != null ? maxC0 : n));
+      for (let c = minC; c <= maxC; c++) {
+        const dp = Array.from({ length: n + 1 }, () => Array(c + 1).fill(null));
+        dp[0][0] = { cost: 0, prev: 0 };
+        for (let p = 1; p <= c; p++) {
+          for (let j = p; j <= n; j++) {
+            for (let i = p - 1; i < j; i++) {
+              if (!dp[i][p - 1]) continue;
+              const l = unitLen(units, i, j);
+              if (l > cap + 1e-6) continue;
+              let glyphs = 0; for (let u = i; u < j; u++) glyphs += units[u].length;
+              if (glyphs <= 2 && !(i === 0 && j === n && n === 1)) continue; // never a 1–2 glyph stub column
+              const cost = dp[i][p - 1].cost + Math.abs(l - total / c);
+              if (!dp[j][p] || cost < dp[j][p].cost) dp[j][p] = { cost, prev: i };
+            }
+          }
+        }
+        if (!dp[n][c]) continue;
+        const bounds = [];
+        for (let p = c, j = n; p > 0; p--) { bounds.push([dp[j][p].prev, j]); j = dp[j][p].prev; }
+        bounds.reverse();
+        return bounds.map(([a, b]) => units.slice(a, b).flat());
+      }
+      return null;
+    };
+    const parallelMin = units => {
+      let best = 0, run = 1;
+      for (let i = 1; i <= units.length; i++) {
+        if (i < units.length && units[i].length === units[i - 1].length && units[i].length >= 5) run++;
+        else { if (run >= 3) best = Math.max(best, run); run = 1; }
+      }
+      return best;
+    };
+    const splitLongUnits = (units, cap) => {
+      const out = [];
+      for (const u of units) {
+        if ( (u.length * ADV + Math.max(0, u.length - 1) * ls) <= cap + 1e-6) { out.push(u); continue; }
+        const n = u.length, need = Math.max(2, Math.ceil(emLen(n) / cap - 1e-9));
+        const prefer = naturalCuts(u);
+        let a = 0, ok = true, parts = [];
+        for (let j = 1; j < need && ok; j++) {
+          const target = a + Math.round((n - a) / (need - j + 1));
+          let best = -1, bc = 1e9;
+          const lo = a + 3, hi = n - 3 * (need - j);
+          for (let b = lo; b <= hi; b++) {
+            if ((b - a) * ADV + Math.max(0, b - a - 1) * ls > cap + 1e-6) break;
+            const d = Math.abs(b - target) + (prefer.includes(b) ? -8 : 0);
+            if (d < bc) { bc = d; best = b; }
+          }
+          if (best < 0) ok = false;
+          else { parts.push(u.slice(a, best)); a = best; }
+        }
+        if (ok && (n - a) >= 3 && ((n - a) * ADV + Math.max(0, n - a - 1) * ls) <= cap + 1e-6) { parts.push(u.slice(a)); out.push(...parts); }
+        else {
+          // equal glyph counts of at least 3 that each fit the cap
+          a = 0;
+          for (let j = need; j > 1; j--) {
+            let take = Math.max(3, Math.round((n - a) / j));
+            while (take > 3 && (take * ADV + Math.max(0, take - 1) * ls) > cap + 1e-6) take--;
+            if ((take * ADV + Math.max(0, take - 1) * ls) > cap + 1e-6) return null;
+            out.push(u.slice(a, a + take)); a += take;
+          }
+          if (n - a < 1 || ((n - a) * ADV + Math.max(0, n - a - 1) * ls) > cap + 1e-6) return null;
+          out.push(u.slice(a));
+        }
+      }
+      return out;
+    };
+    const breakLine = (L, cap, atFloor, tag, maxC) => {
+      if (!L.length) return [L];
+      const whole = lenRange(L, 0, L.length);
+      const titleLike = isTitle || tag === 't1' || tag === 't2';
+      if (whole <= cap + 1e-6) return [L];
+      if (titleLike && !atFloor) return null;
+      let units = unitsOf(L);
+      if (units.some(u => emLen(u.length) > cap + 1e-6)) {
+        // 16em is a hard horizontal row cap (shrinking the font does not raise it). A cap that comes from the
+        // stage size grows when the type shrinks, so keep the phrase whole and try a smaller step first.
+        const hardCap = vert ? 1e9 : 16;
+        const canGrow = units.every(u => emLen(u.length) <= hardCap + 1e-6);
+        if (canGrow && !atFloor) return null;
+        units = splitLongUnits(units, cap);
+      }
+      if (!units) return atFloor ? evenSplit(L, cap) : null;
+      const budget = maxC != null ? maxC : units.length;
+      const want = parallelMin(units);
+      // if every phrase (including a 3+ run of equal-length ones) fits a column of its own and the stage can hold them, prefer that
+      if (want >= 3 && units.length <= budget && units.every(u =>  (u.length * ADV + Math.max(0, u.length - 1) * ls) <= cap + 1e-6)) {
+        const isol = packUnits(units, cap, units.length, units.length);
+        if (isol && isol.every(col => lenCol(col) <= cap + 1e-6)) return isol;
+      }
+      const packed = packUnits(units, cap, 1, budget);
+      if (packed) return packed;
+      return atFloor ? evenSplit(L, cap) : null;
+    };
+    const layout = (S, atFloor) => {
+      const budget = maxColsOf(S);
+      const out = [];
+      let used = 0;
+      for (let li = 0; li < rawLines.length; li++) {
+        const remain = Math.max(1, budget - used - (rawLines.length - li - 1));
+        const cols = breakLine(rawLines[li], capOf(S, tags[li]), atFloor, tags[li], remain);
+        if (!cols) return null;
+        out.push(cols);
+        used += cols.length;
+        if (used > budget) return null;
+      }
+      return out;
+    };
+    const stageFits = (all, S) => {
+      if (!all) return false;
+      const nCols = all.reduce((m, x) => m + x.length, 0);
+      return nCols * pitchOf(S) <= (vert ? AW : AH) + 0.5;
+    };
+    const isolateScore = all => {
+      if (!all) return -1;
+      let score = 0;
+      for (const cols of all) {
+        const lens = cols.map(c => c.length);
+        for (let i = 0; i < lens.length; i++) if (lens[i] >= 5 && lens.filter(x => x === lens[i]).length >= 3) score++;
+      }
+      return score;
+    };
+    const stubby = all => {
+      if (!all) return true;
+      for (let li = 0; li < all.length; li++) {
+        const whole = rawLines[li].length;
+        for (const col of all[li]) if (col.length <= 2 && whole > 2) return true;
+      }
+      return false;
+    };
+    const okAt = (S, atFloor) => {
+      const all = layout(S, atFloor);
+      return all && !stubby(all) && stageFits(all, S);
+    };
+    const candidates = [];
+    for (const s of steps) if (okAt(s, false)) candidates.push(s);
+    // also try sizes between the last ladder step and the typographic floor, still keeping phrases whole
+    if (!candidates.length) {
+      let s = steps[steps.length - 1] - 2;
+      const lo = vert ? 18 : 16; // shrink below the typographic floor before mid-phrase splits
+      while (s >= lo) {
+        if (okAt(s, false)) candidates.push(s);
+        s -= 2;
+      }
+    }
+    let S, all;
+    if (candidates.length) {
+      candidates.sort((a, b) => isolateScore(layout(b, false)) - isolateScore(layout(a, false)) || b - a);
+      S = candidates[0];
+      all = layout(S, false);
+    } else {
+      // only now allow a mid-phrase split, and only as an emergency below the typographic floor
+      const emergency = vert ? 18 : 16;
+      S = Math.min(typoFloor, maxS != null ? maxS : typoFloor);
+      while (S > emergency && !okAt(S, true)) S -= 2;
+      if (!okAt(S, true)) S = Math.max(emergency, S);
+      all = layout(S, true) || rawLines.map(L => [L]);
+    }
+    const maybeSplitParallels = (all0, S0) => {
+      const budget = maxColsOf(S0);
+      let used = 0;
+      const all1 = all0.map((cols, li) => {
+        const units = splitLongUnits(unitsOf(rawLines[li]), capOf(S0, tags[li]));
+        const want = units ? parallelMin(units) : 0;
+        if (!units || want < 3) { used += cols.length; return cols; }
+        const cap = capOf(S0, tags[li]);
+        const remain = Math.max(cols.length, budget - used - (all0.length - li - 1));
+        const isol = packUnits(units, cap, Math.min(units.length, remain), remain);
+        const chosen = isol && isol.length > cols.length && isol.length <= remain && isol.every(col => lenCol(col) <= cap + 1e-6) ? isol : cols;
+        used += chosen.length;
+        return chosen;
+      });
+      return stageFits(all1, S0) && !stubby(all1) && all1.reduce((m, x) => m + x.length, 0) <= budget ? all1 : all0;
+    };
+    all = maybeSplitParallels(all, S);
+    t.replaceChildren();
+    t.classList.add('rf');
+    t.classList.toggle('is-title', isTitle);
+    all.forEach((cols, li) => {
+      const tag = tags[li];
+      cols.forEach((col, ci) => {
+        const wrap = document.createElement('span');
+        wrap.className = 'ln' + (tag ? ' ' + tag : '');
+        wrap.dataset.col = col.map(o => o.n.textContent).join('');
+        col.forEach((o, i) => {
+          const g = i === col.length - 1 ? 0 : o.g;
+          o.n.classList.toggle('g1', g === 1);
+          o.n.classList.toggle('g2', g === 2);
+          const [w, op] = inkScale(o.n.textContent);
+          o.n.classList.toggle('w', w < 1);
+          if (w < 1) { o.n.style.setProperty('--w', w.toFixed(3)); o.n.style.setProperty('--o', op.toFixed(2)); }
+          else { o.n.style.removeProperty('--w'); o.n.style.removeProperty('--o'); }
+          wrap.appendChild(o.n);
+        });
+        t.appendChild(wrap);
+        if (ci < cols.length - 1 || li < all.length - 1) t.appendChild(document.createElement('br'));
+      });
+    });
+    t.style.letterSpacing = ls + 'em';
+    t.style.maxHeight = '';
+    t.style.maxWidth = '';
+    t.style.fontSize = S + 'px';
+    el.style.setProperty('--fs-ink', S + 'px');
+    el.style.fontSize = S + 'px';
+    el.dataset.fs = String(S);
+    el.dataset.cols = String(all.reduce((m, x) => m + x.length, 0));
+    return S;
+  }
   function fit(el) {
     const vert = stage.dataset.vert === '1', t = $('.ink-text', el), k = el.dataset.k;
     const cs = getComputedStyle(field);
     const padL = parseFloat(cs.paddingLeft), padR = parseFloat(cs.paddingRight);
     const padT = parseFloat(cs.paddingTop), padB = parseFloat(cs.paddingBottom);
-    const aw = field.clientWidth - padL - padR;
-    const ah = field.clientHeight - padT - padB;
-    const AW = aw, AH = ah;
-    const len = +el.dataset.n, wlen = +el.dataset.w || len, verse = k !== 'i' && k !== 't' && t.querySelectorAll('.ln').length > 1;
-    const f = (k === 'i' || k === 't') ? 1.0 : len <= 8 ? 1.32 : len <= 16 ? 1.2 : len <= 30 ? 1.08 : 1;
-    const kf = k === 'n' ? 0.66 : 1;
-    let S = (vert ? 56 : Math.min(aw / 12, ah / 15) * f) * kf;
-    S = Math.max(17, Math.min(vert ? 56 : 46, S));
-    const ls = k === 'n' ? 0.16 : 0.1;
-    t.style.letterSpacing = ls + 'em';
-    t.style.transform = 'none';
-    // Content box of the field (inside padding). WebKit's vertical-rl often reports a stretched
-    // parent box and, with overflow:hidden on the stage, may clamp glyph rects — open overflow
-    // while measuring, then centre the painted glyphs (Safari packs vertical-rl to the right).
+    const AW = field.clientWidth - padL - padR;
+    const AH = field.clientHeight - padT - padB;
+    const floor = vert ? 22 : 18;
     const contentBox = () => {
       const b = field.getBoundingClientRect();
       return { left: b.left + padL, right: b.right - padR, top: b.top + padT, bottom: b.bottom - padB };
@@ -159,7 +534,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       stage.style.overflow = prev;
       return r.left >= f.left - 0.5 && r.right <= f.right + 0.5 && r.top >= f.top - 0.5 && r.bottom <= f.bottom + 0.5;
     };
-    const apply = s => {
+    const applySize = s => {
       t.style.transform = 'none';
       t.style.fontSize = s + 'px';
       el.style.setProperty('--fs-ink', s + 'px');
@@ -169,17 +544,6 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
         const scale = ln && ln.classList.contains('t1') ? 1.3 : ln && ln.classList.contains('t2') ? 0.46 : 1;
         n.style.setProperty('font-size', (s * scale) + 'px', 'important');
       });
-      if (!vert && t.classList.contains('is-verse')) {
-        const pitch = 1.85 * s;
-        t.querySelectorAll('.ln').forEach(n => {
-          if (n.classList.contains('t1') || n.classList.contains('t2')) return;
-          n.style.fontSize = s + 'px';
-          n.style.lineHeight = pitch + 'px';
-          n.style.height = pitch + 'px';
-        });
-      }
-      if (vert) { t.style.maxHeight = AH + 'px'; t.style.maxWidth = ''; }
-      else { t.style.maxWidth = AW + 'px'; t.style.maxHeight = ''; }
       void t.offsetWidth;
     };
     const centre = () => {
@@ -194,24 +558,23 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       const dy = ((f.top + f.bottom) - (r.top + r.bottom)) / 2;
       if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) t.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
     };
-    apply(S);
-    let guard = 0;
-    while (!measure() && S > 12 && guard++ < 50) { S -= 1.5; apply(S); }
-    // balance the columns so a short passage is not one long column plus a stub
-    if (vert && !verse && len > 10 && k !== 'i' && k !== 't') {
-      const r = t.getBoundingClientRect(), pitch = S * (1 + ls) * 1.0, linePitch = S * (vert ? 1.75 : 1.85);
-      const cols = Math.max(1, Math.round(r.width / linePitch));
-      if (cols > 1) {
-        const per = Math.ceil(wlen / cols), h = Math.min(AH, (per + 0.7) * pitch);
-        t.style.maxHeight = h + 'px';
-        if (t.getBoundingClientRect().width > r.width + 2) t.style.maxHeight = AH + 'px';
-      }
-    }
+    t.style.transform = 'none';
+    let S = layoutInk(el, vert, t, k, AW, AH);
+    applySize(S);
     centre();
-    guard = 0;
-    while (!measure() && S > 12 && guard++ < 30) { S -= 1.5; apply(S); centre(); }
+    glyphBox(); // flush WebKit boxes before measuring
+    let guard = 0;
+    const emergency = vert ? 18 : 16;
+    while (!measure() && S > emergency && guard++ < 30) {
+      S = layoutInk(el, vert, t, k, AW, AH, Math.max(emergency, S - 2));
+      applySize(S);
+      centre();
+      glyphBox();
+    }
     el.style.setProperty('--fs-ink', S + 'px');
+    el.dataset.fs = String(S);
   }
+
   R.fitInk = () => { const e = cur(); if (e && R.mode === 'dlg') fit(e); };
 
   // ---------- writing, holding, dissolving ----------

@@ -975,7 +975,7 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height
 @keyframes ink-mist-b{from{transform:translate3d(3%,-2%,0) scale(1.06)}to{transform:translate3d(-3%,2%,0) scale(1.02)}}
 .ink-pass,.ink-text,.ink-text .ch{transition:none !important}
 .ink-field{position:absolute;inset:0;display:grid;place-items:center;
-  padding:calc(64px + env(safe-area-inset-top,0px)) calc(22px + env(safe-area-inset-right,0px)) calc(52px + env(safe-area-inset-bottom,0px)) calc(22px + env(safe-area-inset-left,0px))}
+  padding:calc(max(56px,7vh) + env(safe-area-inset-top,0px)) calc(max(30px,7.5vw) + env(safe-area-inset-right,0px)) calc(max(56px,7vh) + env(safe-area-inset-bottom,0px)) calc(max(30px,7.5vw) + env(safe-area-inset-left,0px))}
 .ink-pass{position:relative;max-width:100%;max-height:100%}
 .ink-text{margin:0;font-size:var(--fs-ink,34px);font-weight:400;line-height:1.9;color:var(--ink-c);line-break:strict;word-break:normal;overflow-wrap:anywhere}
 .ink-pass,.ink-pass .ink-text{font-size:var(--fs-ink,34px)}
@@ -989,8 +989,14 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height
 .k-a{--ink-c:#c9d4e6;--glow:rgba(170,190,220,.18);--halo:210,220,236}
 .k-j{--ink-c:#e0c0b0;--glow:rgba(224,180,160,.20);--halo:236,214,200}
 .k-y{--ink-c:#d4c48a;--glow:rgba(212,190,120,.18);--halo:232,216,160}
-.ch.g1{padding-inline-end:.3em}
-.ch.g2{padding-inline-end:.7em}
+.ch.g1,.ch.g2{padding-inline-end:.6em}  /* one phrase gap: 0.6 em, never at a column edge (layoutInk) */
+.ink-text.rf{white-space:nowrap}
+.ink[data-vert="0"] .ink-text.rf{display:block}
+.ink[data-vert="0"] .ink-text.rf .ln{display:block;height:auto;line-height:inherit}
+.ink[data-vert="0"] .ink-text.rf br{display:none}
+.ink-text .ch.w{display:inline-block;transform:scale(var(--w,1));opacity:var(--o,1)}
+.ink[data-vert="1"] .ink-text .ch.w{transform-origin:50% .5em}
+.ink[data-vert="0"] .ink-text .ch.w{transform-origin:.5em 50%}
 .k-n .ink-text{--ink-c:rgba(196,190,180,.7);--glow:rgba(200,190,170,.08)}
 /* narrator leads (佛告須菩提, 須菩提白佛言, …) are their own kind-n pages; leftover .ch.lead keeps the narration ink if a lead still shares a page */
 .ink-pass .ch.lead{--ink-c:rgba(196,190,180,.7);--glow:rgba(200,190,170,.08);--halo:196,190,180;--tsh:0 0 .5em var(--glow)}
@@ -1078,7 +1084,7 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height
 .ink-toc-item.cur{color:#f0e7d5;border-left-color:#a93a27}
 .ink-toc-item:focus-visible{outline:2px solid #9DB4D3;outline-offset:-2px}
 @media (max-width:420px){ .ik{min-width:36px;padding:0 4px} }
-@media (min-width:860px){ .ink-field{padding-inline:7vw} }
+@media (min-width:860px){ .ink-field{padding-inline:max(30px,7.5vw)} }
 @media (prefers-reduced-motion:reduce){
   .ink-cloud-a,.ink-cloud-b{animation:none}
   .ink-pass.writing .ch{animation:none}
