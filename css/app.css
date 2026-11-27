@@ -903,3 +903,110 @@ body.link-mode .selbar{display:none}
 .lk-del{flex:none;min-width:40px;min-height:40px;border:0;background:transparent;color:var(--muted);border-radius:var(--radius);cursor:pointer}
 .lk-del:hover{color:var(--ink);background:var(--accent-soft)}
 @media (pointer:coarse){ .lk-go,.lk-del{min-height:44px} .lk-del{min-width:44px} }
+
+/* ===== 對話 Dialogue: chat bubbles (世尊 left, 善現 right, narration centred) ===== */
+.seg.only-dlg{display:inline-flex}
+.reader.mode-dlg .doc{display:none}
+.reader.mode-dlg .seg.only-zh,.reader.mode-dlg .rbar .ts-btn{display:none}
+.reader.mode-dlg.bar-collapsed.bar-peek #tabTapSel{display:none !important}
+.chat{display:none;position:relative;height:calc(100vh - var(--top) - var(--rbar));height:calc(100dvh - var(--top) - var(--rbar));overflow:hidden;font-family:var(--font-zh);color:var(--ink)}
+.reader.mode-dlg .chat{display:block}
+.chat-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:manipulation;cursor:pointer;padding:26px 14px calc(120px + env(safe-area-inset-bottom,0px));outline:none;scrollbar-width:thin}
+.reader.bar-collapsed .chat-scroll{padding-top:56px}
+.chat-col{max-width:46rem;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.chat-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.chat-intro{text-align:center;padding:10px 4px 22px;margin:0 0 6px;border-bottom:1px solid var(--line)}
+.chat-kicker{margin:0;font-family:var(--font-ui);font-size:var(--fs-2xs);letter-spacing:.2em;text-transform:uppercase;color:var(--shu)}
+.chat-intro h2{margin:6px 0 12px;font-weight:400;font-size:1.5rem;letter-spacing:.12em}
+.chat-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin:0 0 14px;font-size:var(--fs-sm);color:var(--ink-soft)}
+.chat-legend .lg{display:inline-flex;align-items:center;gap:7px}
+.chat-legend .dl-av{width:26px;height:26px}
+.chat-hint{margin:0 0 6px;font-size:var(--fs-base);color:var(--ink)}
+.chat-hint small,.chat-hint2 small{font-family:var(--font-ui);color:var(--muted);font-size:var(--fs-xs)}
+.chat-hint2{margin:6px 0 0}
+.chat-hint-go{display:inline-block;padding-bottom:2px;border-bottom:1px solid var(--shu)}
+.chat.dl-started .chat-hint,.chat.dl-started .chat-hint2{display:none}
+.chat.dl-started .chat-intro{padding-bottom:14px}
+.dl-row{display:flex;align-items:flex-start;gap:9px;font-size:calc(var(--fs) * .9);line-height:1.8}
+.dl-row[hidden]{display:none}
+.dl-av{flex:none;width:34px;height:34px;display:inline-grid;place-items:center;color:var(--ink);margin-top:20px}
+.dl-av svg{width:100%;height:100%;display:block}
+.dl-av text{font-family:var(--font-zh)}
+.dl-cont{margin-top:-5px}
+.dl-cont .dl-av{visibility:hidden}
+.dl-body{min-width:0;max-width:calc(100% - 46px);display:flex;flex-direction:column;gap:2px}
+.dl-name{font-size:var(--fs-xs);color:var(--muted);letter-spacing:.06em;display:flex;align-items:baseline;gap:7px;line-height:1.4;margin-bottom:1px}
+.dl-name b{font-weight:600;color:var(--ink-soft);font-size:var(--fs-sm);letter-spacing:.12em}
+.dl-name small{font-family:var(--font-ui);font-size:var(--fs-2xs);letter-spacing:.02em}
+.dl-bub{margin:0;padding:10px 14px;border:1px solid var(--line-strong);background:var(--paper);border-radius:3px 15px 15px 15px;box-shadow:0 1px 2px rgba(43,43,43,.04);overflow-wrap:anywhere;word-break:normal;line-break:strict;text-align:left;user-select:text;-webkit-user-select:text;cursor:text}
+.dl-b .dl-bub{border-left:2px solid var(--shu)}
+.dl-cont.dl-b .dl-bub{border-top-left-radius:15px}
+/* 善現 sits on the right */
+.dl-s{flex-direction:row-reverse}
+.dl-s .dl-body{align-items:flex-end}
+.dl-s .dl-name{flex-direction:row-reverse}
+.dl-s .dl-bub{background:color-mix(in srgb,var(--accent) 9%,var(--paper));border-color:color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:15px 3px 15px 15px}
+.dl-cont.dl-s .dl-bub{border-top-right-radius:15px}
+/* verses: lines kept, a touch more air */
+.dl-verse{white-space:pre-line;text-align:center;letter-spacing:.1em;line-height:2.1;padding:12px 18px}
+/* narration: a small centred caption */
+.dl-n{justify-content:center;padding:6px 8px}
+.dl-cap{margin:0;max-width:34em;text-align:center;font-size:.86em;line-height:1.85;color:var(--muted);letter-spacing:.05em;position:relative;padding:0 .2em;overflow-wrap:anywhere;line-break:strict}
+.dl-cap::before,.dl-cap::after{content:"";display:block;width:26px;height:1px;background:var(--line-strong);margin:0 auto}
+.dl-cap::before{margin-bottom:7px}.dl-cap::after{margin-top:7px}
+/* gentle arrival */
+@keyframes dl-in-l{from{opacity:0;transform:translate(-10px,8px)}to{opacity:1;transform:none}}
+@keyframes dl-in-r{from{opacity:0;transform:translate(10px,8px)}to{opacity:1;transform:none}}
+@keyframes dl-in-c{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.dl-row.enter.dl-b{animation:dl-in-l .42s var(--ease) both}
+.dl-row.enter.dl-s{animation:dl-in-r .42s var(--ease) both}
+.dl-row.enter.dl-n{animation:dl-in-c .5s var(--ease) both}
+/* "typing" beat before an auto-played line */
+.dl-typing .dl-bub{display:inline-flex;gap:5px;align-items:center;padding:13px 16px}
+.dl-typing .dl-bub i{width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:.35;animation:dl-dot 1s infinite ease-in-out}
+.dl-typing .dl-bub i:nth-child(2){animation-delay:.16s}.dl-typing .dl-bub i:nth-child(3){animation-delay:.32s}
+.dl-typing[hidden]{display:none}
+.dl-typing .dl-av{margin-top:0}
+@keyframes dl-dot{0%,80%,100%{opacity:.25;transform:none}40%{opacity:.8;transform:translateY(-2px)}}
+.chat-end{text-align:center;margin:18px 0 0;font-size:var(--fs-sm);letter-spacing:.3em;color:var(--muted)}
+.chat-end[hidden]{display:none}
+/* controls: one quiet pill at the bottom (the dock stays reachable while the bars are folded) */
+.chat-dock{position:absolute;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:2px;padding:4px;max-width:calc(100% - 20px);border:1px solid var(--line-strong);border-radius:999px;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:var(--shadow-float);font-family:var(--font-ui)}
+.dk{display:inline-grid;place-items:center;min-width:44px;min-height:44px;padding:0;border:0;border-radius:999px;background:transparent;color:var(--ink-soft);cursor:pointer;font:inherit;font-size:var(--fs-sm);transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease),opacity var(--dur) var(--ease)}
+@media (hover:hover){.dk:hover:not(:disabled){background:var(--accent-soft);color:var(--ink)}}
+.dk:disabled{opacity:.3;cursor:default}
+.dk:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.dk-next{grid-auto-flow:row;align-content:center;gap:0;min-width:104px;padding:2px 16px;background:var(--ink);color:var(--bg);font-family:var(--font-zh);letter-spacing:.1em;line-height:1.15}
+@media (hover:hover){.dk-next:hover:not(:disabled){background:var(--ink);color:var(--bg);opacity:.88}}
+.dk-next .dk-t{font-size:var(--fs-base)}
+.dk-next .dk-c{font-family:var(--font-ui);font-size:.66rem;letter-spacing:.04em;opacity:.7;font-variant-numeric:tabular-nums}
+.dk-play .i-pause{display:none}
+.dk-play[aria-pressed=true]{color:var(--shu)}
+.dk-play[aria-pressed=true] .i-play{display:none}
+.dk-play[aria-pressed=true] .i-pause{display:block}
+.dk-speed{font-family:var(--font-zh);font-size:var(--fs-base);min-width:40px}
+.chat-dock svg{display:block}
+@media (max-width:420px){ .dk{min-width:40px} .dk-next{min-width:92px;padding:2px 12px} .dk-speed{min-width:36px} }
+@media (max-width:860px){ .chat-scroll{padding-inline:10px} .dl-av{width:30px;height:30px} .dl-body{max-width:calc(100% - 40px)} }
+@media (min-width:860px){ .chat-scroll{padding-top:34px} .dl-row{gap:12px} .dl-av{width:38px;height:38px;margin-top:22px} .dl-body{max-width:min(36em,calc(100% - 52px))} .chat-dock{bottom:22px} }
+@media (max-height:500px) and (orientation:landscape) and (pointer:coarse){ .chat{height:calc(100dvh - var(--rbar))} .chat-scroll{padding-bottom:84px} }
+[data-theme=dark] .dl-bub{box-shadow:none}
+[data-theme=dark] .dl-s .dl-bub{background:color-mix(in srgb,var(--accent) 13%,var(--paper))}
+[data-theme=dark] .chat-dock{background:color-mix(in srgb,var(--paper) 88%,transparent)}
+@media (prefers-reduced-motion:reduce){ .dl-row.enter,.dl-row.enter.dl-b,.dl-row.enter.dl-s,.dl-row.enter.dl-n{animation:none} .dl-typing .dl-bub i{animation:none;opacity:.5} .dk{transition:none} }
+/* library: the second button and the little tag */
+.card .tag-dlg{margin-left:6px;color:var(--shu);border-color:color-mix(in srgb,var(--shu) 45%,var(--line))}
+.btn.chat-open{display:inline-flex;align-items:center;gap:6px}
+/* narrow phones: one compact mode button in the bar instead of the two-part switch (the bar is already full there) */
+.rbar .mode-btn{display:none;font-family:var(--font-zh);letter-spacing:.06em}
+@media (max-width:520px){
+  .reader .rbar .seg.only-dlg{display:none}
+  .reader .rbar .mode-btn{display:inline-flex}
+  .reader[data-dlg] .rbar{gap:3px;padding-inline:8px}
+  .reader[data-dlg] .rbar .seg button{min-width:36px;padding:0 6px}
+  .reader[data-dlg] .rbar .ts-btn{min-width:38px}
+  .reader[data-dlg] .rbar .btn.small{padding-inline:4px;white-space:nowrap}
+  .reader[data-dlg] .rbar .mode-btn{font-size:var(--fs-sm)}
+  .reader[data-dlg] .rbar #panelBtn .pb-long{display:none}
+}
+@media (max-width:520px){ .reader[data-dlg]:not(.mode-dlg) .rbar .title{display:none} }

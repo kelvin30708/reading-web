@@ -9,6 +9,14 @@ window.RW_META = [
     license: 'Fifth-century translation in the public domain; this e-text follows the NTU-hosted CBETA 2023.Q4 ebook (non-commercial use, keep the CBETA header intact).'
   },
   {
+    id: 'diamond-xz', kind: 'text', lang: 'zh-Hant', group: 'diamond', dialogue: 170,
+    title: '能斷金剛分', short: '金剛經 · 玄奘譯',
+    subtitle: '唐 玄奘 譯 · 《大般若波羅蜜多經》卷第五百七十七 第九能斷金剛分（大正藏 T0220）· 含「對話」模式：世尊與善現（須菩提）',
+    source: 'CBETA 電子佛典集成 T07n0220 卷577（cbeta-org/xml-p5）',
+    url: 'https://github.com/cbeta-org/xml-p5/blob/master/T/T07/T07n0220.xml',
+    license: 'Seventh-century translation in the public domain. E-text and punctuation from CBETA (Taishō Tripiṭaka electronic version; “available for non-commercial use when distributed with this header intact”; punctuation by 眾生出版社). The 對話 Dialogue split into speaker turns is this app’s own arrangement.'
+  },
+  {
     id: 'diamond-en', kind: 'text', lang: 'en', group: 'diamond',
     title: 'The Diamond Sutra', short: 'Diamond Sutra · English',
     subtitle: 'Vajracchedikā Prajñāpāramitā Sūtra, translated from Kumārajīva’s Chinese (T0235) by Lapis Lazuli Texts',

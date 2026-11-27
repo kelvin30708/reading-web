@@ -2,6 +2,7 @@ import { store, files, uid, grade, isDue, BOX_DAYS, startOfNextDay, startOfDayPl
 import { rangeToParts, partsText, paint, containerText, sentenceAround, tidyCJK, healForContainer } from './anchor.js';
 import { setupTapSelect } from './tapselect.js';
 import { textToc, pdfOutline, pdfDetect, renderTocList } from './toc.js';
+import { setupDialogue } from './dialogue.js';
 import { paintLinks, unpaintLinks } from './links.js';
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -52,7 +53,7 @@ let pdfjsLib = null;
 let reader = null;
 
 store.load();
-window.RW = { store }; // handy for debugging / tests
+window.RW = { store, get reader() { return reader; } }; // handy for debugging / tests
 
 // ---------- input modality (N5): focus moves for keyboard users only ----------
 let lastInput = 'pointer', lastKey = null;
@@ -284,9 +285,10 @@ function renderLibrary() {
     const actions = isPeak
       ? (peak ? `<a class="btn primary" href="#/read/peak">${readLabel('peak', 'Open')}</a><button class="btn ghost small" data-upload="peak">Replace PDF</button>` :
         `<button class="btn primary" data-upload="peak">Upload your copy (PDF)</button>`)
-      : `<a class="btn primary" href="#/read/${m.id}">${readLabel(m.id, 'Read')}</a>`;
+      : `<a class="btn primary" href="#/read/${m.id}"${m.dialogue ? ' data-mode="read"' : ''}>${readLabel(m.id, 'Read')}</a>`
+        + (m.dialogue ? `<a class="btn ghost chat-open" href="#/read/${m.id}" data-mode="dlg" aria-label="對話 Dialogue — chat-bubble mode"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 4.2h8.6a1.4 1.4 0 0 1 1.4 1.4v3.2a1.4 1.4 0 0 1-1.4 1.4H7.4L4.6 12.6V10.2H3a1.4 1.4 0 0 1-1.4-1.4V5.6A1.4 1.4 0 0 1 3 4.2z M14 7.4h1a1.4 1.4 0 0 1 1.4 1.4V12a1.4 1.4 0 0 1-1.4 1.4h-.4v1.9l-2.4-1.9H9.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/></svg>對話 Dialogue${(store.data.settings.dlgPos?.[m.id] || 0) > 0 ? ` · ${store.data.settings.dlgPos[m.id]}/${m.dialogue}` : ''}</a>` : '');
     return `<article class="card cover-${m.group}">
-      <span class="tag">${m.lang.startsWith('zh') ? '中文 Chinese' : 'English'}${isPeak ? ' · your file' : ' · built-in'}</span>
+      <span class="tag">${m.lang.startsWith('zh') ? '中文 Chinese' : 'English'}${isPeak ? ' · your file' : ' · built-in'}</span>${m.dialogue ? '<span class="tag tag-dlg">對話 Dialogue</span>' : ''}
       <h2>${esc(m.short)}</h2>
       <p>${esc(isPeak && peak ? `${peak.name} · ${fmtSize(peak.size)}` : m.subtitle)}</p>
       <div class="actions">${actions}<span class="stats">${(isPeak && !peak) ? '' : statsFor(m.id)}</span></div>${progLine(m.id)}
@@ -316,6 +318,8 @@ function renderLibrary() {
       <p class="hint">Backups (資料 Your data, above) hold your highlights, notes, cards and settings. Uploaded PDF files stay in this browser only; after restoring on another device, re-attach each PDF and its highlights reappear.</p>
     </div></div>`;
   $$('[data-upload]', view).forEach(b => b.onclick = () => pickFile(b.dataset.upload));
+  // texts with a 對話 Dialogue mode: the button you pressed decides how the reader opens
+  $$('a[data-mode]', view).forEach(a => a.addEventListener('click', () => { const id = decodeURIComponent(a.getAttribute('href').split('/').pop()); ((store.data.settings.modeByDoc ||= {})[id] = a.dataset.mode); store.save(); }));
   $$('[data-del]', view).forEach(b => b.onclick = async () => {
     const id = b.dataset.del; if (!confirm('Remove this PDF and its highlights from this browser?')) return;
     store.data.uploads = store.data.uploads.filter(u => u.id !== id); store.tomb(id);
@@ -392,16 +396,17 @@ async function openReader(id) {
   const tapOn = !!store.data.settings.tapSelect;
   const tocTab = store.data.settings.panelTab === 'toc';
   const headMin = !!store.data.settings.panelHeadMin;
-  view.innerHTML = `<div class="reader ${closed ? 'panel-closed' : ''}${barCollapsed ? ' bar-collapsed' : ''}${tapOn ? ' tool-on' : ''}" data-lang="${info.kind === 'text' ? info.lang : ''}"${zh ? ' lang="zh-Hant"' : ''}>
+  view.innerHTML = `<div class="reader ${closed ? 'panel-closed' : ''}${barCollapsed ? ' bar-collapsed' : ''}${tapOn ? ' tool-on' : ''}" data-lang="${info.kind === 'text' ? info.lang : ''}"${info.dialogue ? ' data-dlg="1"' : ''}${zh ? ' lang="zh-Hant"' : ''}>
     <div class="reader-main">
       <div class="rbar" id="rbar"><a class="btn small ghost rb-back" href="#/library" aria-label="Back to library">←</a>
         <h1 class="title" data-heading>${esc(info.short)}</h1>
+        ${info.dialogue ? `<div class="seg only-dlg" id="modeSeg" role="group" aria-label="Mode 模式"><button type="button" data-m="read" aria-pressed="true" title="閱讀 Reading" aria-label="閱讀 Reading">閱讀</button><button type="button" data-m="dlg" aria-pressed="false" title="對話 Dialogue" aria-label="對話 Dialogue">對話</button></div><button type="button" class="btn small ghost mode-btn" id="modeBtn" aria-label="切換到對話 Switch to Dialogue" title="切換到對話 Switch to Dialogue">對話</button>` : ''}
         ${info.kind === 'text' ? `<button type="button" class="btn small ghost ts-btn" id="tapSelBtn" aria-pressed="${tapOn}" aria-label="點選 Tap-select: tap a phrase to select it" title="點選 Tap-select — tap a phrase, tap again to extend, double-tap for the sentence"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}
         <div class="seg only-zh" id="vertSeg" role="group" aria-label="Text direction 排版方向"><button type="button" data-v="1" aria-pressed="true" title="直排 Vertical" aria-label="直排 Vertical">直</button><button type="button" data-v="0" aria-pressed="false" title="橫排 Horizontal" aria-label="橫排 Horizontal">橫</button></div>
         <div class="land-tools only-land"><button class="btn small ghost" id="landAa" aria-label="Text size and theme" aria-expanded="false">Aa</button>
           <div class="land-pop" id="landPop" role="group" aria-label="Text size and theme"><button class="icon-btn" data-size="-1" aria-label="Smaller text">A−</button><button class="icon-btn" data-size="1" aria-label="Larger text">A+</button><button class="icon-btn" data-theme aria-label="Toggle dark mode">◐</button></div></div>
         <button class="btn small" id="panelBtn" aria-controls="panel" aria-expanded="${!closed}">${L.notes} <span id="hlCount"></span></button>
-        <div class="rb-tab"><button type="button" class="rb-dot" id="rbDot" aria-expanded="false" aria-label="Show reader tools 顯示小工具" title="Show reader tools 顯示小工具"></button>${info.kind === 'text' ? `<button type="button" class="rb-notes ts-btn" id="tabTapSel" aria-pressed="${tapOn}" aria-label="點選 Tap-select" title="點選 Tap-select"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}<button type="button" class="rb-notes" id="tabNotes" aria-controls="panel" aria-label="Notes 筆記" title="Notes 筆記">✎</button><button type="button" class="fs-btn" id="fsBtn" ${canFullscreen() ? '' : 'hidden '}aria-pressed="false" aria-label="Full screen 全螢幕" title="Full screen 全螢幕">${fsIcon(false)}</button><button type="button" class="rb-toggle" id="barToggle" aria-controls="rbar" aria-expanded="${!barCollapsed}" aria-label="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}" title="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        <div class="rb-tab"><button type="button" class="rb-dot" id="rbDot" aria-expanded="false" aria-label="Show reader tools 顯示小工具" title="Show reader tools 顯示小工具"></button>${info.dialogue ? `<button type="button" class="rb-notes" id="tabMode" aria-pressed="false" aria-label="切換到對話 Switch to Dialogue" title="切換到對話 Switch to Dialogue"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 4.2h8.6a1.4 1.4 0 0 1 1.4 1.4v3.2a1.4 1.4 0 0 1-1.4 1.4H7.4L4.6 12.6V10.2H3a1.4 1.4 0 0 1-1.4-1.4V5.6A1.4 1.4 0 0 1 3 4.2z M14 7.4h1a1.4 1.4 0 0 1 1.4 1.4V12a1.4 1.4 0 0 1-1.4 1.4h-.4v1.9l-2.4-1.9H9.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/></svg></button>` : ''}${info.kind === 'text' ? `<button type="button" class="rb-notes ts-btn" id="tabTapSel" aria-pressed="${tapOn}" aria-label="點選 Tap-select" title="點選 Tap-select"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M6.5 3h5M6.5 15h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="3" r="1.9" fill="currentColor"/><circle cx="9" cy="15" r="1.9" fill="currentColor"/></svg></button>` : ''}<button type="button" class="rb-notes" id="tabNotes" aria-controls="panel" aria-label="Notes 筆記" title="Notes 筆記">✎</button><button type="button" class="fs-btn" id="fsBtn" ${canFullscreen() ? '' : 'hidden '}aria-pressed="false" aria-label="Full screen 全螢幕" title="Full screen 全螢幕">${fsIcon(false)}</button><button type="button" class="rb-toggle" id="barToggle" aria-controls="rbar" aria-expanded="${!barCollapsed}" aria-label="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}" title="${barCollapsed ? 'Show bars 展開工具列' : 'Hide bars 收合工具列'}"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
         <div class="progress" id="prog"></div></div>
       <div id="docRoot"></div>
     </div>
@@ -693,6 +698,7 @@ async function renderTextDoc(R) {
   };
   R.loadToc = () => R.renderToc();
   $('.doc', R.root).addEventListener('scroll', () => R.tocTick(), { passive: true });
+  if (m.dialogue) setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBar });
 }
 
 // Optional vertical writing (直排) for Chinese sutras. Highlights are DOM-based, so they keep working.
@@ -975,6 +981,7 @@ function wireLinks(el) {
 }
 async function jumpTo(h) {
   const R = reader; const p = h.parts[0];
+  if (R.mode === 'dlg') { R.toReading(); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); }
   if (R.kind === 'pdf') {
     const n = +p.c.slice(1); const pg = $(`.page[data-page="${n}"]`); pg?.scrollIntoView({ block: 'center' });
     await R.renderPage(n);
@@ -1220,6 +1227,7 @@ banner.addEventListener('click', e => {
   }
 });
 async function showParts(R, parts, cls, lid) {
+  if (R.toReading && R.mode === 'dlg') { R.toReading(); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); }
   if (R.kind === 'pdf') { const n = +parts[0].c.slice(1); $(`.page[data-page="${n}"]`)?.scrollIntoView({ block: 'center' }); await R.renderPage(n); }
   const els = $$(`.${cls}[data-lid="${lid}"]`, R.root); if (!els.length) return null;
   // smooth only for short hops; long jumps go instantly so the flash is seen

@@ -18,6 +18,7 @@ Section dividers (a short hairline with a small vermilion square) are pure CSS i
 designed for this app; no image file. CC0 1.0.
 
 vendor/fonts/  Noto Serif TC subset — SIL Open Font License 1.1 (see the OFL file beside the fonts).
+               Extended with ~50 extra glyphs for the Xuanzang Diamond Sutra and the Dialogue UI (same font, Google Fonts subset, merged with fontTools).
 vendor/pdfjs/  PDF.js — Apache License 2.0 (Mozilla).
 Texts: see the "Texts & licenses" section on the library page and texts/meta.js.
 
@@ -29,3 +30,12 @@ texts/diamond-zh.js  — 金剛般若波羅蜜經 (鳩摩羅什譯)
   The app keeps the traditional 昭明太子 32-section headings for navigation;
   those headings are not in the NTU PDF.
 
+
+texts/diamond-xz.js  — 大般若波羅蜜多經 卷第五百七十七 第九能斷金剛分 (玄奘譯, T0220 / T07n0220 juan 577)
+  Text and punctuation from CBETA 電子佛典集成 (Taishō Tripiṭaka electronic version, XML TEI P5):
+  https://github.com/cbeta-org/xml-p5/blob/master/T/T07/T07n0220.xml  (juan 577, lines 0980a05–0985c24)
+  CBETA header: "Available for non-commercial use when distributed with this header intact."
+  Punctuation provided by 眾生出版社 via CBETA. The translation itself (7th c.) is in the public domain.
+  The 對話 Dialogue view (speaker turns 世尊 / 善現 / narration) is this app's own arrangement of that text:
+  RW_DIALOGUE in the same file; chat-bubble avatars (ensō + vermilion seal) are inline SVG drawn for this app (CC0).
+  The reading-marker titles in the 目錄 are this app's, not traditional 分 titles.
