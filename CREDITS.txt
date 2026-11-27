@@ -81,3 +81,6 @@ texts/tara-21-praises.js  — 聖救度佛母二十一種禮讚經 (T1108A, 元 
   itself in the public domain: https://github.com/Esukhia/derge-kangyur
   (archived copy now at OpenPecha/P000001). Credit: Esukhia, UVA-SOAS eKangyur, BDRC W4CZ5369.
   One editorial suggestion {རི་དགས་,རི་དྭགས་} is printed as རི་དྭགས་.
+
+
+v16 font note: a true Wang Xizhi 行書 font (e.g. 方正王羲之行書) is proprietary and cannot be embedded or converted to webfont without a written license, so it is NOT included. The calligraphy mode continues to use the OFL-licensed MasaFont 正風毛筆 subset (654 glyphs, unchanged).

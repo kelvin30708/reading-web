@@ -14,6 +14,7 @@ const INTRO = {
   'diamond-zh': ['金剛般若波羅蜜經', '鳩摩羅什譯'],
 };
 const SPEEDS = [{ k: 0.7, step: 150, t: '慢', en: 'slow' }, { k: 1, step: 110, t: '中', en: 'normal' }, { k: 1.7, step: 75, t: '快', en: 'fast' }];
+const MINOR = /[，、；：,;:]/, MAJOR = /[。！？!?．\s\u3000]/, DROP = /[「」『』《》〈〉（）()\[\]【】"'“”‘’·・—–…～~﹁﹂﹃﹄]/;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ico = {
   prev: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 L5 8 L10 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -75,15 +76,27 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     const intro = i < 0, t = intro ? null : turns[i], k = intro ? 'i' : t[0];
     const el = document.createElement('div');
     el.className = `ink-pass k-${k}`; el.dataset.i = String(i); el.dataset.k = k;
-    let n = 0;
-    const chars = s => [...s].map(c => `<span class="ch" style="--i:${n++}">${esc(c)}</span>`).join('');
+    let n = 0, gapW = 0;
+    // Calligraphy has no punctuation marks: 「」『』 and other marks are dropped; ，、；： leave a small gap and 。！？ or a space a larger one,
+    // as spacing on the preceding character (padding-inline-end works in vertical and horizontal writing). Display only: RW_DIALOGUE and the reading text keep their punctuation.
+    const chars = s => {
+      const toks = [];
+      for (const c of s) {
+        if (MINOR.test(c)) { if (toks.length) toks[toks.length - 1].g = Math.max(toks[toks.length - 1].g, 1); }
+        else if (MAJOR.test(c)) { if (toks.length) toks[toks.length - 1].g = 2; }
+        else if (DROP.test(c)) continue;
+        else toks.push({ c, g: 0 });
+      }
+      if (toks.length) toks[toks.length - 1].g = 0;
+      return toks.map(t => { gapW += t.g === 2 ? 0.7 : t.g === 1 ? 0.3 : 0; return `<span class="ch${t.g ? ' g' + t.g : ''}" style="--i:${n++}">${esc(t.c)}</span>`; }).join('');
+    };
     let body;
     if (intro) body = `<span class="ln t1">${chars(introLines[0])}</span><br><span class="ln t2">${chars(introLines[1])}</span>`;
     else if (k === 't') {
       const [a, b] = t[1].split('\n');
       body = `<span class="ln t1">${chars(a)}</span>` + (b ? `<br><span class="ln t2">${chars(b)}</span>` : '');
     } else body = t[1].split('\n').map(line => chars(line)).join('<br>');
-    el.dataset.n = String(n);
+    el.dataset.n = String(n); el.dataset.w = String(n + gapW);
     const seal = SPK[k];
     el.innerHTML = `<p class="ink-text" aria-hidden="true">${body}</p>` + (seal ? `<span class="ink-seal${seal.seal.length > 2 ? ' seal-3' : ''}" aria-hidden="true">${seal.seal.map(ch => `<b>${esc(ch)}</b>`).join('')}</span>` : '');
     return el;
@@ -97,7 +110,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     const seal = !!$('.ink-seal', el);
     const sealN = seal ? $('.ink-seal', el).querySelectorAll('b').length : 0;
     const AW = aw - (seal && vert ? 52 : 0), AH = ah - (seal && !vert ? (sealN > 2 ? 104 : 78) : 0);
-    const len = +el.dataset.n, verse = el.textContent !== '' && el.querySelector('br') && k !== 'i' && k !== 't';
+    const len = +el.dataset.n, wlen = +el.dataset.w || len, verse = el.textContent !== '' && el.querySelector('br') && k !== 'i' && k !== 't';
     const f = (k === 'i' || k === 't') ? 1.0 : len <= 8 ? 1.32 : len <= 16 ? 1.2 : len <= 30 ? 1.08 : 1;
     const kf = k === 'n' ? 0.66 : 1;
     let S = (vert ? 56 : Math.min(aw / 12, ah / 15) * f) * kf;
@@ -114,7 +127,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       const r = t.getBoundingClientRect(), pitch = S * (1 + ls) * 1.0, linePitch = S * (vert ? 1.75 : 1.85);
       const cols = Math.max(1, Math.round(r.width / linePitch));
       if (cols > 1) {
-        const per = Math.ceil(len / cols), h = Math.min(AH, (per + 0.7) * pitch);
+        const per = Math.ceil(wlen / cols), h = Math.min(AH, (per + 0.7) * pitch);
         t.style.maxHeight = h + 'px';
         if (t.getBoundingClientRect().width > r.width + 2) t.style.maxHeight = AH + 'px';
       }

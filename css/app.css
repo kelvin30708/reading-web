@@ -973,8 +973,12 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
 .ink-text{margin:0;font-size:var(--fs-ink,34px);font-weight:400;line-height:1.9;color:var(--ink-c);line-break:strict;word-break:normal;overflow-wrap:anywhere;font-feature-settings:"vert" 1,"vrt2" 1}
 .ink[data-vert="1"] .ink-text{line-height:1.75;writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;text-orientation:mixed}
 .ink[data-vert="0"] .ink-text{text-align:center;line-height:1.85}
-.k-s{--ink-c:#cdccc7;--glow:rgba(190,205,225,.17)}
-.k-n .ink-text{--ink-c:rgba(196,190,180,.62);--glow:rgba(200,190,170,.08)}
+/* ink colour per speaker: 世尊 warm gold ink, 須菩提 / 善現 pale silver-blue; title cards and narration stay neutral */
+.k-b{--ink-c:#ecd49a;--glow:rgba(255,214,140,.24);--halo:244,224,176}
+.k-s{--ink-c:#b6cfec;--glow:rgba(150,188,236,.22);--halo:196,220,246}
+.ch.g1{padding-inline-end:.3em}
+.ch.g2{padding-inline-end:.7em}
+.k-n .ink-text{--ink-c:rgba(196,190,180,.7);--glow:rgba(200,190,170,.08)}
 .k-i .ink-text .t1,.k-t .ink-text .t1{font-size:1.3em}
 .k-i .ink-text .t2,.k-t .ink-text .t2{font-size:.46em;letter-spacing:.3em;color:rgba(214,206,190,.7)}
 .k-i .ink-text .t2.ln,.k-t .ink-text .t2.ln{display:inline-block}
@@ -984,9 +988,9 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
 .ink-pass.writing .ch{animation:ink-in 1100ms cubic-bezier(.2,.65,.25,1) both;animation-delay:calc(var(--i) * var(--step,110ms))}
 .ink-pass.done .ch{color:var(--ink-c);text-shadow:var(--tsh)}
 @keyframes ink-in{
-  0%{color:transparent;text-shadow:0 0 1.1em rgba(240,231,213,0)}
-  30%{color:transparent;text-shadow:0 0 .62em rgba(240,231,213,.8),0 0 1.4em rgba(240,231,213,.25)}
-  70%{color:rgba(240,231,213,.55);text-shadow:0 0 .3em rgba(240,231,213,.5)}
+  0%{color:transparent;text-shadow:0 0 1.1em rgba(var(--halo,240,231,213),0)}
+  30%{color:transparent;text-shadow:0 0 .62em rgba(var(--halo,240,231,213),.8),0 0 1.4em rgba(var(--halo,240,231,213),.25)}
+  70%{color:rgba(var(--halo,240,231,213),.55);text-shadow:0 0 .3em rgba(var(--halo,240,231,213),.5)}
   100%{color:var(--ink-c);text-shadow:var(--tsh)}}
 /* the seal presses in once the writing is finished */
 .ink-seal{position:absolute;display:grid;grid-template-rows:1fr 1fr;place-items:center;width:30px;height:58px;padding:2px 0;border-radius:3px;background:#a93a27;color:#f6e6d8;
