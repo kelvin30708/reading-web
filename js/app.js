@@ -698,7 +698,7 @@ async function renderTextDoc(R) {
   };
   R.loadToc = () => R.renderToc();
   $('.doc', R.root).addEventListener('scroll', () => R.tocTick(), { passive: true });
-  if (m.dialogue) setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBar });
+  if (m.dialogue) setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBar, fs: { toggle: () => { isFullscreen() ? exitFullscreen() : requestFullscreen(); }, sync: syncFullscreenBtns } });
 }
 
 // Optional vertical writing (直排) for Chinese sutras. Highlights are DOM-based, so they keep working.

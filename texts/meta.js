@@ -9,7 +9,7 @@ window.RW_META = [
     license: 'Fifth-century translation in the public domain; this e-text follows the NTU-hosted CBETA 2023.Q4 ebook (non-commercial use, keep the CBETA header intact).'
   },
   {
-    id: 'diamond-xz', kind: 'text', lang: 'zh-Hant', group: 'diamond', dialogue: 170,
+    id: 'diamond-xz', kind: 'text', lang: 'zh-Hant', group: 'diamond', dialogue: 233,
     title: '能斷金剛分', short: '金剛經 · 玄奘譯',
     subtitle: '唐 玄奘 譯 · 《大般若波羅蜜多經》卷第五百七十七 第九能斷金剛分（大正藏 T0220）· 含「對話」模式：世尊與善現（須菩提）',
     source: 'CBETA 電子佛典集成 T07n0220 卷577（cbeta-org/xml-p5）',
