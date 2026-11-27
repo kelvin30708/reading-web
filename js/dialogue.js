@@ -55,6 +55,9 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   stage.dataset.vert = st.dlgVert === false ? '0' : '1';
   stage.innerHTML = `<div class="ink-bg" aria-hidden="true"><i class="ink-cloud ink-cloud-a"></i><i class="ink-cloud ink-cloud-b"></i></div>
     <div class="ink-field" id="inkField"></div>
+    <button type="button" class="ink-lotus" id="inkLotus" hidden aria-label="蓮花進度 已完成 0/32 品" title="蓮花進度"></button>
+    <p class="ink-lotus-tip" id="inkLotusTip" hidden role="status">已完成 0/32 品</p>
+    <div class="ink-lotus-finale" id="inkLotusFinale" hidden></div>
     <p class="ink-hint" id="inkHint" aria-hidden="true"><span class="ink-hint-phone">左／中 下一頁 · 右 上一頁</span><span class="ink-hint-desk">輕點繼續 · Tap, Space or → · ← back · P plays</span></p>
     <div class="ink-edges" aria-hidden="true"><span class="ink-edge ink-edge-next">‹</span><span class="ink-edge ink-edge-prev">›</span></div>
     <div class="ink-line" aria-hidden="true"><i id="inkProg"></i></div>
@@ -69,6 +72,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
         <button type="button" class="ik ik-toc" data-a="toc" aria-label="目錄 Contents" title="目錄 Contents">目錄</button>
         <button type="button" class="ik" data-a="restart" aria-label="從頭開始 Restart" title="從頭開始 Restart">${ico.restart}</button>
         <button type="button" class="ik fs-btn" data-a="fs" hidden aria-label="Full screen 全螢幕"></button>
+        <button type="button" class="ik ik-lotus" data-a="lotus-reset" hidden aria-label="重設蓮花進度 Reset lotus progress" title="重設蓮花進度">蓮</button>
         <button type="button" class="ik" data-a="close" aria-label="Hide tools 收起工具" title="Hide tools 收起工具">${ico.close}</button>
       </div>
     </div>
@@ -77,14 +81,204 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   R.root.appendChild(stage);
   const field = $('#inkField', stage), hint = $('#inkHint', stage), prog = $('#inkProg', stage), live = $('#dlgLive', stage);
   const tools = $('#inkTools', stage), tocEl = $('#inkToc', stage);
+  const lotusBtn = $('#inkLotus', stage), lotusTip = $('#inkLotusTip', stage), lotusFinaleEl = $('#inkLotusFinale', stage);
   const btn = a => $(`[data-a="${a}"]`, stage);
 
   // ---------- state ----------
-  let idx = -1, phase = 'idle', playing = false, tWrite = 0, tHold = 0, tOut = 0, tPeek = 0, tHint = 0, pendingNext = null, started = false;
+  let idx = -1, phase = 'idle', playing = false, tWrite = 0, tHold = 0, tOut = 0, tPeek = 0, tHint = 0, tFinale = 0, tLotusTip = 0, tLotusLong = 0, pendingNext = null, started = false;
   let speedI = SPEEDS.findIndex(s => s.k === st.dlgSpeed); if (speedI < 0) speedI = 1;
   const cur = () => field.firstElementChild;
   const lenOf = i => (i < 0 ? introLines.join('').length : turns[i][1].replace(/\n/g, '').length);
   const savePos = debounce(() => { if (!R.dead) { posMap[R.id] = idx + 1; store.save(); } }, 300);
+
+  // ---------- 32-petal lotus (Diamond Sutra 品 progress) ----------
+  // A 品 is complete when the reader reaches that 品's last page (the page before the next title, or N-1 for 品 32).
+  // Order-independent; persisted per text id. Finale auto-plays once on a user-facing mount (write/fade), not on instant show().
+  const titleIdx = [];
+  for (let i = 0; i < N; i++) if (turns[i][0] === 't') titleIdx.push(i);
+  const lotusRanges = titleIdx.length === 32
+    ? titleIdx.map((start, k) => ({ pin: k + 1, start, end: k + 1 < titleIdx.length ? titleIdx[k + 1] - 1 : N - 1 }))
+    : null;
+  const hasLotus = !!lotusRanges;
+  const pinOfLastPage = i => {
+    if (!lotusRanges || i < 0) return 0;
+    const r = lotusRanges.find(x => x.end === i);
+    return r ? r.pin : 0;
+  };
+  const loadLotus = () => {
+    const raw = ((st.dlgLotus ||= {})[R.id]) || { done: [], finale: false };
+    const done = new Set((raw.done || []).filter(n => n >= 1 && n <= 32));
+    return { done, finale: !!raw.finale };
+  };
+  const lotusState = loadLotus();
+  let finalePlaying = false, lotusLongFired = false;
+  const persistLotus = () => {
+    (st.dlgLotus ||= {})[R.id] = { done: [...lotusState.done].sort((a, b) => a - b), finale: !!lotusState.finale };
+    store.save();
+  };
+  const petalD = (r0, r1, w) => {
+    const y0 = 50 - r0, y1 = 50 - r1, ym = (y0 + y1) / 2;
+    return `M50,${y0.toFixed(2)} C${(50 + w).toFixed(2)},${ym.toFixed(2)} ${(50 + w * 0.42).toFixed(2)},${(y1 + 3).toFixed(2)} 50,${y1.toFixed(2)} C${(50 - w * 0.42).toFixed(2)},${(y1 + 3).toFixed(2)} ${(50 - w).toFixed(2)},${ym.toFixed(2)} 50,${y0.toFixed(2)} Z`;
+  };
+  const buildLotusSvg = () => {
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = `<defs>
+      <linearGradient id="lotusInk" x1="26" y1="18" x2="80" y2="88" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#f4e2c6"/><stop offset="45%" stop-color="#e8c4b0"/><stop offset="100%" stop-color="#d9a8a0"/>
+      </linearGradient>
+    </defs>`;
+    const rings = [
+      { n: 8, r0: 10, r1: 32, w: 7.6, rot: 0 },
+      { n: 8, r0: 22, r1: 42.5, w: 8.0, rot: 22.5 },
+      { n: 16, r0: 36, r1: 48.6, w: 6.15, rot: 11.25 },
+    ];
+    // Draw outer ring first so the heart sits on top; pin numbers still run inner → outer (1–8, 9–16, 17–32).
+    const groups = rings.map(() => document.createElementNS(NS, 'g'));
+    let pin = 1;
+    rings.forEach((ring, ri) => {
+      const g = groups[ri];
+      g.setAttribute('class', 'lotus-ring lotus-ring-' + ri);
+      for (let i = 0; i < ring.n; i++) {
+        const ang = ring.rot + i * (360 / ring.n);
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', petalD(ring.r0, ring.r1, ring.w));
+        p.setAttribute('class', 'pt pt-r' + ri);
+        p.dataset.pin = String(pin++);
+        p.style.setProperty('--ang', ang + 'deg');
+        g.appendChild(p);
+      }
+    });
+    for (let i = groups.length - 1; i >= 0; i--) svg.appendChild(groups[i]);
+    const seed = document.createElementNS(NS, 'circle');
+    seed.setAttribute('class', 'lotus-seed'); seed.setAttribute('cx', '50'); seed.setAttribute('cy', '50'); seed.setAttribute('r', '7');
+    const heart = document.createElementNS(NS, 'circle');
+    heart.setAttribute('class', 'lotus-heart'); heart.setAttribute('cx', '50'); heart.setAttribute('cy', '50'); heart.setAttribute('r', '3.1');
+    svg.appendChild(seed); svg.appendChild(heart);
+    return svg;
+  };
+  const paintLotus = ({ bloomPin } = {}) => {
+    if (!hasLotus) return;
+    lotusBtn.querySelectorAll('.pt').forEach(p => {
+      const pin = +p.dataset.pin;
+      const earned = lotusState.done.has(pin);
+      p.classList.toggle('earned', earned);
+      if (bloomPin && pin === bloomPin && earned) {
+        p.classList.remove('bloom');
+        void p.getBoundingClientRect();
+        p.classList.add('bloom');
+        p.addEventListener('animationend', () => p.classList.remove('bloom'), { once: true });
+      }
+    });
+    const n = lotusState.done.size;
+    const label = `蓮花進度 已完成 ${n}/32 品`;
+    lotusBtn.setAttribute('aria-label', label);
+    lotusBtn.setAttribute('title', label);
+    lotusTip.textContent = `已完成 ${n}/32 品`;
+    stage.classList.toggle('lotus-full', n === 32);
+  };
+  const endFinale = () => {
+    clearTimeout(tFinale);
+    finalePlaying = false;
+    stage.classList.remove('lotus-finale');
+    lotusFinaleEl.hidden = true;
+    lotusBtn.style.transform = '';
+    lotusBtn.style.opacity = '';
+    lotusBtn.style.transition = '';
+  };
+  const playFinale = ({ replay = false } = {}) => {
+    if (!hasLotus || finalePlaying) return;
+    if (!replay && lotusState.finale) return;
+    if (!replay) { lotusState.finale = true; persistLotus(); }
+    finalePlaying = true;
+    try { peek(false); } catch (_) {}
+    hideLotusTip();
+    lotusFinaleEl.hidden = false;
+    stage.classList.add('lotus-finale');
+    const place = () => {
+      const r = stage.getBoundingClientRect();
+      const b = lotusBtn.getBoundingClientRect();
+      const dx = (r.left + r.width / 2) - (b.left + b.width / 2);
+      const dy = (r.top + r.height / 2) - (b.top + b.height / 2);
+      const scale = Math.min(r.width, r.height) * 0.72 / Math.max(b.width, 56);
+      lotusBtn.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+    };
+    if (reduced()) {
+      lotusBtn.style.transition = 'opacity .5s ease';
+      lotusBtn.style.opacity = '0';
+      place();
+      requestAnimationFrame(() => { lotusBtn.style.opacity = '1'; });
+      tFinale = setTimeout(() => {
+        lotusBtn.style.opacity = '0';
+        tFinale = setTimeout(() => endFinale(), 500);
+      }, 2500);
+    } else {
+      lotusBtn.style.transition = 'transform 1.8s cubic-bezier(.22,.7,.25,1)';
+      requestAnimationFrame(() => requestAnimationFrame(place));
+      tFinale = setTimeout(() => {
+        lotusBtn.style.transform = 'none';
+        tFinale = setTimeout(() => endFinale(), 1600);
+      }, 4600);
+    }
+  };
+  const hideLotusTip = () => { clearTimeout(tLotusTip); lotusTip.hidden = true; };
+  const showLotusTip = () => {
+    lotusTip.hidden = false;
+    clearTimeout(tLotusTip);
+    tLotusTip = setTimeout(() => { lotusTip.hidden = true; }, 2400);
+  };
+  const resetLotus = ({ confirm: ask = true } = {}) => {
+    if (ask && !window.confirm('重設蓮花進度？')) return false;
+    lotusState.done.clear();
+    lotusState.finale = false;
+    persistLotus();
+    endFinale();
+    hideLotusTip();
+    paintLotus();
+    announce('已重設蓮花進度');
+    return true;
+  };
+  const notePin = (i, how) => {
+    if (!hasLotus || i < 0) return;
+    const pin = pinOfLastPage(i);
+    if (!pin) return;
+    const already = lotusState.done.has(pin);
+    if (!already) {
+      lotusState.done.add(pin);
+      persistLotus();
+      paintLotus({ bloomPin: pin });
+    }
+    if (lotusState.done.size === 32 && !lotusState.finale && how !== 'instant') playFinale({ replay: false });
+  };
+  if (hasLotus) {
+    stage.classList.add('has-lotus');
+    lotusBtn.hidden = false;
+    lotusBtn.appendChild(buildLotusSvg());
+    const resetBtn = btn('lotus-reset');
+    if (resetBtn) resetBtn.hidden = false;
+    paintLotus();
+    lotusBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (lotusLongFired) { lotusLongFired = false; return; }
+      if (finalePlaying) { endFinale(); return; }
+      if (lotusState.done.size === 32) { playFinale({ replay: true }); return; }
+      if (lotusTip.hidden) showLotusTip(); else hideLotusTip();
+    });
+    lotusBtn.addEventListener('pointerdown', e => {
+      e.stopPropagation();
+      lotusLongFired = false;
+      clearTimeout(tLotusLong);
+      tLotusLong = setTimeout(() => { lotusLongFired = true; resetLotus(); }, 700);
+    });
+    const clearLong = () => clearTimeout(tLotusLong);
+    lotusBtn.addEventListener('pointerup', clearLong);
+    lotusBtn.addEventListener('pointercancel', clearLong);
+    lotusBtn.addEventListener('pointerleave', clearLong);
+    lotusFinaleEl.addEventListener('click', e => { e.stopPropagation(); if (finalePlaying) endFinale(); });
+  }
 
   // ---------- building a passage ----------
   function build(i) {
@@ -596,7 +790,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     } else {
       el.classList.add('done', how === 'instant' ? 'instant' : 'fade'); phase = 'held'; held();
     }
-    paint(); savePos();
+    paint(); savePos(); notePin(i, how);
     if (i >= 0) live.textContent = turns[i][1].replace(/\n/g, '');
     if (i >= 0 && !started) { started = true; stage.classList.remove('show-hint'); clearTimeout(tHint); }
   }
@@ -673,6 +867,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     speed: () => { speedI = (speedI + 1) % SPEEDS.length; st.dlgSpeed = SPEEDS[speedI].k; store.save(); const e = cur(); if (e) e.style.setProperty('--step', stepMs() + 'ms'); paint(); if (playing && phase === 'held') held(); },
     vert: () => { stage.dataset.vert = stage.dataset.vert === '1' ? '0' : '1'; st.dlgVert = stage.dataset.vert === '1'; store.save(); const e = cur(); if (e) { fit(e); } paint(); },
     toc: () => toc(true), fs: () => fs.toggle(), close: () => peek(false),
+    'lotus-reset': () => resetLotus(),
   };
   $('.ink-row', stage).addEventListener('click', e => { const b = e.target.closest('button[data-a]'); if (!b) return; e.stopPropagation(); act[b.dataset.a]?.(); if (b.dataset.a !== 'close' && b.dataset.a !== 'read' && b.dataset.a !== 'toc') bump(); });
   $('.ink-row', stage).addEventListener('pointerdown', bump);
@@ -685,13 +880,13 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   const sideNav = () => matchMedia('(max-width: 860px), (pointer: coarse)').matches;
   let ptr0 = null, suppressNav = false;
   stage.addEventListener('pointerdown', e => {
-    if (e.target.closest('.ink-tools, .ink-toc')) { ptr0 = null; return; }
+    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip')) { ptr0 = null; return; }
     if (tools.classList.contains('open')) { peek(false); suppressNav = true; }
     if (!tocEl.hidden) { toc(false); suppressNav = true; }
     ptr0 = { x: e.clientX, y: e.clientY };
   });
   stage.addEventListener('click', e => {
-    if (e.target.closest('.ink-tools, .ink-toc')) { suppressNav = false; return; }
+    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip')) { suppressNav = false; return; }
     if (suppressNav) { suppressNav = false; return; }
     if (ptr0 && Math.hypot(e.clientX - ptr0.x, e.clientY - ptr0.y) > 28) { ptr0 = null; return; }
     ptr0 = null;
@@ -720,7 +915,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   document.addEventListener('visibilitychange', onVis);
   const onRs = debounce(() => R.fitInk(), 150);
   addEventListener('resize', onRs);
-  R.cleanup.push(() => { document.removeEventListener('keydown', onKey); document.removeEventListener('visibilitychange', onVis); removeEventListener('resize', onRs); [tWrite, tHold, tOut, tPeek, tHint].forEach(clearTimeout); root.classList.remove('ink-lock'); });
+  R.cleanup.push(() => { document.removeEventListener('keydown', onKey); document.removeEventListener('visibilitychange', onVis); removeEventListener('resize', onRs); [tWrite, tHold, tOut, tPeek, tHint, tFinale, tLotusTip, tLotusLong].forEach(clearTimeout); root.classList.remove('ink-lock'); });
 
   // ---------- going to a place (TOC, switching modes) ----------
   const firstTurnOfBlock = bi => { const i = turns.findIndex(t => t[2] >= bi); return i < 0 ? N - 1 : i; };
@@ -797,9 +992,33 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   R.toReading = () => { if (R.mode === 'dlg') R.setMode('read', { silent: true }); };
 
   // state for tests / debugging
-  R.dlg = { next, prev, play, pause, restart, goto: R.dlgGoto, finish, show: i => { pause(); mount(i, 'instant'); },
+  R.dlg = { next, prev, play, pause, restart, goto: R.dlgGoto, finish,
+    show: i => { pause(); mount(i, 'instant'); },
+    open: (i, how) => { pause(); mount(i, how || 'fade'); },
     get shown() { return idx + 1; }, get idx() { return idx; }, get total() { return N; }, get playing() { return playing; }, get phase() { return phase; },
-    sideNav, turns };
+    sideNav, turns,
+    lotus: {
+      get has() { return hasLotus; },
+      done: () => [...lotusState.done].sort((a, b) => a - b),
+      get finalePlayed() { return !!lotusState.finale; },
+      get finalePlaying() { return finalePlaying; },
+      ranges: lotusRanges,
+      pinOf: pinOfLastPage,
+      lastPageOf: pin => (lotusRanges && pin >= 1 && pin <= 32) ? lotusRanges[pin - 1].end : -1,
+      seed: (pins, { finale = false } = {}) => {
+        if (!hasLotus) return;
+        lotusState.done = new Set((pins || []).filter(n => n >= 1 && n <= 32));
+        lotusState.finale = !!finale;
+        persistLotus();
+        endFinale();
+        paintLotus();
+      },
+      earn: pin => notePin(lotusRanges && pin >= 1 && pin <= 32 ? lotusRanges[pin - 1].end : -1, 'fade'),
+      reset: () => resetLotus({ confirm: false }),
+      playFinale: () => playFinale({ replay: true }),
+      endFinale,
+    },
+  };
   // start where we left off (the stage is drawn when the mode is entered)
   const saved = Math.min(N, Math.max(0, +posMap[R.id] || 0));
   idx = saved - 1;

@@ -953,29 +953,31 @@ body.link-mode .selbar{display:none}
 .reader.mode-dlg .doc{display:none}
 html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height:100%;height:100dvh;height:-webkit-fill-available;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .ink,.ink-text,.ink-text .ln,.ink-text .ch,.ink-field{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-.ink{display:none;position:fixed;inset:0;z-index:55;overflow:hidden;background:#08080a;
+.ink{display:none;position:fixed;inset:0;z-index:55;overflow:hidden;background:#050506;
   width:100%;height:100%;height:100dvh;height:-webkit-fill-available;
   --ink-c:#f0e7d5;--glow:rgba(255,226,170,.2);--tsh:0 0 .5em var(--glow);
   font-family:"RW Brush","Noto Serif TC Sutra",var(--font-zh);color:var(--ink-c);
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;cursor:pointer;outline:none}
 .reader.mode-dlg .ink{display:block}
-/* ink-wash: two slow drifting 雲霧 layers (CSS transform only), a vignette, a whisper of paper grain */
-.ink-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.ink-cloud{position:absolute;inset:-20%;pointer-events:none;will-change:transform}
+/* 寂靜水墨黑: still ink-wash ground, two slower/darker drifting 雲霧 layers, a deeper vignette, quiet paper grain */
+.ink-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;
+  background:radial-gradient(90% 70% at 16% 8%,rgba(22,24,26,.7),transparent 64%),radial-gradient(70% 55% at 88% 22%,rgba(14,16,18,.75),transparent 70%),radial-gradient(80% 60% at 48% 100%,rgba(4,4,6,.95),transparent 62%),#050506}
+.ink-cloud{position:absolute;inset:-20%;pointer-events:none;will-change:transform;opacity:.55}
 .ink-cloud-a{
-  background:radial-gradient(50% 38% at 28% 34%,rgba(186,178,164,.42),transparent 72%),radial-gradient(44% 34% at 78% 58%,rgba(168,162,152,.36),transparent 74%),radial-gradient(70% 48% at 52% 108%,rgba(120,116,108,.32),transparent 70%),radial-gradient(36% 28% at 86% 14%,rgba(176,170,160,.30),transparent 72%);
-  animation:ink-mist-a 64s ease-in-out infinite alternate}
+  background:radial-gradient(50% 38% at 28% 34%,rgba(48,50,52,.38),transparent 72%),radial-gradient(44% 34% at 78% 58%,rgba(36,38,40,.36),transparent 74%),radial-gradient(70% 48% at 52% 108%,rgba(16,16,18,.5),transparent 70%),radial-gradient(36% 28% at 86% 14%,rgba(42,44,46,.28),transparent 72%);
+  animation:ink-mist-a 96s ease-in-out infinite alternate}
 .ink-cloud-b{
-  background:radial-gradient(40% 30% at 62% 24%,rgba(210,202,188,.30),transparent 70%),radial-gradient(46% 34% at 16% 76%,rgba(160,154,146,.26),transparent 72%),radial-gradient(32% 24% at 90% 80%,rgba(190,184,174,.22),transparent 70%);
-  animation:ink-mist-b 90s ease-in-out infinite alternate}
+  background:radial-gradient(40% 30% at 62% 24%,rgba(58,56,52,.22),transparent 70%),radial-gradient(46% 34% at 16% 76%,rgba(32,32,34,.28),transparent 72%),radial-gradient(32% 24% at 90% 80%,rgba(44,42,40,.18),transparent 70%);
+  animation:ink-mist-b 140s ease-in-out infinite alternate}
 .ink-bg::after{content:"";position:absolute;inset:0;
-  background:radial-gradient(130% 110% at 50% 46%,transparent 52%,rgba(0,0,0,.72) 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .88 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
+  background:radial-gradient(130% 110% at 50% 46%,transparent 48%,rgba(0,0,0,.82) 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .88 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
   background-blend-mode:normal;opacity:1;background-size:auto,160px 160px}
-@keyframes ink-mist-a{from{transform:translate3d(-4%,1.5%,0) scale(1.02)}to{transform:translate3d(4%,-2.5%,0) scale(1.08)}}
-@keyframes ink-mist-b{from{transform:translate3d(3%,-2%,0) scale(1.06)}to{transform:translate3d(-3%,2%,0) scale(1.02)}}
+@keyframes ink-mist-a{from{transform:translate3d(-2%,.8%,0) scale(1.01)}to{transform:translate3d(2%,-1.2%,0) scale(1.04)}}
+@keyframes ink-mist-b{from{transform:translate3d(1.6%,-1%,0) scale(1.03)}to{transform:translate3d(-1.6%,1%,0) scale(1.01)}}
 .ink-pass,.ink-text,.ink-text .ch{transition:none !important}
 .ink-field{position:absolute;inset:0;display:grid;place-items:center;
   padding:calc(max(56px,7vh) + env(safe-area-inset-top,0px)) calc(max(30px,7.5vw) + env(safe-area-inset-right,0px)) calc(max(56px,7vh) + env(safe-area-inset-bottom,0px)) calc(max(30px,7.5vw) + env(safe-area-inset-left,0px))}
+.ink.has-lotus .ink-field{padding-left:calc(max(62px,7.5vw) + env(safe-area-inset-left,0px));padding-top:calc(max(62px,7vh) + env(safe-area-inset-top,0px))}
 .ink-pass{position:relative;max-width:100%;max-height:100%}
 .ink-text{margin:0;font-size:var(--fs-ink,34px);font-weight:400;line-height:1.9;color:var(--ink-c);line-break:strict;word-break:normal;overflow-wrap:anywhere}
 .ink-pass,.ink-pass .ink-text{font-size:var(--fs-ink,34px)}
@@ -1057,6 +1059,44 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height
 @media (min-width:861px) and (pointer:fine){
   .ink-edge{display:none}
 }
+
+/* 32-petal lotus progress (Diamond Sutra 品) — top-left, outside the text field */
+.ink-lotus{position:absolute;z-index:3;top:calc(env(safe-area-inset-top,0px) + 6px);left:calc(env(safe-area-inset-left,0px) + 6px);
+  width:56px;height:56px;margin:0;padding:0;border:0;background:transparent;cursor:pointer;line-height:0;
+  transform-origin:28px 28px;transition:transform 1.8s cubic-bezier(.22,.7,.25,1);-webkit-tap-highlight-color:transparent}
+.ink-lotus[hidden]{display:none}
+.ink-lotus:focus-visible{outline:2px solid #9DB4D3;outline-offset:2px;border-radius:50%}
+.ink-lotus svg{width:100%;height:100%;display:block;overflow:visible}
+.ink-lotus .pt{transform-origin:50px 50px;transform:rotate(var(--ang,0deg));transition:fill .45s ease,stroke .45s ease,opacity .45s ease}
+.ink-lotus .pt:not(.earned){fill:rgba(240,231,213,.04);stroke:rgba(220,210,190,.26);stroke-width:.55}
+.ink-lotus .pt.earned{fill:url(#lotusInk);stroke:rgba(232,200,160,.7);stroke-width:.45;filter:drop-shadow(0 0 0.7px rgba(232,196,150,.55))}
+.ink-lotus .pt.bloom{animation:lotus-bloom .9s ease-out both}
+@keyframes lotus-bloom{
+  0%{transform:rotate(var(--ang,0deg)) scale(.55);opacity:.25}
+  58%{transform:rotate(var(--ang,0deg)) scale(1.14);opacity:1}
+  100%{transform:rotate(var(--ang,0deg)) scale(1);opacity:1}}
+.ink-lotus .lotus-seed{fill:rgba(28,24,20,.85);stroke:rgba(200,170,130,.35);stroke-width:.5}
+.ink-lotus .lotus-heart{fill:rgba(196,160,110,.28)}
+.ink.lotus-full .ink-lotus .lotus-heart{fill:url(#lotusInk);filter:drop-shadow(0 0 1.5px rgba(232,196,150,.6))}
+.ink-lotus-tip{position:absolute;z-index:4;top:calc(env(safe-area-inset-top,0px) + 66px);left:calc(env(safe-area-inset-left,0px) + 8px);
+  margin:0;padding:4px 8px;border-radius:4px;background:rgba(8,8,10,.82);color:rgba(240,231,213,.78);
+  font:400 .68rem/1.3 var(--font-ui);letter-spacing:.1em;pointer-events:none;white-space:nowrap}
+.ink-lotus-tip[hidden]{display:none}
+.ink-lotus-finale{position:absolute;inset:0;z-index:6;pointer-events:auto;background:transparent;cursor:pointer}
+.ink-lotus-finale[hidden]{display:none}
+.ink.lotus-finale .ink-lotus{z-index:7;pointer-events:auto}
+.ink.lotus-finale .pt-r0{animation:lotus-unfold 1s ease both}
+.ink.lotus-finale .pt-r1{animation:lotus-unfold 1.05s ease both;animation-delay:.32s}
+.ink.lotus-finale .pt-r2{animation:lotus-unfold 1.15s ease both;animation-delay:.68s}
+@keyframes lotus-unfold{
+  0%{transform:rotate(var(--ang,0deg)) scale(.22);opacity:0}
+  100%{transform:rotate(var(--ang,0deg)) scale(1);opacity:1}}
+.ink.lotus-finale .ink-lotus{filter:drop-shadow(0 0 18px rgba(220,180,130,.28)) drop-shadow(0 0 42px rgba(200,150,100,.16))}
+@media (prefers-reduced-motion:reduce){
+  .ink-lotus .pt{transition:none}
+  .ink-lotus .pt.bloom,.ink.lotus-finale .pt-r0,.ink.lotus-finale .pt-r1,.ink.lotus-finale .pt-r2{animation:none}
+  .ink-lotus{transition:opacity .5s ease}
+}
 .ink-tools{position:absolute;z-index:3;top:calc(env(safe-area-inset-top,0px) + 2px);right:calc(6px + env(safe-area-inset-right,0px));display:flex;justify-content:flex-end;max-width:calc(100% - 12px);cursor:default}
 .ink-dot{display:inline-grid;place-items:center;width:44px;height:44px;margin:0;padding:0;border:0;background:transparent;cursor:pointer;position:relative}
 .ink-dot::after{content:"";width:11px;height:11px;border-radius:50%;background:#f0e7d5;opacity:.2;transition:opacity .3s}
@@ -1084,7 +1124,8 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height
 .ink-toc-item.cur{color:#f0e7d5;border-left-color:#a93a27}
 .ink-toc-item:focus-visible{outline:2px solid #9DB4D3;outline-offset:-2px}
 @media (max-width:420px){ .ik{min-width:36px;padding:0 4px} }
-@media (min-width:860px){ .ink-field{padding-inline:max(30px,7.5vw)} }
+@media (min-width:860px){ .ink-field{padding-inline:max(30px,7.5vw)}
+  .ink.has-lotus .ink-field{padding-left:max(72px,7.5vw);padding-right:max(30px,7.5vw)} }
 @media (prefers-reduced-motion:reduce){
   .ink-cloud-a,.ink-cloud-b{animation:none}
   .ink-pass.writing .ch{animation:none}
