@@ -41,6 +41,24 @@ window.RW_META = [
     license: 'CC BY 4.0 per the Zenodo record; the book itself says © 2001 Minh Thanh, “strictly for free distribution”, reprint permission granted on request. Free, non-commercial use with attribution. Footnote markers removed.'
   },
   {
+    id: 'tara-white-praise', kind: 'text', lang: 'zh-Hant', group: 'tara',
+    bilingual: true, verticalDefault: false,
+    title: '白救度佛母讚', short: '白救度佛母讚 · 漢藏',
+    subtitle: '清 阿旺扎什 譯（大正藏 T1109）· 藏文傳統歸於二世達賴喇嘛根敦嘉措',
+    source: '漢文以 Kanripo KR6j0319 為底（CC BY-SA 4.0），標點與「輪／輸」校訂參 CBETA T20n1109；藏文為與 T1109 對應的《སྒྲོལ་དཀར་བསྟོད་པ།》傳本',
+    url: 'https://www.kanripo.org/text/KR6j0319/001',
+    license: 'Literary works are in the public domain (Qing translation; 16th-century Tibetan praise). Kanripo e-text: CC BY-SA 4.0. CBETA punctuation and e-text: CC BY-NC-SA 4.0 (this app is non-commercial; share-alike applies to those text files). These are praises (讚) and a mantra, not the full White Tara daily sadhana.'
+  },
+  {
+    id: 'tara-21-praises', kind: 'text', lang: 'zh-Hant', group: 'tara',
+    bilingual: true, verticalDefault: false,
+    title: '聖救度佛母二十一種禮讚經', short: '度母二十一禮讚 · 漢藏',
+    subtitle: '元 安藏 譯（大正藏 T1108A）· 藏文德格版甘珠爾 D438 / Toh 438',
+    source: '漢文據 CBETA 電子佛典 T20n1108A；藏文據 Esukhia Digital Derge Kangyur（UVA-SOAS 2013 eKangyur 的校訂轉寫，德格木刻版 vol. 81 / BDRC W4CZ5369）',
+    url: 'https://github.com/cbeta-org/xml-p5/blob/master/T/T20/T20n1108A.xml',
+    license: 'The Yuan translation and the Derge woodblock text are in the public domain. CBETA e-text: CC BY-NC-SA 4.0 (this app is non-commercial; share-alike applies to those text files). Esukhia / UVA-SOAS Digital Derge Kangyur is a mechanical reproduction of a public-domain work, and is itself in the public domain (credit Esukhia, UVA-SOAS eKangyur, BDRC W4CZ5369). These are praises (讚) and mantras, not a full sadhana.'
+  },
+  {
     id: 'peak', kind: 'pdf', lang: 'en', group: 'peak', userFile: true,
     title: 'Peak: Secrets from the New Science of Expertise', short: '刻意練習 · Peak (English)',
     subtitle: 'Anders Ericsson & Robert Pool (2016). Copyrighted — upload your own copy (PDF). It is stored only in this browser.',

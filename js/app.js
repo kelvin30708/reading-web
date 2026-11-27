@@ -288,7 +288,7 @@ function renderLibrary() {
       : `<a class="btn primary" href="#/read/${m.id}"${m.dialogue ? ' data-mode="read"' : ''}>${readLabel(m.id, 'Read')}</a>`
         + (m.dialogue ? `<a class="btn ghost chat-open" href="#/read/${m.id}" data-mode="dlg" aria-label="對話 Dialogue — chat-bubble mode"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 4.2h8.6a1.4 1.4 0 0 1 1.4 1.4v3.2a1.4 1.4 0 0 1-1.4 1.4H7.4L4.6 12.6V10.2H3a1.4 1.4 0 0 1-1.4-1.4V5.6A1.4 1.4 0 0 1 3 4.2z M14 7.4h1a1.4 1.4 0 0 1 1.4 1.4V12a1.4 1.4 0 0 1-1.4 1.4h-.4v1.9l-2.4-1.9H9.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/></svg>對話 Dialogue${(store.data.settings.dlgPos?.[m.id] || 0) > 0 ? ` · ${store.data.settings.dlgPos[m.id]}/${m.dialogue}` : ''}</a>` : '');
     return `<article class="card cover-${m.group}">
-      <span class="tag">${m.lang.startsWith('zh') ? '中文 Chinese' : 'English'}${isPeak ? ' · your file' : ' · built-in'}</span>${m.dialogue ? '<span class="tag tag-dlg">對話 Dialogue</span>' : ''}
+      <span class="tag">${m.bilingual ? '漢藏 Chinese · Tibetan' : m.lang.startsWith('zh') ? '中文 Chinese' : 'English'}${isPeak ? ' · your file' : ' · built-in'}</span>${m.dialogue ? '<span class="tag tag-dlg">對話 Dialogue</span>' : ''}
       <h2>${esc(m.short)}</h2>
       <p>${esc(isPeak && peak ? `${peak.name} · ${fmtSize(peak.size)}` : m.subtitle)}</p>
       <div class="actions">${actions}<span class="stats">${(isPeak && !peak) ? '' : statsFor(m.id)}</span></div>${progLine(m.id)}
@@ -668,10 +668,20 @@ async function renderTextDoc(R) {
   // Zen ink art for the sutras: a sumi-e header (Tōhaku's pines, public domain), hairline section marks (CSS), a closing ensō.
   // Decorative only (aria-hidden, outside every [data-anchor]), so highlight offsets are untouched.
   const art = /^(diamond|medicine)-/.test(R.id);
-  R.root.innerHTML = `<article class="doc${art ? ' art' : ''}${R.id.startsWith('diamond-') ? ' div-plain' : ''}${R.tapOn() ? ' tapsel' : ''}" lang="${m.lang}">
+  const blockHTML = (b, i) => {
+    const kind = b[0];
+    if (kind === 'bi') {
+      return `<div class="bi-verse"><div class="bi-zh"><p data-anchor="b${i}-zh" lang="zh-Hant" class="verse">${phraseHTML(b[1])}</p></div><div class="bi-bo"><p data-anchor="b${i}-bo" lang="bo">${esc(b[2] || '')}</p></div></div>`;
+    }
+    if (kind === 'bo') return `<p data-anchor="b${i}" class="bo-block" lang="bo">${esc(b[1])}</p>`;
+    if (kind === 'n') return `<p data-anchor="b${i}" class="ednote">${esc(b[1])}</p>`;
+    const txt = m.lang.startsWith('zh') ? phraseHTML(b[1]) : esc(b[1]);
+    return kind === 'h' ? `<h3 data-anchor="b${i}">${txt}</h3>` : `<p data-anchor="b${i}" class="${kind === 'v' ? 'verse' : ''}">${txt}</p>`;
+  };
+  R.root.innerHTML = `<article class="doc${art ? ' art' : ''}${R.id.startsWith('diamond-') ? ' div-plain' : ''}${m.bilingual ? ' bilingual' : ''}${R.tapOn() ? ' tapsel' : ''}" lang="${m.lang}">
     ${art ? `<figure class="art-head" aria-hidden="true"><img class="art-wide" src="img/art/pines-wide.webp" width="1400" height="606" alt="" loading="lazy" decoding="async"><img class="art-tall" src="img/art/pines-tall.webp" width="460" height="825" alt="" loading="lazy" decoding="async"></figure>` : ''}
     <h1>${esc(m.title)}</h1><div class="sub">${esc(m.subtitle)}</div>
-    ${blocks.map((b, i) => { const t = m.lang.startsWith('zh') ? phraseHTML(b[1]) : esc(b[1]); return b[0] === 'h' ? `<h3 data-anchor="b${i}">${t}</h3>` : `<p data-anchor="b${i}" class="${b[0] === 'v' ? 'verse' : ''}">${t}</p>`; }).join('')}
+    ${blocks.map((b, i) => blockHTML(b, i)).join('')}
     ${art ? `<div class="art-end" aria-hidden="true"><img src="img/art/enso.webp" width="560" height="560" alt="" loading="lazy" decoding="async"></div>` : ''}
     <div class="colophon">Source: ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source)}</a>` : esc(m.source)}<br>License: ${esc(m.license)}</div>
   </article>`;
@@ -751,9 +761,9 @@ function setupVertical(R) {
       if (on) showVCoach(R);
     });
   };
-  // Chinese sutras open in 直排 by default; an explicit choice is remembered per text in settings.verticalByDoc.
+  // Chinese sutras open in 直排 by default (bilingual Tara texts set verticalDefault: false). An explicit choice is remembered per text in settings.verticalByDoc.
   const prefs = (store.data.settings.verticalByDoc ||= {});
-  const isOn = () => prefs[R.id] ?? true;
+  const isOn = () => prefs[R.id] ?? (R.info.verticalDefault !== false);
   apply(isOn(), false);
   $$('button', seg).forEach(b => b.onclick = () => {
     const on = b.dataset.v === '1'; if (on === isOn()) return;

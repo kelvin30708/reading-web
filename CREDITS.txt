@@ -19,6 +19,8 @@ designed for this app; no image file. CC0 1.0.
 
 vendor/fonts/  Noto Serif TC subset — SIL Open Font License 1.1 (see the OFL file beside the fonts).
                Extended with ~50 extra glyphs for the Xuanzang Diamond Sutra and the Dialogue UI (same font, Google Fonts subset, merged with fontTools).
+  Two rare Buddhist transliteration glyphs (儞, 嚩) not present in Noto Serif TC were added from BIZ UDPMincho Regular (TypeBank / Morisawa, SIL OFL 1.1, Google Fonts), glyphs otherwise unaltered.
+
 vendor/pdfjs/  PDF.js — Apache License 2.0 (Mozilla).
 Texts: see the "Texts & licenses" section on the library page and texts/meta.js.
 
@@ -45,3 +47,33 @@ vendor/fonts/RWBrush-subset.woff2  — brush-script face of the 對話 Dialogue 
   Subset (542 characters, glyphs unaltered) of MasaFont 正風毛筆 Regular v2.1 by Chun yu Yao,
   https://github.com/max32002/MasaFont , which is based on 衡山毛筆フォント行書 by Aoyagi Kouzan 青柳衡山.
   SIL Open Font License 1.1 — see vendor/fonts/OFL-MasaFont.txt. Used under the CSS name "RW Brush".
+
+vendor/fonts/NotoSerifTibetan-subset.woff2  — Noto Serif Tibetan (Regular), SIL Open Font License 1.1
+  Source: Google Fonts ofl/notoseriftibetan (Noto Serif Tibetan variable font, instanced at wght 400).
+  https://github.com/google/fonts/tree/main/ofl/notoseriftibetan
+  Designed by the Noto project (Google). Subset of the characters used in the bilingual Tara praises,
+  plus the Tibetan Unicode block needed for proper stacks (glyphs unaltered). See vendor/fonts/OFL-NotoSerifTibetan.txt.
+
+texts/tara-white-praise.js  — 白救度佛母讚 (T1109) with the matching Tibetan སྒྲོལ་དཀར་བསྟོད་པ།
+  Chinese: Qing translation by 阿旺扎什, literary work in the public domain.
+  E-text prefers Kanripo KR6j0319 (CC BY-SA 4.0): https://www.kanripo.org/text/KR6j0319/001
+  Punctuation and the 輪（CBETA）／輸（Taisho）reading follow CBETA T20n1109
+  (https://github.com/cbeta-org/xml-p5 ; CC BY-NC-SA 4.0 — this app is non-commercial;
+  share-alike applies to those text files). The Taisho colophon glyph [口*束*頁] / U+210E4 is written as 賴.
+  Tibetan: traditionally attributed (in T1109's own colophon) to the 2nd Dalai Lama 根敦嘉措 (1475–1542),
+  public domain. Some circulating editions attribute a closely similar praise to the 1st Dalai Lama.
+  These are praises (讚) and a longevity mantra, not the full 白度母日修儀軌.
+
+texts/tara-21-praises.js  — 聖救度佛母二十一種禮讚經 (T1108A, 元 安藏) with Derge Kangyur D438 / Toh 438
+  Chinese: Yuan translation, public domain. E-text and punctuation from CBETA T20n1108A
+  (CC BY-NC-SA 4.0; this app is non-commercial; share-alike applies to those text files).
+  CBETA readings 禮／災 are used where they correct Taisho 體／炎.
+  The imperial preface and the compressed 21-name digest have no Tibetan counterpart in D438.
+  The first Anzang quatrain (唵敬禮多哩…) praises the mantra syllables and is not paired with a
+  ཕྱག་འཚལ homage verse; the following 21 敬禮 verses are aligned with the 21 Tibetan homage verses.
+  Siddham glyphs in the two closing mantras are replaced with the CBETA XML Chinese phonetic lines.
+  Tibetan: Esukhia Digital Derge Kangyur (based on the UVA-SOAS 2013 eKangyur), a mechanical
+  reproduction of the public-domain Derge woodblock (BDRC W4CZ5369 / Library of Congress),
+  itself in the public domain: https://github.com/Esukhia/derge-kangyur
+  (archived copy now at OpenPecha/P000001). Credit: Esukhia, UVA-SOAS eKangyur, BDRC W4CZ5369.
+  One editorial suggestion {རི་དགས་,རི་དྭགས་} is printed as རི་དྭགས་.

@@ -4,6 +4,7 @@
    ========================================================================== */
 @font-face{font-family:"Noto Serif TC Sutra";src:url(../vendor/fonts/NotoSerifTC-400-sutra-subset.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Noto Serif TC Sutra";src:url(../vendor/fonts/NotoSerifTC-600-sutra-subset.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Noto Serif Tibetan";src:url(../vendor/fonts/NotoSerifTibetan-subset.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 :root{--top:60px;
   /* paper & ink */
   --bg:#F7F4EE;        /* washi */
@@ -37,6 +38,7 @@
   --font-read:"Noto Serif","Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Noto Serif TC Sutra","Noto Serif CJK TC","Source Han Serif TC","Songti TC","PMingLiU",serif;
   --font-ui:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;
   --font-zh:"Noto Serif TC Sutra","Noto Serif","Noto Serif TC","Noto Serif CJK TC","Source Han Serif TC","Songti TC","PMingLiU","MingLiU",serif;
+  --font-bo:"Noto Serif Tibetan","Jomolhari","Noto Serif Tibetan UI","Microsoft Himalaya","Kailasa","DDC Uchen",serif;
   /* P7 UI type scale (reading sizes stay on --fs) */
   --fs-2xs:.733rem; --fs-xs:.8rem; --fs-sm:.867rem; --fs-base:1rem; --fs-md:1.133rem; --fs-lg:1.4rem;
   --fs:19px; --radius:6px; --radius-lg:10px;
@@ -135,6 +137,7 @@ main{outline:none}
 .card.cover-diamond{--c:var(--yamabuki)}
 .card.cover-medicine{--c:var(--accent)}
 .card.cover-peak{--c:var(--matcha)}
+.card.cover-tara{--c:#8A8070}
 .card.cover-user{--c:var(--sakura)}
 .card.cover-upload{border:1px dashed var(--line-strong);background:transparent;justify-content:center;cursor:pointer}
 .card.cover-upload::before{display:none}
@@ -184,6 +187,44 @@ mark.hl.flash{outline:1px solid var(--shu);outline-offset:3px}
 .doc.vertical p{margin:0 0 0 1.1em}
 .doc.vertical p.verse{margin:2em 0 0 1.1em}
 .doc.vertical .colophon{margin:0 0 0 0;padding:0 1.4em 0 0;border-top:0;border-right:1px solid var(--line);max-height:24em}
+
+/* bilingual Chinese + Tibetan verses (Tara praises) */
+.doc.bilingual{max-width:40em}
+.doc.bilingual .bi-verse{display:flex;flex-direction:column;gap:.55em;margin:1.7em 0;padding:0 0 1.25em;border-bottom:1px solid var(--line)}
+.doc.bilingual .bi-zh p,.doc.bilingual .bi-bo p{margin:0}
+.doc.bilingual p.verse{margin-left:0;white-space:pre-line}
+.doc.bilingual .bi-zh,.doc.bilingual .bi-zh p{white-space:pre-line}
+.doc[lang^=zh].bilingual .bi-bo p,.doc[lang^=zh].bilingual p.bo-block{white-space:pre-line}
+.doc.bilingual .bi-zh .ph-nl,
+.doc.bilingual p.verse .ph-nl{display:inline;width:auto;height:auto;overflow:visible;font-size:inherit;line-height:inherit;letter-spacing:inherit}
+.bi-bo,.bo-block,[lang=bo]{
+  font-family:var(--font-bo);
+  writing-mode:horizontal-tb;
+  text-orientation:mixed;
+  letter-spacing:0;
+  line-height:1.95;
+  text-align:left;
+  text-justify:auto;
+  font-feature-settings:"liga" 1,"clig" 1;
+  white-space:pre-line;
+  font-size:1.06em;
+}
+.bo-block{margin:1.4em 0}
+.doc .ednote{font-family:var(--font-ui);font-size:var(--fs-sm);color:var(--muted);line-height:1.75;letter-spacing:0;text-align:left;text-justify:auto;margin:1em 0 1.6em;padding:.85em 1em;border-left:2px solid var(--line-strong);background:color-mix(in srgb,var(--panel) 70%,transparent)}
+@media (min-width:860px){
+  .doc.bilingual{max-width:52em}
+  .doc.bilingual .bi-verse{flex-direction:row;gap:2em;align-items:flex-start}
+  .doc.bilingual .bi-zh,.doc.bilingual .bi-bo{flex:1;min-width:0}
+}
+/* Tibetan stays horizontal even if the Chinese is set to 直排 */
+.doc.vertical .bi-bo,.doc.vertical .bo-block,.doc.vertical [lang=bo]{
+  writing-mode:horizontal-tb;
+  text-orientation:mixed;
+  max-width:18em;
+}
+.doc.vertical.bilingual .bi-verse{writing-mode:horizontal-tb;max-width:18em;margin:1.2em 1.2em 1.2em 0}
+.doc.vertical .ednote{writing-mode:horizontal-tb;max-width:18em;letter-spacing:0}
+
 .doc.vertical mark.hl.has-note{background-image:linear-gradient(to bottom,var(--shu) 50%,transparent 50%);background-size:1px 4px;background-repeat:repeat-y;background-position:0 0}
 .vhint{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);font-size:var(--fs-xs);color:var(--muted);pointer-events:none;letter-spacing:.06em}
 

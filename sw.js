@@ -1,13 +1,13 @@
 // Reading Web service worker: offline reading + install (analysis-3 P5).
 // Bump CACHE on every release so the new files replace the old ones (old caches are deleted on activate).
-const CACHE = 'rw-v13';
+const CACHE = 'rw-v14';
 const RUNTIME = 'rw-runtime-v3';   // pdf.js cmaps / standard fonts, filled on first use
 const FONTS = 'rw-gfonts-v1';      // Google Fonts CSS + files, stale-while-revalidate
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
   'js/app.js', 'js/store.js', 'js/anchor.js', 'js/tapselect.js', 'js/toc.js', 'js/links.js', 'js/dialogue.js',
-  'texts/meta.js', 'texts/diamond-zh.js', 'texts/diamond-xz.js', 'texts/diamond-en.js', 'texts/medicine-zh.js', 'texts/medicine-en.js',
-  'vendor/fonts/NotoSerifTC-400-sutra-subset.woff2', 'vendor/fonts/NotoSerifTC-600-sutra-subset.woff2', 'vendor/fonts/RWBrush-subset.woff2',
+  'texts/meta.js', 'texts/diamond-zh.js', 'texts/diamond-xz.js', 'texts/diamond-en.js', 'texts/medicine-zh.js', 'texts/medicine-en.js', 'texts/tara-white-praise.js', 'texts/tara-21-praises.js',
+  'vendor/fonts/NotoSerifTC-400-sutra-subset.woff2', 'vendor/fonts/NotoSerifTC-600-sutra-subset.woff2', 'vendor/fonts/RWBrush-subset.woff2', 'vendor/fonts/NotoSerifTibetan-subset.woff2',
   'vendor/pdfjs/pdf.min.mjs', 'vendor/pdfjs/pdf.worker.min.mjs',
   'icons/icon-192.png', 'icons/icon-512.png',
   // ink art for the sutra readers (see CREDITS.txt)
