@@ -138,6 +138,7 @@ main{outline:none}
 .card.cover-medicine{--c:var(--accent)}
 .card.cover-peak{--c:var(--matcha)}
 .card.cover-tara{--c:#8A8070}
+.card.cover-qixin{--c:#4F5E55}
 .card.cover-user{--c:var(--sakura)}
 .card.cover-upload{border:1px dashed var(--line-strong);background:transparent;justify-content:center;cursor:pointer}
 .card.cover-upload::before{display:none}
@@ -973,9 +974,13 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
 .ink-text{margin:0;font-size:var(--fs-ink,34px);font-weight:400;line-height:1.9;color:var(--ink-c);line-break:strict;word-break:normal;overflow-wrap:anywhere;font-feature-settings:"vert" 1,"vrt2" 1}
 .ink[data-vert="1"] .ink-text{line-height:1.75;writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;text-orientation:mixed}
 .ink[data-vert="0"] .ink-text{text-align:center;line-height:1.85}
-/* ink colour per speaker: 世尊 warm gold ink, 須菩提 / 善現 pale silver-blue; title cards and narration stay neutral */
+/* ink colour per speaker: 世尊 warm gold, 須菩提/善現 and 阿難 silver-blue, 曼殊室利 celadon, 救脫 warm sand, 藥叉 muted bronze; title cards and narration stay neutral */
 .k-b{--ink-c:#ecd49a;--glow:rgba(255,214,140,.24);--halo:244,224,176}
 .k-s{--ink-c:#b6cfec;--glow:rgba(150,188,236,.22);--halo:196,220,246}
+.k-m{--ink-c:#b7d4b0;--glow:rgba(160,210,170,.22);--halo:200,228,196}
+.k-a{--ink-c:#c9d4e6;--glow:rgba(170,190,220,.18);--halo:210,220,236}
+.k-j{--ink-c:#e0c0b0;--glow:rgba(224,180,160,.20);--halo:236,214,200}
+.k-y{--ink-c:#d4c48a;--glow:rgba(212,190,120,.18);--halo:232,216,160}
 .ch.g1{padding-inline-end:.3em}
 .ch.g2{padding-inline-end:.7em}
 .k-n .ink-text{--ink-c:rgba(196,190,180,.7);--glow:rgba(200,190,170,.08)}

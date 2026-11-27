@@ -667,7 +667,7 @@ async function renderTextDoc(R) {
   const m = R.info;
   // Zen ink art for the sutras: a sumi-e header (Tōhaku's pines, public domain), hairline section marks (CSS), a closing ensō.
   // Decorative only (aria-hidden, outside every [data-anchor]), so highlight offsets are untouched.
-  const art = /^(diamond|medicine)-/.test(R.id);
+  const art = /^(diamond|medicine|qixin)-/.test(R.id);
   const blockHTML = (b, i) => {
     const kind = b[0];
     if (kind === 'bi') {

@@ -25,9 +25,9 @@ window.RW_META = [
     license: 'CC0 1.0 Universal (public domain dedication).'
   },
   {
-    id: 'medicine-zh', kind: 'text', lang: 'zh-Hant', group: 'medicine',
+    id: 'medicine-zh', kind: 'text', lang: 'zh-Hant', group: 'medicine', dialogue: 174,
     title: '藥師琉璃光如來本願功德經', short: '藥師經 · 中文',
-    subtitle: '唐 玄奘 譯（大正藏 T0450）',
+    subtitle: '唐 玄奘 譯（大正藏 T0450）· 含「對話」模式：世尊、曼殊室利、阿難、救脫菩薩、十二藥叉大將',
     source: 'Wikisource 維基文庫：藥師琉璃光如來本願功德經（誦本斷句空格已移除）',
     url: 'https://zh.wikisource.org/wiki/藥師琉璃光如來本願功德經',
     license: 'Public domain (7th-century translation).'
@@ -39,6 +39,14 @@ window.RW_META = [
     source: 'Text from the free-distribution edition (BuddhaNet eLibrary PDF); also archived on Zenodo record 14569042 under CC BY 4.0',
     url: 'https://zenodo.org/records/14569042',
     license: 'CC BY 4.0 per the Zenodo record; the book itself says © 2001 Minh Thanh, “strictly for free distribution”, reprint permission granted on request. Free, non-commercial use with attribution. Footnote markers removed.'
+  },
+  {
+    id: 'qixin-zh', kind: 'text', lang: 'zh-Hant', group: 'qixin', dialogue: 333,
+    title: '大乘起信論', short: '大乘起信論 · 真諦譯',
+    subtitle: '馬鳴菩薩造 · 梁 真諦 譯（大正藏 T1666）· 含「對話」模式：墨書一節一節現前',
+    source: '以 Kanripo KR6o0078（CC BY-SA 4.0）與 CBETA 電子佛典 T32n1666 對讀；標點為西蓮淨苑新式標點（經 CBETA 收錄）',
+    url: 'https://www.kanripo.org/text/KR6o0078/001',
+    license: 'Sixth-century translation in the public domain (traditionally attributed to Aśvaghoṣa 馬鳴; translated by Paramārtha 真諦 in 553 CE). Kanripo e-text: CC BY-SA 4.0. CBETA punctuation and e-text: CC BY-NC-SA 4.0 (this app is non-commercial; share-alike applies to those text files).'
   },
   {
     id: 'tara-white-praise', kind: 'text', lang: 'zh-Hant', group: 'tara',

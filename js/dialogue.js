@@ -1,17 +1,28 @@
 // 對話 Dialogue mode — "ink in the dark": one passage (one speaker turn, or a screen-sized part of a long one)
 // writes itself character by character in brush script on a near-black screen, holds, then dissolves like ink.
-// 世尊 and 須菩提 (or 善現, in the Xuanzang text) are marked by a small vermilion seal; narration is smaller and dimmer.
-// Passages come from window.RW_DIALOGUE[id] = [speaker t|n|b|s, text, reading-block index].
-// t = title card (昭明太子 分 headings); n = narration (no seal); b = 世尊; s = Subhūti.
+// Speakers are told apart by ink colour only — there is no vermilion name-seal, so the screen stays quiet.
+// The sutra's own speaker leads (佛告須菩提、須菩提白佛言、佛告具壽善現曰, and so on) stay at the start of the passage; punctuation is still not drawn.
+// Passages come from window.RW_DIALOGUE[id] = [speaker, text, reading-block index].
+// t = title card; n = narration; b = 世尊; s = Subhūti / 善現;
+// m = 曼殊室利; a = 阿難; j = 救脫; y = 十二藥叉大將; i = intro.
 // The reading view (.doc) stays in the DOM untouched, so highlights, notes, cards and links keep their anchors;
 // the dark stage is a read-only presentation (no [data-anchor]) — mark text in 閱讀 Reading.
 const SPK_BY = {
-  'diamond-xz': { b: { name: '世尊', seal: ['世', '尊'], en: 'The Buddha' }, s: { name: '善現', seal: ['善', '現'], en: 'Subhūti' } },
-  'diamond-zh': { b: { name: '世尊', seal: ['世', '尊'], en: 'The Buddha' }, s: { name: '須菩提', seal: ['須', '菩', '提'], en: 'Subhūti' } },
+  'diamond-xz': { b: { name: '世尊', en: 'The Buddha' }, s: { name: '善現', en: 'Subhūti' } },
+  'diamond-zh': { b: { name: '世尊', en: 'The Buddha' }, s: { name: '須菩提', en: 'Subhūti' } },
+  'medicine-zh': {
+    b: { name: '世尊', en: 'The Buddha' },
+    m: { name: '曼殊室利', en: 'Mañjuśrī' },
+    a: { name: '阿難', en: 'Ānanda' },
+    j: { name: '救脫', en: 'Salvation Bodhisattva' },
+    y: { name: '藥叉', en: 'The twelve yakṣa generals' }
+  }
 };
 const INTRO = {
   'diamond-xz': ['能斷金剛分', '玄奘譯'],
   'diamond-zh': ['金剛般若波羅蜜經', '鳩摩羅什譯'],
+  'medicine-zh': ['藥師琉璃光如來本願功德經', '玄奘譯'],
+  'qixin-zh': ['大乘起信論', '馬鳴菩薩造 · 真諦譯']
 };
 const SPEEDS = [{ k: 0.7, step: 150, t: '慢', en: 'slow' }, { k: 1, step: 110, t: '中', en: 'normal' }, { k: 1.7, step: 75, t: '快', en: 'fast' }];
 const MINOR = /[，、；：,;:]/, MAJOR = /[。！？!?．\s\u3000]/, DROP = /[「」『』《》〈〉（）()\[\]【】"'“”‘’·・—–…～~﹁﹂﹃﹄]/;
@@ -26,8 +37,8 @@ const ico = {
 export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBar, fs }) {
   const turns = window.RW_DIALOGUE?.[R.id];
   if (!turns || !turns.length) return;
-  const SPK = SPK_BY[R.id] || SPK_BY['diamond-xz'];
-  const introLines = INTRO[R.id] || INTRO['diamond-xz'];
+  const SPK = SPK_BY[R.id] || {};
+  const introLines = INTRO[R.id] || ['', ''];
   const N = turns.length, st = store.data.settings;
   const posMap = (st.dlgPos ||= {});
   const modeMap = (st.modeByDoc ||= {});
@@ -97,8 +108,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       body = `<span class="ln t1">${chars(a)}</span>` + (b ? `<br><span class="ln t2">${chars(b)}</span>` : '');
     } else body = t[1].split('\n').map(line => chars(line)).join('<br>');
     el.dataset.n = String(n); el.dataset.w = String(n + gapW);
-    const seal = SPK[k];
-    el.innerHTML = `<p class="ink-text" aria-hidden="true">${body}</p>` + (seal ? `<span class="ink-seal${seal.seal.length > 2 ? ' seal-3' : ''}" aria-hidden="true">${seal.seal.map(ch => `<b>${esc(ch)}</b>`).join('')}</span>` : '');
+    el.innerHTML = `<p class="ink-text" aria-hidden="true">${body}</p>`;
     return el;
   }
   // font size: large and calligraphic, shrunk until the passage fits the screen without scrolling
@@ -107,9 +117,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     const cs = getComputedStyle(field);
     const aw = field.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     const ah = field.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-    const seal = !!$('.ink-seal', el);
-    const sealN = seal ? $('.ink-seal', el).querySelectorAll('b').length : 0;
-    const AW = aw - (seal && vert ? 52 : 0), AH = ah - (seal && !vert ? (sealN > 2 ? 104 : 78) : 0);
+    const AW = aw, AH = ah;
     const len = +el.dataset.n, wlen = +el.dataset.w || len, verse = el.textContent !== '' && el.querySelector('br') && k !== 'i' && k !== 't';
     const f = (k === 'i' || k === 't') ? 1.0 : len <= 8 ? 1.32 : len <= 16 ? 1.2 : len <= 30 ? 1.08 : 1;
     const kf = k === 'n' ? 0.66 : 1;
@@ -150,13 +158,12 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     el.style.setProperty('--step', stepMs() + 'ms');
     if (how === 'write' && !reduced()) {
       el.classList.add('writing'); phase = 'writing';
-      el.style.setProperty('--seal-delay', ((+el.dataset.n) * stepMs() + 250) + 'ms');
       tWrite = setTimeout(() => finish(), writeMs(el));
     } else {
       el.classList.add('done', how === 'instant' ? 'instant' : 'fade'); phase = 'held'; held();
     }
     paint(); savePos();
-    if (i >= 0) live.textContent = `${SPK[turns[i][0]] ? SPK[turns[i][0]].name + '：' : ''}${turns[i][1].replace(/\n/g, '')}`;
+    if (i >= 0) live.textContent = turns[i][1].replace(/\n/g, '');
     if (i >= 0 && !started) { started = true; stage.classList.remove('show-hint'); clearTimeout(tHint); }
   }
   function finish() {
@@ -308,7 +315,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       peek(false); tocEl.hidden = true;
       let start = idx;
       if (keepEl && keepEl.dataset.anchor) { const t = firstTurnOfBlock(num(keepEl.dataset.anchor)); if (t > Math.max(idx, 0)) start = t; }
-      const ready = Promise.race([document.fonts?.load('40px "RW Brush"', '世尊善現須菩提能斷金剛分金剛般若波羅蜜經玄奘譯鳩摩羅什').catch(() => {}), new Promise(r => setTimeout(r, 1800))]);
+      const ready = Promise.race([document.fonts?.load('40px "RW Brush"', '世尊善現須菩提能斷金剛分金剛般若波羅蜜經玄奘譯鳩摩羅什藥師琉璃光如來本願功德經曼殊室利文殊阿難救脫藥叉馬鳴大乘起信論真諦菩薩造').catch(() => {}), new Promise(r => setTimeout(r, 1800))]);
       requestAnimationFrame(async () => {
         await ready;
         if (R.dead || R.mode !== 'dlg') return;

@@ -18,8 +18,8 @@ Section dividers (a short hairline with a small vermilion square) are pure CSS i
 designed for this app; no image file. CC0 1.0.
 
 vendor/fonts/  Noto Serif TC subset — SIL Open Font License 1.1 (see the OFL file beside the fonts).
-               Extended with ~50 extra glyphs for the Xuanzang Diamond Sutra and the Dialogue UI (same font, Google Fonts subset, merged with fontTools).
-  Two rare Buddhist transliteration glyphs (儞, 嚩) not present in Noto Serif TC were added from BIZ UDPMincho Regular (TypeBank / Morisawa, SIL OFL 1.1, Google Fonts), glyphs otherwise unaltered.
+               Rebuilt to cover the built-in sutras including 大乘起信論, plus UI strings (same font, Google Fonts subset, merged with fontTools).
+  Two rare Buddhist transliteration glyphs (儞, 嚩) not present in Noto Serif TC were added from BIZ UDPMincho (TypeBank / Morisawa, SIL OFL 1.1, Google Fonts), glyphs otherwise unaltered. 搩 (藥師經「搩手」) is also absent from Noto Serif TC and falls back to the CSS font stack.
 
 vendor/pdfjs/  PDF.js — Apache License 2.0 (Mozilla).
 Texts: see the "Texts & licenses" section on the library page and texts/meta.js.
@@ -34,7 +34,8 @@ texts/diamond-zh.js  — 金剛般若波羅蜜經 (鳩摩羅什譯)
   The 對話 Dialogue view (speaker turns 世尊 / 須菩提 / narration, plus a title card
   for each of the 32 分 headings) is this app's own arrangement of that text:
   RW_DIALOGUE in the same file (passages: one speaker turn, long ones cut at clause
-  punctuation to fit a phone screen; 偈 stay whole with the Buddha).
+  punctuation to fit a phone screen; 偈 stay whole with the Buddha;
+  speaker leads such as 佛告須菩提 / 須菩提白佛言 are kept, with no name-seal).
 
 
 texts/diamond-xz.js  — 大般若波羅蜜多經 卷第五百七十七 第九能斷金剛分 (玄奘譯, T0220 / T07n0220 juan 577)
@@ -43,12 +44,13 @@ texts/diamond-xz.js  — 大般若波羅蜜多經 卷第五百七十七 第九�
   CBETA header: "Available for non-commercial use when distributed with this header intact."
   Punctuation provided by 眾生出版社 via CBETA. The translation itself (7th c.) is in the public domain.
   The 對話 Dialogue view (speaker turns 世尊 / 善現 / narration) is this app's own arrangement of that text:
-  RW_DIALOGUE in the same file (passages: one speaker turn, long ones cut at clause punctuation to fit a phone screen).
+  RW_DIALOGUE in the same file (passages: one speaker turn, long ones cut at clause punctuation to fit a phone screen;
+  speaker leads such as 佛告具壽善現曰 / 佛告善現 / 善現答言 are kept, with no name-seal).
   
   The reading-marker titles in the 目錄 are this app's, not traditional 分 titles.
 
 vendor/fonts/RWBrush-subset.woff2  — brush-script face of the 對話 Dialogue mode
-  Subset (654 characters, glyphs unaltered) of MasaFont 正風毛筆 Regular v2.1 by Chun yu Yao,
+  Subset (1261 characters, glyphs unaltered) of MasaFont 正風毛筆 Regular v2.1 by Chun yu Yao,
   https://github.com/max32002/MasaFont , which is based on 衡山毛筆フォント行書 by Aoyagi Kouzan 青柳衡山.
   SIL Open Font License 1.1 — see vendor/fonts/OFL-MasaFont.txt. Used under the CSS name "RW Brush".
 
@@ -83,4 +85,27 @@ texts/tara-21-praises.js  — 聖救度佛母二十一種禮讚經 (T1108A, 元 
   One editorial suggestion {རི་དགས་,རི་དྭགས་} is printed as རི་དྭགས་.
 
 
-v16 font note: a true Wang Xizhi 行書 font (e.g. 方正王羲之行書) is proprietary and cannot be embedded or converted to webfont without a written license, so it is NOT included. The calligraphy mode continues to use the OFL-licensed MasaFont 正風毛筆 subset (654 glyphs, unchanged).
+texts/medicine-zh.js  — 藥師琉璃光如來本願功德經 (玄奘譯, T0450)
+  The 對話 Dialogue view (speaker turns 世尊 / 曼殊室利 / 阿難 / 救脫 / 十二藥叉大將 / narration,
+  plus traditional landmark title cards) is this app's own arrangement of the Wikisource text.
+  The 藥師灌頂真言 (dhāraṇī) is shown as narration, like the Diamond Sutra 真言.
+  Speaker leads such as 佛告曼殊室利 / 阿難白言 / 同時舉聲白佛言 are kept; there is no name-seal.
+
+texts/qixin-zh.js  — 大乘起信論 (馬鳴菩薩造，梁 真諦譯, T1666 / T32n1666)
+  Literary work: sixth-century translation, public domain (traditionally attributed
+  to Aśvaghoṣa 馬鳴; Paramārtha 真諦 translated it in 553 CE at 衡州始興郡建興寺).
+  E-text prefers Kanripo KR6o0078 (CC BY-SA 4.0):
+  https://www.kanripo.org/text/KR6o0078/001  (https://github.com/kanripo/KR6o0078)
+  Paragraphing, verses and punctuation follow CBETA 電子佛典集成 T32n1666 (xml-p5):
+  https://github.com/cbeta-org/xml-p5/blob/master/T/T32/T32n1666.xml
+  CBETA header: "Available for non-commercial use when distributed with this header intact."
+  Punctuation provided by 西蓮淨苑 via CBETA. Two Kanripo typography issues follow the
+  CBETA / Taishō reading: 魔邪諸鬼 (Kanripo has a dittography 魔邪邪諸鬼 around a
+  nested apparatus mark) and 隨己堪能 (Kanripo 隨已堪能; CBETA addition 己).
+  The 目錄 headings (序, the five 分, and the three 科 of 解釋分) are this app's
+  arrangement of the treatise's traditional structure; "初說／次說…分" transition
+  lines are replaced by those headings.
+  The 對話 Dialogue view uses those headings as title cards and splits the body
+  into readable passages (narration, no speaker name-seal). The intro card already names 馬鳴菩薩造.
+
+v16 font note: a true Wang Xizhi 行書 font (e.g. 方正王羲之行書) is proprietary and cannot be embedded or converted to webfont without a written license, so it is NOT included. The calligraphy mode continues to use the OFL-licensed MasaFont 正風毛筆 subset (1261 glyphs, extended for 藥師經 and 大乘起信論).
