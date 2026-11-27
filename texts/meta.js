@@ -1,7 +1,7 @@
 // Built-in materials. Texts live in texts/<id>.js (bundled locally, never fetched from the web).
 window.RW_META = [
   {
-    id: 'diamond-zh', kind: 'text', lang: 'zh-Hant', group: 'diamond', dialogue: 211,
+    id: 'diamond-zh', kind: 'text', lang: 'zh-Hant', group: 'diamond', dialogue: 247,
     title: '金剛般若波羅蜜經', short: '金剛經 · 中文',
     subtitle: '姚秦 鳩摩羅什 譯（大正藏 T0235）· 含「對話」模式：世尊與須菩提',
     source: '臺大佛學數位圖書館 NTU Digital Library of Buddhist Studies PDF of T0235（CBETA 電子佛典集成 2023.Q4）。昭明太子三十二分科為本應用於目錄的標題，不在該 PDF 中。',
@@ -9,7 +9,7 @@ window.RW_META = [
     license: 'Fifth-century translation in the public domain; this e-text follows the NTU-hosted CBETA 2023.Q4 ebook (non-commercial use, keep the CBETA header intact). The 對話 Dialogue split into speaker turns is this app’s own arrangement.'
   },
   {
-    id: 'diamond-xz', kind: 'text', lang: 'zh-Hant', group: 'diamond', dialogue: 231,
+    id: 'diamond-xz', kind: 'text', lang: 'zh-Hant', group: 'diamond', dialogue: 331,
     title: '能斷金剛分', short: '金剛經 · 玄奘譯',
     subtitle: '唐 玄奘 譯 · 《大般若波羅蜜多經》卷第五百七十七 第九能斷金剛分（大正藏 T0220）· 含「對話」模式：世尊與善現（須菩提）',
     source: 'CBETA 電子佛典集成 T07n0220 卷577（cbeta-org/xml-p5）',
@@ -25,7 +25,7 @@ window.RW_META = [
     license: 'CC0 1.0 Universal (public domain dedication).'
   },
   {
-    id: 'medicine-zh', kind: 'text', lang: 'zh-Hant', group: 'medicine', dialogue: 163,
+    id: 'medicine-zh', kind: 'text', lang: 'zh-Hant', group: 'medicine', dialogue: 183,
     title: '藥師琉璃光如來本願功德經', short: '藥師經 · 中文',
     subtitle: '唐 玄奘 譯（大正藏 T0450）· 含「對話」模式：世尊、曼殊室利、阿難、救脫菩薩、十二藥叉大將',
     source: 'Wikisource 維基文庫：藥師琉璃光如來本願功德經（誦本斷句空格已移除）',

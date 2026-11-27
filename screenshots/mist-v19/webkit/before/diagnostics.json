@@ -1,0 +1,6980 @@
+[
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 105.5625,
+      "right": 290.3046875,
+      "top": 114.40625,
+      "bottom": 741.5812377929688
+    },
+    "overflow": {
+      "left": -105.56,
+      "right": -99.7,
+      "top": -114.41,
+      "bottom": -102.42,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 78.4,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "117.599991px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v1-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.883333px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "28.833334px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 33.58384704589844,
+      "right": 356.4005126953125,
+      "top": 382.828125,
+      "bottom": 475.140625
+    },
+    "overflow": {
+      "left": -33.58,
+      "right": -33.6,
+      "top": -382.83,
+      "bottom": -368.86,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 40.35,
+      "dy": 0,
+      "fs": 28.833334,
+      "ls": "2.883333px",
+      "lh": "53.341667px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v0-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 176.5,
+      "right": 213.5,
+      "top": 342.265625,
+      "bottom": 513.7325439453125
+    },
+    "overflow": {
+      "left": -176.5,
+      "right": -176.5,
+      "top": -342.27,
+      "bottom": -330.27,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v1-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "4.019136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "25.1196px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 136.73516845703125,
+      "right": 253.24920654296875,
+      "top": 415,
+      "bottom": 441
+    },
+    "overflow": {
+      "left": -136.74,
+      "right": -136.75,
+      "top": -415,
+      "bottom": -403,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 29.13,
+      "dy": 0,
+      "fs": 25.1196,
+      "ls": "4.019136px",
+      "lh": "46.47126px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v0-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 176.5,
+      "right": 213.5,
+      "top": 320.828125,
+      "bottom": 535.1617431640625
+    },
+    "overflow": {
+      "left": -176.5,
+      "right": -176.5,
+      "top": -320.83,
+      "bottom": -308.84,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v1-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "4.019136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "25.1196px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 122.17871856689453,
+      "right": 267.8212890625,
+      "top": 415,
+      "bottom": 441
+    },
+    "overflow": {
+      "left": -122.18,
+      "right": -122.18,
+      "top": -415,
+      "bottom": -403,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 29.13,
+      "dy": 0,
+      "fs": 25.1196,
+      "ls": "4.019136px",
+      "lh": "46.47126px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v0-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 118,
+      "right": 272,
+      "top": 190.84375,
+      "bottom": 622.0437622070312
+    },
+    "overflow": {
+      "left": -118,
+      "right": -118,
+      "top": -190.84,
+      "bottom": -221.96,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v1-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "3.46px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "34.599998px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 23.758148193359375,
+      "right": 366.2418518066406,
+      "top": 378.5078125,
+      "bottom": 477.4921875
+    },
+    "overflow": {
+      "left": -23.76,
+      "right": -23.76,
+      "top": -378.51,
+      "bottom": -366.51,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 38.05,
+      "dy": 0,
+      "fs": 34.599998,
+      "ls": "3.46px",
+      "lh": "64.009995px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v0-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.45px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "54.5px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 42.1875,
+      "right": 383.3125,
+      "top": 248.140625,
+      "bottom": 607.8406372070312
+    },
+    "overflow": {
+      "left": -42.19,
+      "right": -6.69,
+      "top": -248.14,
+      "bottom": -236.16,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 59.95,
+      "fs": 54.5,
+      "ls": "5.45px",
+      "lh": "95.375px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v1-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "3.114px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "31.139999px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 92.28300476074219,
+      "right": 297.71697998046875,
+      "top": 326.1328125,
+      "bottom": 529.8671875
+    },
+    "overflow": {
+      "left": -92.28,
+      "right": -92.28,
+      "top": -326.13,
+      "bottom": -314.13,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 34.24,
+      "dy": 0,
+      "fs": 31.139999,
+      "ls": "3.114px",
+      "lh": "57.609001px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v0-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 176.5,
+      "right": 213.5,
+      "top": 299.390625,
+      "bottom": 556.5909423828125
+    },
+    "overflow": {
+      "left": -176.5,
+      "right": -176.5,
+      "top": -299.39,
+      "bottom": -287.41,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v1-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "4.019136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "25.1196px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 107.61446380615234,
+      "right": 282.3855285644531,
+      "top": 415,
+      "bottom": 441
+    },
+    "overflow": {
+      "left": -107.61,
+      "right": -107.61,
+      "top": -415,
+      "bottom": -403,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 29.13,
+      "dy": 0,
+      "fs": 25.1196,
+      "ls": "4.019136px",
+      "lh": "46.47126px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v0-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "24",
+    "text": "善現答言",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 176.5,
+      "right": 213.5,
+      "top": 342.265625,
+      "bottom": 513.7325439453125
+    },
+    "overflow": {
+      "left": -176.5,
+      "right": -176.5,
+      "top": -342.27,
+      "bottom": -330.27,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v1-shanxian-da",
+    "needle": "善現答言",
+    "foundIdx": 24
+  },
+  {
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "vv": {
+      "w": 390,
+      "h": 844,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 390,
+      "h": 844,
+      "top": 0,
+      "left": 0,
+      "bottom": 844,
+      "right": 390,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "844px",
+      "width": "390px"
+    },
+    "htmlH": 844,
+    "bodyH": 844,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "s",
+    "idx": "25",
+    "text": "不也世尊",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 390,
+      "bottom": 844,
+      "w": 390,
+      "h": 844,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 167,
+      "right": 223,
+      "top": 285.203125,
+      "bottom": 570.7906494140625
+    },
+    "overflow": {
+      "left": -167,
+      "right": -167,
+      "top": -285.2,
+      "bottom": -273.21,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 81.19,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-v1-bu-ye-shizun",
+    "needle": "不也！世尊",
+    "foundIdx": 25
+  },
+  {
+    "mode": "dlg",
+    "writingMode": "vertical-rl",
+    "docH": "731px",
+    "inner": {
+      "w": 390,
+      "h": 844
+    },
+    "reader": {
+      "w": 390,
+      "h": 784,
+      "top": 60,
+      "bottom": 844
+    },
+    "doc": {
+      "w": 0,
+      "h": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "panel": {
+      "w": 390,
+      "h": 573.9061889648438,
+      "top": 872.7937622070312,
+      "bottom": 1446.699951171875
+    },
+    "overflowY": "hidden",
+    "overflowX": "auto",
+    "gapBottom": 0,
+    "tag": "iphone13-reading"
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 179.703125,
+      "right": 670.1640625,
+      "top": 64,
+      "bottom": 299.19061279296875
+    },
+    "overflow": {
+      "left": -179.7,
+      "right": -173.84,
+      "top": -64,
+      "bottom": -90.81,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 78.4,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "117.599991px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v1-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "1.826667px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "18.266666px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 319.755859375,
+      "right": 524.244140625,
+      "top": 172.609375,
+      "bottom": 230.4609375
+    },
+    "overflow": {
+      "left": -319.76,
+      "right": -319.76,
+      "top": -172.61,
+      "bottom": -159.54,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 25.56,
+      "dy": 0,
+      "fs": 18.266666,
+      "ls": "1.826667px",
+      "lh": "33.793335px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v0-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 403.5,
+      "right": 440.5,
+      "top": 115.265625,
+      "bottom": 286.7325439453125
+    },
+    "overflow": {
+      "left": -403.5,
+      "right": -403.5,
+      "top": -115.27,
+      "bottom": -103.27,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v1-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.72px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "17px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 382.55218505859375,
+      "right": 461.43218994140625,
+      "top": 192.5,
+      "bottom": 209.5
+    },
+    "overflow": {
+      "left": -382.55,
+      "right": -382.57,
+      "top": -192.5,
+      "bottom": -180.5,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 19.72,
+      "dy": 0,
+      "fs": 17,
+      "ls": "2.72px",
+      "lh": "31.450001px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v0-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 403.5,
+      "right": 440.5,
+      "top": 93.828125,
+      "bottom": 308.1617431640625
+    },
+    "overflow": {
+      "left": -403.5,
+      "right": -403.5,
+      "top": -93.83,
+      "bottom": -81.84,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v1-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.72px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "17px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 372.69219970703125,
+      "right": 471.29217529296875,
+      "top": 192.5,
+      "bottom": 209.5
+    },
+    "overflow": {
+      "left": -372.69,
+      "right": -372.71,
+      "top": -192.5,
+      "bottom": -180.5,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 19.72,
+      "dy": 0,
+      "fs": 17,
+      "ls": "2.72px",
+      "lh": "31.450001px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v0-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 247,
+      "right": 597,
+      "top": 64,
+      "bottom": 310.3999938964844
+    },
+    "overflow": {
+      "left": -247,
+      "right": -247,
+      "top": -64,
+      "bottom": -79.6,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v1-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.192px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "21.92px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 265.36138916015625,
+      "right": 578.6386108398438,
+      "top": 189.9921875,
+      "bottom": 211.9921875
+    },
+    "overflow": {
+      "left": -265.36,
+      "right": -265.36,
+      "top": -189.99,
+      "bottom": -178.01,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 24.1,
+      "dy": 0,
+      "fs": 21.92,
+      "ls": "2.192px",
+      "lh": "40.552002px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v0-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 198,
+      "right": 646,
+      "top": 64,
+      "bottom": 310.3999938964844
+    },
+    "overflow": {
+      "left": -198,
+      "right": -198,
+      "top": -64,
+      "bottom": -79.6,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v1-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "1.9728px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "19.728001px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 356.92535400390625,
+      "right": 487.07464599609375,
+      "top": 136.296875,
+      "bottom": 265.703125
+    },
+    "overflow": {
+      "left": -356.93,
+      "right": -356.93,
+      "top": -136.3,
+      "bottom": -124.3,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 21.69,
+      "dy": 0,
+      "fs": 19.728001,
+      "ls": "1.9728px",
+      "lh": "36.496803px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v0-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 403.5,
+      "right": 440.5,
+      "top": 72.390625,
+      "bottom": 329.5909729003906
+    },
+    "overflow": {
+      "left": -403.5,
+      "right": -403.5,
+      "top": -72.39,
+      "bottom": -60.41,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v1-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.72px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "17px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 362.8321838378906,
+      "right": 481.1521911621094,
+      "top": 192.5,
+      "bottom": 209.5
+    },
+    "overflow": {
+      "left": -362.83,
+      "right": -362.85,
+      "top": -192.5,
+      "bottom": -180.5,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 19.72,
+      "dy": 0,
+      "fs": 17,
+      "ls": "2.72px",
+      "lh": "31.450001px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v0-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "24",
+    "text": "善現答言",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 403.5,
+      "right": 440.5,
+      "top": 115.265625,
+      "bottom": 286.7325439453125
+    },
+    "overflow": {
+      "left": -403.5,
+      "right": -403.5,
+      "top": -115.27,
+      "bottom": -103.27,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v1-shanxian-da",
+    "needle": "善現答言",
+    "foundIdx": 24
+  },
+  {
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "vv": {
+      "w": 844,
+      "h": 390,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "left": 0,
+      "bottom": 390,
+      "right": 844,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "390px",
+      "width": "844px"
+    },
+    "htmlH": 390,
+    "bodyH": 390,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "s",
+    "idx": "25",
+    "text": "不也世尊",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 844,
+      "bottom": 390,
+      "w": 844,
+      "h": 390,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 345,
+      "right": 499,
+      "top": 64,
+      "bottom": 287.98748779296875
+    },
+    "overflow": {
+      "left": -345,
+      "right": -345,
+      "top": -64,
+      "bottom": -102.01,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 81.19,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone13-land-v1-bu-ye-shizun",
+    "needle": "不也！世尊",
+    "foundIdx": 25
+  },
+  {
+    "mode": "dlg",
+    "writingMode": "vertical-rl",
+    "docH": "345px",
+    "inner": {
+      "w": 844,
+      "h": 390
+    },
+    "reader": {
+      "w": 844,
+      "h": 390,
+      "top": 0,
+      "bottom": 390
+    },
+    "doc": {
+      "w": 0,
+      "h": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "panel": {
+      "w": 844,
+      "h": 346,
+      "top": 407.29998779296875,
+      "bottom": 753.2999877929688
+    },
+    "overflowY": "hidden",
+    "overflowX": "auto",
+    "gapBottom": 0,
+    "tag": "iphone13-land-reading"
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 125.5625,
+      "right": 310.3046875,
+      "top": 158.40625,
+      "bottom": 785.5812377929688
+    },
+    "overflow": {
+      "left": -125.56,
+      "right": -119.7,
+      "top": -158.41,
+      "bottom": -146.42,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 78.4,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "117.599991px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v1-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "3.216667px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "32.166668px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 34.87550354003906,
+      "right": 395.10888671875,
+      "top": 421.25,
+      "bottom": 524.15625
+    },
+    "overflow": {
+      "left": -34.88,
+      "right": -34.89,
+      "top": -421.25,
+      "bottom": -407.84,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 45.03,
+      "dy": 0,
+      "fs": 32.166668,
+      "ls": "3.216667px",
+      "lh": "59.508335px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v0-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 196.5,
+      "right": 233.5,
+      "top": 386.265625,
+      "bottom": 557.7325439453125
+    },
+    "overflow": {
+      "left": -196.5,
+      "right": -196.5,
+      "top": -386.27,
+      "bottom": -374.27,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v1-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "4.483776px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "28.0236px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 150.00119018554688,
+      "right": 279.9988098144531,
+      "top": 457.9921875,
+      "bottom": 485.9921875
+    },
+    "overflow": {
+      "left": -150,
+      "right": -150,
+      "top": -457.99,
+      "bottom": -446.01,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 32.5,
+      "dy": 0,
+      "fs": 28.0236,
+      "ls": "4.483776px",
+      "lh": "51.843658px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v0-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 196.5,
+      "right": 233.5,
+      "top": 364.828125,
+      "bottom": 579.1617431640625
+    },
+    "overflow": {
+      "left": -196.5,
+      "right": -196.5,
+      "top": -364.83,
+      "bottom": -352.84,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v1-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "4.483776px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "28.0236px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 133.75149536132812,
+      "right": 296.2485046386719,
+      "top": 457.9921875,
+      "bottom": 485.9921875
+    },
+    "overflow": {
+      "left": -133.75,
+      "right": -133.75,
+      "top": -457.99,
+      "bottom": -446.01,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 32.5,
+      "dy": 0,
+      "fs": 28.0236,
+      "ls": "4.483776px",
+      "lh": "51.843658px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v0-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 187,
+      "right": 243,
+      "top": 71.59375,
+      "bottom": 872.3936767578125
+    },
+    "overflow": {
+      "left": -187,
+      "right": -187,
+      "top": -71.59,
+      "bottom": -59.61,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v1-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "3.86px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "38.599998px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 23.9581298828125,
+      "right": 406.0418701171875,
+      "top": 417.3046875,
+      "bottom": 526.6953125
+    },
+    "overflow": {
+      "left": -23.96,
+      "right": -23.96,
+      "top": -417.3,
+      "bottom": -405.3,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 42.45,
+      "dy": 0,
+      "fs": 38.599998,
+      "ls": "3.86px",
+      "lh": "71.409996px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v0-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 43,
+      "right": 393,
+      "top": 287.1875,
+      "bottom": 656.7874755859375
+    },
+    "overflow": {
+      "left": -43,
+      "right": -37,
+      "top": -287.19,
+      "bottom": -275.21,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v1-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "3.474px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "34.740002px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 100.3670654296875,
+      "right": 329.6173095703125,
+      "top": 358.125,
+      "bottom": 585.875
+    },
+    "overflow": {
+      "left": -100.37,
+      "right": -100.38,
+      "top": -358.13,
+      "bottom": -346.13,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 38.21,
+      "dy": 0,
+      "fs": 34.740002,
+      "ls": "3.474px",
+      "lh": "64.269005px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v0-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 196.5,
+      "right": 233.5,
+      "top": 343.390625,
+      "bottom": 600.5909423828125
+    },
+    "overflow": {
+      "left": -196.5,
+      "right": -196.5,
+      "top": -343.39,
+      "bottom": -331.41,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v1-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "4.483776px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "28.0236px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 117.50179290771484,
+      "right": 312.4981994628906,
+      "top": 457.9921875,
+      "bottom": 485.9921875
+    },
+    "overflow": {
+      "left": -117.5,
+      "right": -117.5,
+      "top": -457.99,
+      "bottom": -446.01,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 32.5,
+      "dy": 0,
+      "fs": 28.0236,
+      "ls": "4.483776px",
+      "lh": "51.843658px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v0-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "24",
+    "text": "善現答言",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 196.5,
+      "right": 233.5,
+      "top": 386.265625,
+      "bottom": 557.7325439453125
+    },
+    "overflow": {
+      "left": -196.5,
+      "right": -196.5,
+      "top": -386.27,
+      "bottom": -374.27,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v1-shanxian-da",
+    "needle": "善現答言",
+    "foundIdx": 24
+  },
+  {
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "vv": {
+      "w": 430,
+      "h": 932,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 430,
+      "h": 932,
+      "top": 0,
+      "left": 0,
+      "bottom": 932,
+      "right": 430,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "932px",
+      "width": "430px"
+    },
+    "htmlH": 932,
+    "bodyH": 932,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "s",
+    "idx": "25",
+    "text": "不也世尊",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 430,
+      "bottom": 932,
+      "w": 430,
+      "h": 932,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 187,
+      "right": 243,
+      "top": 329.203125,
+      "bottom": 614.7906494140625
+    },
+    "overflow": {
+      "left": -187,
+      "right": -187,
+      "top": -329.2,
+      "bottom": -317.21,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 81.19,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-v1-bu-ye-shizun",
+    "needle": "不也！世尊",
+    "foundIdx": 25
+  },
+  {
+    "mode": "dlg",
+    "writingMode": "vertical-rl",
+    "docH": "819px",
+    "inner": {
+      "w": 430,
+      "h": 932
+    },
+    "reader": {
+      "w": 430,
+      "h": 872,
+      "top": 60,
+      "bottom": 932
+    },
+    "doc": {
+      "w": 0,
+      "h": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "panel": {
+      "w": 430,
+      "h": 620,
+      "top": 963,
+      "bottom": 1583
+    },
+    "overflowY": "hidden",
+    "overflowX": "auto",
+    "gapBottom": 0,
+    "tag": "iphone15p-reading"
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 300.140625,
+      "right": 637.7421875,
+      "top": 64,
+      "bottom": 377.5874938964844
+    },
+    "overflow": {
+      "left": -300.14,
+      "right": -294.26,
+      "top": -64,
+      "bottom": -52.41,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 78.4,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "117.599991px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v1-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.093333px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "20.933332px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 348.81414794921875,
+      "right": 583.1858520507812,
+      "top": 188.140625,
+      "bottom": 254.6484375
+    },
+    "overflow": {
+      "left": -348.81,
+      "right": -348.81,
+      "top": -188.14,
+      "bottom": -175.35,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 29.3,
+      "dy": 0,
+      "fs": 20.933332,
+      "ls": "2.093333px",
+      "lh": "38.726665px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v0-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 447.5,
+      "right": 484.5,
+      "top": 135.265625,
+      "bottom": 306.7325439453125
+    },
+    "overflow": {
+      "left": -447.5,
+      "right": -447.5,
+      "top": -135.27,
+      "bottom": -123.27,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v1-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.917939px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "18.23712px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 423.68756103515625,
+      "right": 508.29681396484375,
+      "top": 211.5,
+      "bottom": 230.5
+    },
+    "overflow": {
+      "left": -423.69,
+      "right": -423.7,
+      "top": -211.5,
+      "bottom": -199.5,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 21.15,
+      "dy": 0,
+      "fs": 18.23712,
+      "ls": "2.917939px",
+      "lh": "33.73867px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v0-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 447.5,
+      "right": 484.5,
+      "top": 113.828125,
+      "bottom": 328.1617431640625
+    },
+    "overflow": {
+      "left": -447.5,
+      "right": -447.5,
+      "top": -113.83,
+      "bottom": -101.84,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v1-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.917939px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "18.23712px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 413.11138916015625,
+      "right": 518.8729858398438,
+      "top": 211.5,
+      "bottom": 230.5
+    },
+    "overflow": {
+      "left": -413.11,
+      "right": -413.13,
+      "top": -211.5,
+      "bottom": -199.5,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 21.15,
+      "dy": 0,
+      "fs": 18.23712,
+      "ls": "2.917939px",
+      "lh": "33.73867px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v0-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 340,
+      "right": 592,
+      "top": 64,
+      "bottom": 372
+    },
+    "overflow": {
+      "left": -340,
+      "right": -340,
+      "top": -64,
+      "bottom": -58,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v1-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.512px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "25.120001px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 286.4532775878906,
+      "right": 645.5311279296875,
+      "top": 208,
+      "bottom": 234
+    },
+    "overflow": {
+      "left": -286.45,
+      "right": -286.47,
+      "top": -208,
+      "bottom": -196,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 27.62,
+      "dy": 0,
+      "fs": 25.120001,
+      "ls": "2.512px",
+      "lh": "46.472004px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v0-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 242,
+      "right": 690,
+      "top": 64,
+      "bottom": 372
+    },
+    "overflow": {
+      "left": -242,
+      "right": -242,
+      "top": -64,
+      "bottom": -58,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v1-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.2608px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "22.608px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 391.42852783203125,
+      "right": 540.5558471679688,
+      "top": 147.3046875,
+      "bottom": 294.6953125
+    },
+    "overflow": {
+      "left": -391.43,
+      "right": -391.44,
+      "top": -147.3,
+      "bottom": -135.3,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 24.85,
+      "dy": 0,
+      "fs": 22.608,
+      "ls": "2.2608px",
+      "lh": "41.824799px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v0-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 447.5,
+      "right": 484.5,
+      "top": 92.390625,
+      "bottom": 349.5909729003906
+    },
+    "overflow": {
+      "left": -447.5,
+      "right": -447.5,
+      "top": -92.39,
+      "bottom": -80.41,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v1-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.917939px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "18.23712px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 402.5352478027344,
+      "right": 529.4490966796875,
+      "top": 211.5,
+      "bottom": 230.5
+    },
+    "overflow": {
+      "left": -402.54,
+      "right": -402.55,
+      "top": -211.5,
+      "bottom": -199.5,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 21.15,
+      "dy": 0,
+      "fs": 18.23712,
+      "ls": "2.917939px",
+      "lh": "33.73867px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v0-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "24",
+    "text": "善現答言",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 447.5,
+      "right": 484.5,
+      "top": 135.265625,
+      "bottom": 306.7325439453125
+    },
+    "overflow": {
+      "left": -447.5,
+      "right": -447.5,
+      "top": -135.27,
+      "bottom": -123.27,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v1-shanxian-da",
+    "needle": "善現答言",
+    "foundIdx": 24
+  },
+  {
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "vv": {
+      "w": 932,
+      "h": 430,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "left": 0,
+      "bottom": 430,
+      "right": 932,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "430px",
+      "width": "932px"
+    },
+    "htmlH": 430,
+    "bodyH": 430,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "s",
+    "idx": "25",
+    "text": "不也世尊",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 932,
+      "bottom": 430,
+      "w": 932,
+      "h": 430,
+      "pad": "64px 65.239998px 52px"
+    },
+    "union": {
+      "left": 438,
+      "right": 494,
+      "top": 78.203125,
+      "bottom": 363.7906188964844
+    },
+    "overflow": {
+      "left": -438,
+      "right": -438,
+      "top": -78.2,
+      "bottom": -66.21,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 81.19,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphone15p-land-v1-bu-ye-shizun",
+    "needle": "不也！世尊",
+    "foundIdx": 25
+  },
+  {
+    "mode": "dlg",
+    "writingMode": "vertical-rl",
+    "docH": "385px",
+    "inner": {
+      "w": 932,
+      "h": 430
+    },
+    "reader": {
+      "w": 932,
+      "h": 430,
+      "top": 0,
+      "bottom": 430
+    },
+    "doc": {
+      "w": 0,
+      "h": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "panel": {
+      "w": 360,
+      "h": 430,
+      "top": 0,
+      "bottom": 430
+    },
+    "overflowY": "hidden",
+    "overflowX": "auto",
+    "gapBottom": 0,
+    "tag": "iphone15p-land-reading"
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 67.796875,
+      "right": 405.3984375,
+      "top": 64,
+      "bottom": 612.7781372070312
+    },
+    "overflow": {
+      "left": -67.8,
+      "right": 30.4,
+      "top": -64,
+      "bottom": -54.22,
+      "overflows": true
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 78.4,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "117.599991px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v1-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.758333px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "27.583334px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 33.08384704589844,
+      "right": 341.9005126953125,
+      "top": 295.9921875,
+      "bottom": 384.640625
+    },
+    "overflow": {
+      "left": -33.08,
+      "right": -33.1,
+      "top": -295.99,
+      "bottom": -282.36,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 38.6,
+      "dy": 0,
+      "fs": 27.583334,
+      "ls": "2.758333px",
+      "lh": "51.029167px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v0-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 169,
+      "right": 206,
+      "top": 253.765625,
+      "bottom": 425.2325439453125
+    },
+    "overflow": {
+      "left": -169,
+      "right": -169,
+      "top": -253.77,
+      "bottom": -241.77,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v1-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "3.844896px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "24.0306px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 131.77114868164062,
+      "right": 243.21322631835938,
+      "top": 327.4921875,
+      "bottom": 351.4921875
+    },
+    "overflow": {
+      "left": -131.77,
+      "right": -131.79,
+      "top": -327.49,
+      "bottom": -315.51,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 27.86,
+      "dy": 0,
+      "fs": 24.0306,
+      "ls": "3.844896px",
+      "lh": "44.456612px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v0-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 169,
+      "right": 206,
+      "top": 232.328125,
+      "bottom": 446.6617431640625
+    },
+    "overflow": {
+      "left": -169,
+      "right": -169,
+      "top": -232.33,
+      "bottom": -220.34,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v1-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "3.844896px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "24.0306px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 117.84869384765625,
+      "right": 257.15130615234375,
+      "top": 327.4921875,
+      "bottom": 351.4921875
+    },
+    "overflow": {
+      "left": -117.85,
+      "right": -117.85,
+      "top": -327.49,
+      "bottom": -315.51,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 27.86,
+      "dy": 0,
+      "fs": 24.0306,
+      "ls": "3.844896px",
+      "lh": "44.456612px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v0-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 110.5,
+      "right": 264.5,
+      "top": 102.34375,
+      "bottom": 533.5437622070312
+    },
+    "overflow": {
+      "left": -110.5,
+      "right": -110.5,
+      "top": -102.34,
+      "bottom": -133.46,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v1-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "3.31px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "33.099998px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 23.683120727539062,
+      "right": 351.31689453125,
+      "top": 292.390625,
+      "bottom": 386.609375
+    },
+    "overflow": {
+      "left": -23.68,
+      "right": -23.68,
+      "top": -292.39,
+      "bottom": -280.39,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 36.4,
+      "dy": 0,
+      "fs": 33.099998,
+      "ls": "3.31px",
+      "lh": "61.234997px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v0-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.3px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "53px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 41.875,
+      "right": 373.125,
+      "top": 164.59375,
+      "bottom": 514.3937377929688
+    },
+    "overflow": {
+      "left": -41.88,
+      "right": -1.88,
+      "top": -164.59,
+      "bottom": -152.61,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 58.3,
+      "fs": 53,
+      "ls": "5.3px",
+      "lh": "92.75px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v1-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.979px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "29.790001px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 89.21924591064453,
+      "right": 285.78076171875,
+      "top": 241.859375,
+      "bottom": 437.140625
+    },
+    "overflow": {
+      "left": -89.22,
+      "right": -89.22,
+      "top": -241.86,
+      "bottom": -229.86,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 32.76,
+      "dy": 0,
+      "fs": 29.790001,
+      "ls": "2.979px",
+      "lh": "55.111504px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v0-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 169,
+      "right": 206,
+      "top": 210.890625,
+      "bottom": 468.0909729003906
+    },
+    "overflow": {
+      "left": -169,
+      "right": -169,
+      "top": -210.89,
+      "bottom": -198.91,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v1-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "3.844896px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "24.0306px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 103.9106216430664,
+      "right": 271.0737609863281,
+      "top": 327.4921875,
+      "bottom": 351.4921875
+    },
+    "overflow": {
+      "left": -103.91,
+      "right": -103.93,
+      "top": -327.49,
+      "bottom": -315.51,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 27.86,
+      "dy": 0,
+      "fs": 24.0306,
+      "ls": "3.844896px",
+      "lh": "44.456612px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v0-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "24",
+    "text": "善現答言",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 169,
+      "right": 206,
+      "top": 253.765625,
+      "bottom": 425.2325439453125
+    },
+    "overflow": {
+      "left": -169,
+      "right": -169,
+      "top": -253.77,
+      "bottom": -241.77,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v1-shanxian-da",
+    "needle": "善現答言",
+    "foundIdx": 24
+  },
+  {
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "vv": {
+      "w": 375,
+      "h": 667,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 375,
+      "h": 667,
+      "top": 0,
+      "left": 0,
+      "bottom": 667,
+      "right": 375,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "667px",
+      "width": "375px"
+    },
+    "htmlH": 667,
+    "bodyH": 667,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "s",
+    "idx": "25",
+    "text": "不也世尊",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 375,
+      "bottom": 667,
+      "w": 375,
+      "h": 667,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 159.5,
+      "right": 215.5,
+      "top": 196.703125,
+      "bottom": 482.2906188964844
+    },
+    "overflow": {
+      "left": -159.5,
+      "right": -159.5,
+      "top": -196.7,
+      "bottom": -184.71,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 81.19,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-v1-bu-ye-shizun",
+    "needle": "不也！世尊",
+    "foundIdx": 25
+  },
+  {
+    "mode": "dlg",
+    "writingMode": "vertical-rl",
+    "docH": "554px",
+    "inner": {
+      "w": 375,
+      "h": 667
+    },
+    "reader": {
+      "w": 375,
+      "h": 607,
+      "top": 60,
+      "bottom": 667
+    },
+    "doc": {
+      "w": 0,
+      "h": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "panel": {
+      "w": 375,
+      "h": 453.54693603515625,
+      "top": 689.6281127929688,
+      "bottom": 1143.175048828125
+    },
+    "overflowY": "hidden",
+    "overflowX": "auto",
+    "gapBottom": 0,
+    "tag": "iphoneSE-reading"
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 91.203125,
+      "right": 581.6640625,
+      "top": 64,
+      "bottom": 299.19061279296875
+    },
+    "overflow": {
+      "left": -91.2,
+      "right": -85.34,
+      "top": -64,
+      "bottom": -75.81,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 78.4,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "117.599991px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v1-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "1.726667px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "17.266666px",
+    "kind": "i",
+    "idx": "-1",
+    "text": "金剛般若波羅蜜經鳩摩羅什譯",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 236.83551025390625,
+      "right": 430.14886474609375,
+      "top": 166.53125,
+      "bottom": 221.7578125
+    },
+    "overflow": {
+      "left": -236.84,
+      "right": -236.85,
+      "top": -166.53,
+      "bottom": -153.24,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 24.16,
+      "dy": 0,
+      "fs": 17.266666,
+      "ls": "1.726667px",
+      "lh": "31.943333px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v0-intro",
+    "errs": []
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 315,
+      "right": 352,
+      "top": 107.765625,
+      "bottom": 279.2325439453125
+    },
+    "overflow": {
+      "left": -315,
+      "right": -315,
+      "top": -107.77,
+      "bottom": -95.77,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v1-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.72px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "17px",
+    "kind": "n",
+    "idx": "2",
+    "text": "如是我聞",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 294.05218505859375,
+      "right": 372.93218994140625,
+      "top": 185,
+      "bottom": 202
+    },
+    "overflow": {
+      "left": -294.05,
+      "right": -294.07,
+      "top": -185,
+      "bottom": -173,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 19.72,
+      "dy": 0,
+      "fs": 17,
+      "ls": "2.72px",
+      "lh": "31.450001px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v0-rushi-wowen",
+    "needle": "如是我聞",
+    "foundIdx": 2
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 315,
+      "right": 352,
+      "top": 86.328125,
+      "bottom": 300.6617431640625
+    },
+    "overflow": {
+      "left": -315,
+      "right": -315,
+      "top": -86.33,
+      "bottom": -74.34,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v1-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.72px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "17px",
+    "kind": "n",
+    "idx": "14",
+    "text": "佛告須菩提",
+    "n": 5,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 284.19219970703125,
+      "right": 382.79217529296875,
+      "top": 185,
+      "bottom": 202
+    },
+    "overflow": {
+      "left": -284.19,
+      "right": -284.21,
+      "top": -185,
+      "bottom": -173,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 19.72,
+      "dy": 0,
+      "fs": 17,
+      "ls": "2.72px",
+      "lh": "31.450001px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v0-fo-gao-xubuti",
+    "needle": "佛告須菩提",
+    "foundIdx": 14
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 158.5,
+      "right": 508.5,
+      "top": 64,
+      "bottom": 310.3999938964844
+    },
+    "overflow": {
+      "left": -158.5,
+      "right": -158.5,
+      "top": -64,
+      "bottom": -64.6,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v1-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.072px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "20.719999px",
+    "kind": "b",
+    "idx": "15",
+    "text": "諸菩薩摩訶薩應如是降伏其心",
+    "n": 13,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 185.360107421875,
+      "right": 481.639892578125,
+      "top": 182.9921875,
+      "bottom": 203.9921875
+    },
+    "overflow": {
+      "left": -185.36,
+      "right": -185.36,
+      "top": -182.99,
+      "bottom": -171.01,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 22.79,
+      "dy": 0,
+      "fs": 20.719999,
+      "ls": "2.072px",
+      "lh": "38.332001px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v0-xiang-fu-qi-xin",
+    "needle": "諸菩薩摩訶薩應如是降伏其心",
+    "foundIdx": 15
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 109.5,
+      "right": 557.5,
+      "top": 64,
+      "bottom": 310.3999938964844
+    },
+    "overflow": {
+      "left": -109.5,
+      "right": -109.5,
+      "top": -64,
+      "bottom": -64.6,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 61.6,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v1-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "1.8648px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "18.648001px",
+    "kind": "b",
+    "idx": "30",
+    "text": "凡所有相皆是虛妄若見諸相非相則見如來",
+    "n": 18,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 271.9759216308594,
+      "right": 395.0084533691406,
+      "top": 132.2734375,
+      "bottom": 254.7265625
+    },
+    "overflow": {
+      "left": -271.98,
+      "right": -271.99,
+      "top": -132.27,
+      "bottom": -120.27,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 20.51,
+      "dy": 0,
+      "fs": 18.648001,
+      "ls": "1.8648px",
+      "lh": "34.498802px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v0-fan-suo-you-xiang",
+    "needle": "凡所有相",
+    "foundIdx": 30
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 315,
+      "right": 352,
+      "top": 64.890625,
+      "bottom": 322.0909729003906
+    },
+    "overflow": {
+      "left": -315,
+      "right": -315,
+      "top": -64.89,
+      "bottom": -52.91,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v1-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "horizontal-tb",
+    "webkitWritingMode": "horizontal-tb",
+    "textOrientation": "mixed",
+    "letterSpacing": "2.72px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "17px",
+    "kind": "n",
+    "idx": "32",
+    "text": "須菩提白佛言",
+    "n": 6,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 274.3321838378906,
+      "right": 392.6521911621094,
+      "top": 185,
+      "bottom": 202
+    },
+    "overflow": {
+      "left": -274.33,
+      "right": -274.35,
+      "top": -185,
+      "bottom": -173,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 19.72,
+      "dy": 0,
+      "fs": 17,
+      "ls": "2.72px",
+      "lh": "31.450001px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v0-subhuti-lead",
+    "needle": "須菩提白佛言",
+    "foundIdx": 32
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.9136px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "36.959999px",
+    "kind": "n",
+    "idx": "24",
+    "text": "善現答言",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 315,
+      "right": 352,
+      "top": 107.765625,
+      "bottom": 279.2325439453125
+    },
+    "overflow": {
+      "left": -315,
+      "right": -315,
+      "top": -107.77,
+      "bottom": -95.77,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 42.87,
+      "fs": 36.959999,
+      "ls": "5.9136px",
+      "lh": "64.68px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v1-shanxian-da",
+    "needle": "善現答言",
+    "foundIdx": 24
+  },
+  {
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "vv": {
+      "w": 667,
+      "h": 375,
+      "offTop": 0,
+      "offLeft": 0
+    },
+    "ink": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "left": 0,
+      "bottom": 375,
+      "right": 667,
+      "pos": "fixed",
+      "inset": [
+        "0px",
+        "0px",
+        "0px",
+        "0px"
+      ],
+      "height": "375px",
+      "width": "667px"
+    },
+    "htmlH": 375,
+    "bodyH": 375,
+    "htmlOverflow": "hidden",
+    "bodyOverflow": "hidden",
+    "writingMode": "vertical-rl",
+    "webkitWritingMode": "vertical-rl",
+    "textOrientation": "mixed",
+    "letterSpacing": "5.6px",
+    "fontFamily": "RW Brush, Noto Serif TC Sutra, Noto Serif TC Sutra, Noto Serif, Noto Serif TC, Noto Serif CJK TC, Source Han Serif TC, Songti TC, PMingLiU, MingLiU, serif",
+    "fontSize": "56px",
+    "kind": "s",
+    "idx": "25",
+    "text": "不也世尊",
+    "n": 4,
+    "field": {
+      "left": 0,
+      "top": 0,
+      "right": 667,
+      "bottom": 375,
+      "w": 667,
+      "h": 375,
+      "pad": "64px 22px 52px"
+    },
+    "union": {
+      "left": 256.5,
+      "right": 410.5,
+      "top": 64,
+      "bottom": 287.98748779296875
+    },
+    "overflow": {
+      "left": -256.5,
+      "right": -256.5,
+      "top": -64,
+      "bottom": -87.01,
+      "overflows": false
+    },
+    "spacing": {
+      "dx": 0,
+      "dy": 81.19,
+      "fs": 56,
+      "ls": "5.6px",
+      "lh": "98px"
+    },
+    "safe": {
+      "t": ""
+    },
+    "bgBefore": "radial-gradient(46% 34% at 30% 36%, rgba(92, 88, 80, 0.2), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 30% at 76% 62%, rgba(74, 72, 70, 0.17), rgba(0, 0, 0, 0) 70%), radial-gradient",
+    "gapBottom": 0,
+    "gapRight": 0,
+    "tag": "iphoneSE-land-v1-bu-ye-shizun",
+    "needle": "不也！世尊",
+    "foundIdx": 25
+  },
+  {
+    "mode": "dlg",
+    "writingMode": "vertical-rl",
+    "docH": "330px",
+    "inner": {
+      "w": 667,
+      "h": 375
+    },
+    "reader": {
+      "w": 667,
+      "h": 375,
+      "top": 0,
+      "bottom": 375
+    },
+    "doc": {
+      "w": 0,
+      "h": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "panel": {
+      "w": 667,
+      "h": 331,
+      "top": 391.54998779296875,
+      "bottom": 722.5499877929688
+    },
+    "overflowY": "hidden",
+    "overflowX": "auto",
+    "gapBottom": 0,
+    "tag": "iphoneSE-land-reading"
+  }
+]

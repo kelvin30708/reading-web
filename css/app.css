@@ -149,13 +149,13 @@ h3.section{font-family:var(--font-zh);font-weight:400;font-size:var(--fs-md);let
 .about li{margin:6px 0}
 
 /* ---------- reader ---------- */
-.reader{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:calc(100vh - var(--top));transition:grid-template-columns var(--dur) var(--ease)}
+.reader{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:calc(100vh - var(--top));min-height:calc(100dvh - var(--top));transition:grid-template-columns var(--dur) var(--ease)}
 .reader.panel-closed{grid-template-columns:minmax(0,1fr) 0}
 .reader-main{min-width:0;overflow-x:clip}
 .rbar{position:sticky;top:var(--top);z-index:20;display:flex;align-items:center;gap:8px;min-height:52px;padding:4px 20px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .rbar .title{font-family:var(--font-zh);font-weight:400;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1;text-align:center;color:var(--ink-soft);font-size:var(--fs-base)}
 .progress{position:absolute;left:0;bottom:-1px;height:1px;background:var(--shu);width:0;transition:width .2s linear}
-.doc{max-width:40em;margin:0 auto;padding:64px 28px 30vh;font-family:var(--font-read);font-size:var(--fs);line-height:1.9;color:var(--ink);hanging-punctuation:first allow-end}
+.doc{-webkit-text-size-adjust:100%;text-size-adjust:100%;max-width:40em;margin:0 auto;padding:64px 28px 30vh;font-family:var(--font-read);font-size:var(--fs);line-height:1.9;color:var(--ink);hanging-punctuation:first allow-end}
 .doc[lang^=zh]{max-width:34em;font-family:var(--font-zh);line-height:2.15;letter-spacing:.06em;font-feature-settings:"palt" 0;text-align:justify;text-justify:inter-character;line-break:strict}
 .doc h1{font-family:var(--font-zh);font-size:1.55em;line-height:1.5;margin:0 0 .4em;font-weight:400;letter-spacing:.06em}
 .doc .sub{color:var(--muted);font-family:var(--font-ui);font-size:var(--fs-sm);line-height:1.7;letter-spacing:.02em;margin-bottom:3em;padding-bottom:2em;border-bottom:1px solid var(--line)}
@@ -239,7 +239,7 @@ mark.hl.flash{outline:1px solid var(--shu);outline-offset:3px}
 .pdf-empty h2{font-family:var(--font-zh);font-weight:400;letter-spacing:.04em}
 
 /* ---------- side panel ---------- */
-.panel{border-left:1px solid var(--line);background:var(--panel);overflow:hidden;position:sticky;top:var(--top);height:calc(100vh - var(--top));display:flex;flex-direction:column}
+.panel{border-left:1px solid var(--line);background:var(--panel);overflow:hidden;position:sticky;top:var(--top);height:calc(100vh - var(--top));height:calc(100dvh - var(--top));display:flex;flex-direction:column}
 .panel-head{padding:18px 20px 12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .panel-head h4{margin:0 0 6px;font-size:var(--fs-sm);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);flex:1 1 100%;display:flex;align-items:center;justify-content:space-between}
 .panel-head .btn.small{font-size:var(--fs-xs)}
@@ -951,28 +951,36 @@ body.link-mode .selbar{display:none}
 @font-face{font-family:"RW Brush";src:url(../vendor/fonts/RWBrush-subset.woff2) format("woff2");font-weight:400;font-style:normal;font-display:block}
 .seg.only-dlg{display:inline-flex}
 .reader.mode-dlg .doc{display:none}
-html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
+html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none;height:100%;height:100dvh;height:-webkit-fill-available;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.ink,.ink-text,.ink-text .ln,.ink-text .ch,.ink-field{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .ink{display:none;position:fixed;inset:0;z-index:55;overflow:hidden;background:#08080a;
+  width:100%;height:100%;height:100dvh;height:-webkit-fill-available;
   --ink-c:#f0e7d5;--glow:rgba(255,226,170,.2);--tsh:0 0 .5em var(--glow);
   font-family:"RW Brush","Noto Serif TC Sutra",var(--font-zh);color:var(--ink-c);
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;cursor:pointer;outline:none}
 .reader.mode-dlg .ink{display:block}
-/* ink-wash: a few faint grey clouds drifting slowly, a vignette, a whisper of paper grain */
+/* ink-wash: two slow drifting 雲霧 layers (CSS transform only), a vignette, a whisper of paper grain */
 .ink-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.ink-bg::before{content:"";position:absolute;inset:-12%;
-  background:radial-gradient(46% 34% at 30% 36%,rgba(92,88,80,.2),transparent 70%),radial-gradient(40% 30% at 76% 62%,rgba(74,72,70,.17),transparent 70%),radial-gradient(60% 40% at 50% 100%,rgba(60,56,52,.16),transparent 70%),radial-gradient(34% 26% at 84% 12%,rgba(80,76,72,.12),transparent 70%);
-  animation:ink-mist 46s ease-in-out infinite alternate}
+.ink-cloud{position:absolute;inset:-20%;pointer-events:none;will-change:transform}
+.ink-cloud-a{
+  background:radial-gradient(50% 38% at 28% 34%,rgba(186,178,164,.42),transparent 72%),radial-gradient(44% 34% at 78% 58%,rgba(168,162,152,.36),transparent 74%),radial-gradient(70% 48% at 52% 108%,rgba(120,116,108,.32),transparent 70%),radial-gradient(36% 28% at 86% 14%,rgba(176,170,160,.30),transparent 72%);
+  animation:ink-mist-a 64s ease-in-out infinite alternate}
+.ink-cloud-b{
+  background:radial-gradient(40% 30% at 62% 24%,rgba(210,202,188,.30),transparent 70%),radial-gradient(46% 34% at 16% 76%,rgba(160,154,146,.26),transparent 72%),radial-gradient(32% 24% at 90% 80%,rgba(190,184,174,.22),transparent 70%);
+  animation:ink-mist-b 90s ease-in-out infinite alternate}
 .ink-bg::after{content:"";position:absolute;inset:0;
   background:radial-gradient(130% 110% at 50% 46%,transparent 52%,rgba(0,0,0,.72) 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .88 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
-  background-blend-mode:normal;opacity:1}
-.ink-bg::after{background-size:auto,160px 160px}
-@keyframes ink-mist{from{transform:translate3d(-3%,1%,0) scale(1.02)}to{transform:translate3d(3%,-2%,0) scale(1.1)}}
+  background-blend-mode:normal;opacity:1;background-size:auto,160px 160px}
+@keyframes ink-mist-a{from{transform:translate3d(-4%,1.5%,0) scale(1.02)}to{transform:translate3d(4%,-2.5%,0) scale(1.08)}}
+@keyframes ink-mist-b{from{transform:translate3d(3%,-2%,0) scale(1.06)}to{transform:translate3d(-3%,2%,0) scale(1.02)}}
 .ink-pass,.ink-text,.ink-text .ch{transition:none !important}
 .ink-field{position:absolute;inset:0;display:grid;place-items:center;
   padding:calc(64px + env(safe-area-inset-top,0px)) calc(22px + env(safe-area-inset-right,0px)) calc(52px + env(safe-area-inset-bottom,0px)) calc(22px + env(safe-area-inset-left,0px))}
 .ink-pass{position:relative;max-width:100%;max-height:100%}
-.ink-text{margin:0;font-size:var(--fs-ink,34px);font-weight:400;line-height:1.9;color:var(--ink-c);line-break:strict;word-break:normal;overflow-wrap:anywhere;font-feature-settings:"vert" 1,"vrt2" 1}
-.ink[data-vert="1"] .ink-text{line-height:1.75;writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;text-orientation:mixed}
+.ink-text{margin:0;font-size:var(--fs-ink,34px);font-weight:400;line-height:1.9;color:var(--ink-c);line-break:strict;word-break:normal;overflow-wrap:anywhere}
+.ink-pass,.ink-pass .ink-text{font-size:var(--fs-ink,34px)}
+.ink-text .ch{font-size:1em}
+.ink[data-vert="1"] .ink-text{line-height:1.75;writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;text-orientation:mixed;-webkit-text-orientation:mixed;font-feature-settings:"vert" 1,"vrt2" 1;-webkit-font-feature-settings:"vert" 1,"vrt2" 1}
 .ink[data-vert="0"] .ink-text{text-align:center;line-height:1.85}
 /* ink colour per speaker: 世尊 warm gold, 須菩提/善現 and 阿難 silver-blue, 曼殊室利 celadon, 救脫 warm sand, 藥叉 muted bronze; title cards and narration stay neutral */
 .k-b{--ink-c:#ecd49a;--glow:rgba(255,214,140,.24);--halo:244,224,176}
@@ -984,20 +992,27 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
 .ch.g1{padding-inline-end:.3em}
 .ch.g2{padding-inline-end:.7em}
 .k-n .ink-text{--ink-c:rgba(196,190,180,.7);--glow:rgba(200,190,170,.08)}
-/* narrator leads (佛告須菩提, 須菩提白佛言, …) share the narration ink, on the same page as the speech */
+/* narrator leads (佛告須菩提, 須菩提白佛言, …) are their own kind-n pages; leftover .ch.lead keeps the narration ink if a lead still shares a page */
 .ink-pass .ch.lead{--ink-c:rgba(196,190,180,.7);--glow:rgba(200,190,170,.08);--halo:196,190,180;--tsh:0 0 .5em var(--glow)}
 .k-i .ink-text .t1,.k-t .ink-text .t1{font-size:1.3em}
 .k-i .ink-text .t2,.k-t .ink-text .t2{font-size:.46em;letter-spacing:.3em;color:rgba(214,206,190,.7)}
+.ink[data-vert="0"] .ink-text .ln.t1,.ink[data-vert="0"] .ink-text .ln.t2{display:block;height:auto;line-height:inherit}
+.ink[data-vert="0"] .ink-text.is-verse{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:0}
+.ink[data-vert="0"] .ink-text.is-verse .ln{display:block;flex:0 0 auto;box-sizing:content-box;overflow:visible;min-height:0}
+.ink[data-vert="0"] .ink-text br{display:none}
+.ink[data-vert="1"] .ink-text .ln:not(.t1):not(.t2){display:contents}
+.ink[data-vert="1"] .ink-text br{font-size:0;line-height:0}
 .k-i .ink-text .t2.ln,.k-t .ink-text .t2.ln{display:inline-block}
+.ink[data-vert="0"] .k-i .ink-text .t2.ln,.ink[data-vert="0"] .k-t .ink-text .t2.ln{display:block}
 .ink[data-vert="1"] .k-i .ink-text,.ink[data-vert="1"] .k-t .ink-text{line-height:2.1}
 /* each character wells up like ink bleeding into paper: blurred halo first, then the stroke sharpens */
 .ink-pass .ch{color:transparent;text-shadow:0 0 .9em rgba(240,231,213,0)}
 .ink-pass.writing .ch{animation:ink-in 1100ms cubic-bezier(.2,.65,.25,1) both;animation-delay:calc(var(--i) * var(--step,110ms))}
 .ink-pass.done .ch{color:var(--ink-c);text-shadow:var(--tsh)}
 @keyframes ink-in{
-  0%{color:transparent;text-shadow:0 0 1.1em rgba(var(--halo,240,231,213),0)}
-  30%{color:transparent;text-shadow:0 0 .62em rgba(var(--halo,240,231,213),.8),0 0 1.4em rgba(var(--halo,240,231,213),.25)}
-  70%{color:rgba(var(--halo,240,231,213),.55);text-shadow:0 0 .3em rgba(var(--halo,240,231,213),.5)}
+  0%{color:transparent;text-shadow:0 0 1.6em rgba(var(--halo,240,231,213),0)}
+  22%{color:transparent;text-shadow:0 0 .9em rgba(var(--halo,240,231,213),.62),0 0 1.8em rgba(var(--halo,240,231,213),.28)}
+  55%{color:rgba(var(--halo,240,231,213),.4);text-shadow:0 0 .5em rgba(var(--halo,240,231,213),.55),0 0 1.2em rgba(var(--halo,240,231,213),.18)}
   100%{color:var(--ink-c);text-shadow:var(--tsh)}}
 /* the seal presses in once the writing is finished */
 .ink-seal{position:absolute;display:grid;grid-template-rows:1fr 1fr;place-items:center;width:30px;height:58px;padding:2px 0;border-radius:3px;background:#a93a27;color:#f6e6d8;
@@ -1011,9 +1026,9 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
 @keyframes ink-stamp{0%{opacity:0;transform:scale(1.55)}55%{opacity:1;transform:scale(.93)}100%{opacity:.9;transform:scale(1)}}
 /* dissolving into the dark */
 .ink-pass.out{animation:ink-out .72s ease-in both}
-@keyframes ink-out{0%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(7px);transform:translateY(-6px)}}
+@keyframes ink-out{0%{opacity:1;filter:blur(0);-webkit-filter:blur(0)}100%{opacity:0;filter:blur(7px);-webkit-filter:blur(7px);transform:translateY(-6px)}}
 .ink-pass.done.fade{animation:ink-fade .55s ease-out both}
-@keyframes ink-fade{from{opacity:0;filter:blur(5px)}to{opacity:1;filter:blur(0)}}
+@keyframes ink-fade{from{opacity:0;filter:blur(5px);-webkit-filter:blur(5px)}to{opacity:1;filter:blur(0);-webkit-filter:blur(0)}}
 /* chrome: only a faint dot (like the reader's dot toolbar), a hairline of progress, and a hint at the very start */
 .ink-line{position:absolute;left:0;right:0;bottom:0;height:2px;pointer-events:none}
 .ink-line i{display:block;height:100%;width:0;background:#a93a27;opacity:.42;transition:width .6s ease}
@@ -1025,8 +1040,8 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
 /* first-time side-tap hint: faint ‹ › at the edges, shown once and then faded */
 .ink-edges{position:absolute;inset:0;z-index:2;pointer-events:none}
 .ink-edge{position:absolute;top:50%;transform:translateY(-50%);font:300 1.85rem/1 var(--font-ui);color:rgba(240,231,213,.38);opacity:0;letter-spacing:0}
-.ink-edge-prev{left:calc(10px + env(safe-area-inset-left,0px))}
-.ink-edge-next{right:calc(10px + env(safe-area-inset-right,0px))}
+.ink-edge-next{left:calc(10px + env(safe-area-inset-left,0px))}
+.ink-edge-prev{right:calc(10px + env(safe-area-inset-right,0px))}
 .ink.show-hint .ink-edge{animation:ink-edge-fade 5.6s ease-in-out both}
 @keyframes ink-edge-fade{0%{opacity:0}20%{opacity:.5}70%{opacity:.32}100%{opacity:0}}
 @media (max-width:860px), (pointer:coarse){
@@ -1065,7 +1080,7 @@ html.ink-lock,html.ink-lock body{overflow:hidden;overscroll-behavior:none}
 @media (max-width:420px){ .ik{min-width:36px;padding:0 4px} }
 @media (min-width:860px){ .ink-field{padding-inline:7vw} }
 @media (prefers-reduced-motion:reduce){
-  .ink-bg::before{animation:none}
+  .ink-cloud-a,.ink-cloud-b{animation:none}
   .ink-pass.writing .ch{animation:none}
   .ink-pass.writing{animation:ink-fade-s .5s ease-out both}
   .ink-pass.writing .ch{color:var(--ink-c);text-shadow:var(--tsh)}

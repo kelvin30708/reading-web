@@ -1,7 +1,7 @@
 // 對話 Dialogue mode — "ink in the dark": one passage (one speaker turn, or a screen-sized part of a long one)
 // writes itself character by character in brush script on a near-black screen, holds, then dissolves like ink.
 // Speakers are told apart by ink colour only — there is no vermilion name-seal, so the screen stays quiet.
-// The sutra's own speaker leads (佛告須菩提、須菩提白佛言、佛告具壽善現曰, and so on) stay at the start of the same page as the speech: the lead is drawn in the narration colour, the speech in the speaker's colour. Punctuation is still not drawn. Classic four-phrase 偈 are one page, one line per phrase.
+// The sutra's own speaker leads (佛告須菩提、須菩提白佛言、佛告具壽善現曰, 善現答言, and so on) are their own narration-colour pages, styled like 如是我聞, and sit immediately before the speech page. Punctuation is still not drawn. Classic four-phrase 偈 stay one page, one line per phrase, without the lead.
 // Passages come from window.RW_DIALOGUE[id] = [speaker, text, reading-block index].
 // t = title card; n = narration; b = 世尊; s = Subhūti / 善現;
 // m = 曼殊室利; a = 阿難; j = 救脫; y = 十二藥叉大將; i = intro.
@@ -52,10 +52,10 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   const stage = document.createElement('section');
   stage.className = 'ink'; stage.id = 'dlgStage'; stage.setAttribute('lang', 'zh-Hant'); stage.setAttribute('aria-label', '對話 Dialogue'); stage.tabIndex = -1;
   stage.dataset.vert = st.dlgVert === false ? '0' : '1';
-  stage.innerHTML = `<div class="ink-bg" aria-hidden="true"></div>
+  stage.innerHTML = `<div class="ink-bg" aria-hidden="true"><i class="ink-cloud ink-cloud-a"></i><i class="ink-cloud ink-cloud-b"></i></div>
     <div class="ink-field" id="inkField"></div>
-    <p class="ink-hint" id="inkHint" aria-hidden="true"><span class="ink-hint-phone">左上一頁 · 右下一頁</span><span class="ink-hint-desk">輕點繼續 · Tap, Space or → · ← back · P plays</span></p>
-    <div class="ink-edges" aria-hidden="true"><span class="ink-edge ink-edge-prev">‹</span><span class="ink-edge ink-edge-next">›</span></div>
+    <p class="ink-hint" id="inkHint" aria-hidden="true"><span class="ink-hint-phone">左／中 下一頁 · 右 上一頁</span><span class="ink-hint-desk">輕點繼續 · Tap, Space or → · ← back · P plays</span></p>
+    <div class="ink-edges" aria-hidden="true"><span class="ink-edge ink-edge-next">‹</span><span class="ink-edge ink-edge-prev">›</span></div>
     <div class="ink-line" aria-hidden="true"><i id="inkProg"></i></div>
     <div class="ink-tools" id="inkTools">
       <button type="button" class="ink-dot" id="inkDot" aria-expanded="false" aria-label="Show dialogue tools 顯示工具" title="Show dialogue tools 顯示工具"></button>
@@ -114,37 +114,89 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     else if (k === 't') {
       const [a, b] = t[1].split('\n');
       body = `<span class="ln t1">${chars(a)}</span>` + (b ? `<br><span class="ln t2">${chars(b, a.length + 1)}</span>` : '');
-    } else body = linesOf(t[1]).join('<br>');
+    } else body = linesOf(t[1]).map(html => `<span class="ln">${html}</span>`).join('<br>');
     el.dataset.n = String(n); el.dataset.w = String(n + gapW);
     el.innerHTML = `<p class="ink-text" aria-hidden="true">${body}</p>`;
+    if (k !== 'i' && k !== 't' && (raw.includes('\n'))) el.querySelector('.ink-text').classList.add('is-verse');
     return el;
   }
   // font size: large and calligraphic, shrunk until the passage fits the screen without scrolling
   function fit(el) {
     const vert = stage.dataset.vert === '1', t = $('.ink-text', el), k = el.dataset.k;
     const cs = getComputedStyle(field);
-    const aw = field.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-    const ah = field.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const padL = parseFloat(cs.paddingLeft), padR = parseFloat(cs.paddingRight);
+    const padT = parseFloat(cs.paddingTop), padB = parseFloat(cs.paddingBottom);
+    const aw = field.clientWidth - padL - padR;
+    const ah = field.clientHeight - padT - padB;
     const AW = aw, AH = ah;
-    const len = +el.dataset.n, wlen = +el.dataset.w || len, verse = el.textContent !== '' && el.querySelector('br') && k !== 'i' && k !== 't';
+    const len = +el.dataset.n, wlen = +el.dataset.w || len, verse = k !== 'i' && k !== 't' && t.querySelectorAll('.ln').length > 1;
     const f = (k === 'i' || k === 't') ? 1.0 : len <= 8 ? 1.32 : len <= 16 ? 1.2 : len <= 30 ? 1.08 : 1;
     const kf = k === 'n' ? 0.66 : 1;
     let S = (vert ? 56 : Math.min(aw / 12, ah / 15) * f) * kf;
     S = Math.max(17, Math.min(vert ? 56 : 46, S));
     const ls = k === 'n' ? 0.16 : 0.1;
     t.style.letterSpacing = ls + 'em';
+    t.style.transform = 'none';
+    // Content box of the field (inside padding). WebKit's vertical-rl often reports a stretched
+    // parent box and, with overflow:hidden on the stage, may clamp glyph rects — open overflow
+    // while measuring, then centre the painted glyphs (Safari packs vertical-rl to the right).
+    const contentBox = () => {
+      const b = field.getBoundingClientRect();
+      return { left: b.left + padL, right: b.right - padR, top: b.top + padT, bottom: b.bottom - padB };
+    };
+    const glyphBox = () => {
+      const boxes = [...t.querySelectorAll('.ch')].map(n => n.getBoundingClientRect());
+      return (boxes.length ? boxes : [t.getBoundingClientRect()]).reduce((a, b) => ({
+        left: Math.min(a.left, b.left), right: Math.max(a.right, b.right),
+        top: Math.min(a.top, b.top), bottom: Math.max(a.bottom, b.bottom)
+      }));
+    };
     const measure = () => {
-      // Paint of the characters against the visible stage. A title's .t1/.t2 columns (1.3em, line-height 2.1)
-      // can overflow a narrow phone while .ink-text's own box, stretched by maxHeight in vertical-rl, reports as fitting.
-      const f = field.getBoundingClientRect();
-      const boxes = [...t.querySelectorAll('.ch')].map(el => el.getBoundingClientRect());
-      const r = (boxes.length ? boxes : [t.getBoundingClientRect()]).reduce((a, b) => ({ left: Math.min(a.left, b.left), right: Math.max(a.right, b.right), top: Math.min(a.top, b.top), bottom: Math.max(a.bottom, b.bottom) }));
+      const prev = stage.style.overflow;
+      stage.style.overflow = 'visible';
+      void t.offsetWidth;
+      const f = contentBox(), r = glyphBox();
+      stage.style.overflow = prev;
       return r.left >= f.left - 0.5 && r.right <= f.right + 0.5 && r.top >= f.top - 0.5 && r.bottom <= f.bottom + 0.5;
     };
-    const apply = s => { t.style.fontSize = s + 'px'; if (vert) { t.style.maxHeight = AH + 'px'; t.style.maxWidth = ''; } else { t.style.maxWidth = AW + 'px'; t.style.maxHeight = ''; } void t.offsetWidth; };
+    const apply = s => {
+      t.style.transform = 'none';
+      t.style.fontSize = s + 'px';
+      el.style.setProperty('--fs-ink', s + 'px');
+      el.style.fontSize = s + 'px';
+      t.querySelectorAll('.ch').forEach(n => {
+        const ln = n.closest('.ln');
+        const scale = ln && ln.classList.contains('t1') ? 1.3 : ln && ln.classList.contains('t2') ? 0.46 : 1;
+        n.style.setProperty('font-size', (s * scale) + 'px', 'important');
+      });
+      if (!vert && t.classList.contains('is-verse')) {
+        const pitch = 1.85 * s;
+        t.querySelectorAll('.ln').forEach(n => {
+          if (n.classList.contains('t1') || n.classList.contains('t2')) return;
+          n.style.fontSize = s + 'px';
+          n.style.lineHeight = pitch + 'px';
+          n.style.height = pitch + 'px';
+        });
+      }
+      if (vert) { t.style.maxHeight = AH + 'px'; t.style.maxWidth = ''; }
+      else { t.style.maxWidth = AW + 'px'; t.style.maxHeight = ''; }
+      void t.offsetWidth;
+    };
+    const centre = () => {
+      t.style.transform = 'none';
+      void t.offsetWidth;
+      const prev = stage.style.overflow;
+      stage.style.overflow = 'visible';
+      void t.offsetWidth;
+      const f = contentBox(), r = glyphBox();
+      stage.style.overflow = prev;
+      const dx = ((f.left + f.right) - (r.left + r.right)) / 2;
+      const dy = ((f.top + f.bottom) - (r.top + r.bottom)) / 2;
+      if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) t.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+    };
     apply(S);
     let guard = 0;
-    while (!measure() && S > 16 && guard++ < 40) { S -= 1.5; apply(S); }
+    while (!measure() && S > 12 && guard++ < 50) { S -= 1.5; apply(S); }
     // balance the columns so a short passage is not one long column plus a stub
     if (vert && !verse && len > 10 && k !== 'i' && k !== 't') {
       const r = t.getBoundingClientRect(), pitch = S * (1 + ls) * 1.0, linePitch = S * (vert ? 1.75 : 1.85);
@@ -155,6 +207,9 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
         if (t.getBoundingClientRect().width > r.width + 2) t.style.maxHeight = AH + 'px';
       }
     }
+    centre();
+    guard = 0;
+    while (!measure() && S > 12 && guard++ < 30) { S -= 1.5; apply(S); centre(); }
     el.style.setProperty('--fs-ink', S + 'px');
   }
   R.fitInk = () => { const e = cur(); if (e && R.mode === 'dlg') fit(e); };
@@ -258,7 +313,8 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   };
   $('.ink-row', stage).addEventListener('click', e => { const b = e.target.closest('button[data-a]'); if (!b) return; e.stopPropagation(); act[b.dataset.a]?.(); if (b.dataset.a !== 'close' && b.dataset.a !== 'read' && b.dataset.a !== 'toc') bump(); });
   $('.ink-row', stage).addEventListener('pointerdown', bump);
-  // Phone / narrow / coarse-pointer: left half = previous, right half = next.
+  // Phone / narrow / coarse-pointer, matching right-to-left vertical reading:
+  // left two-thirds (including the centre) = next; right third = previous.
   // Desktop (wide + fine pointer): click anywhere still goes next, as before.
   // A tap while the passage is still being revealed always finishes the writing first.
   // Taps on the dot, tool row or contents do not navigate; a swipe is ignored; a tap
@@ -279,7 +335,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     if (phase === 'writing') { finish(); return; }
     if (sideNav()) {
       const r = stage.getBoundingClientRect();
-      if (e.clientX < r.left + r.width / 2) prev();
+      if (e.clientX >= r.left + r.width * 2 / 3) prev();
       else next();
     } else next();
   });
