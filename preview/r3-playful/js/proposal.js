@@ -816,7 +816,9 @@ function fillSlipGrid(grid) {
         if (!b.classList.contains('is-earned')) return;
         await ensureDialogueSrc();
         const s = slipText(pin);
-        const passage = s ? trimPassage((s.title || '') + '　' + (s.first || '')) : '';
+        // Body is the first line only; title stays in the sheet meta as its own field.
+        // Never concatenate title+first (that painted 法會因由分第一如是我聞 as one column).
+        const passage = s ? trimPassage(s.first || s.title || '') : '';
         if (passage) openImpression(passage, s?.title || keepTitle());
       });
       grid.appendChild(b);

@@ -179,6 +179,10 @@ mark.hl.flash{outline:1px solid var(--shu);outline-offset:3px}
 .doc[lang^=zh] .ph{display:inline-block;white-space:nowrap;vertical-align:top}
 .doc[lang^=zh] .ph.ph-long{white-space:normal}
 .doc[lang^=zh] .ph-nl{display:inline-block;width:0;height:0;overflow:hidden;font-size:0;line-height:0;letter-spacing:0}
+/* Punctuation stays in the text tree (offsets) but takes no space, like 對話. */
+.doc[lang^=zh] .ph-mark{display:inline-block;width:0;height:0;overflow:hidden;font-size:0;line-height:0;letter-spacing:0;pointer-events:none}
+.doc[lang^=zh] .ph.g1,.doc[lang^=zh] .ph.g2{padding-inline-end:.6em}
+.doc[lang^=zh] .ph.g1:last-of-type,.doc[lang^=zh] .ph.g2:last-of-type{padding-inline-end:0}
 
 /* vertical writing (直排) for Chinese texts */
 .doc.vertical{writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;width:100%;max-width:none;max-height:none;height:calc(100vh - var(--top) - 53px);height:calc(100dvh - var(--top) - 53px);margin:0;padding:48px 56px 40px;overflow-x:auto;overflow-y:hidden;line-height:2.1;letter-spacing:.12em;text-align:start;scrollbar-width:thin;overscroll-behavior-x:contain}

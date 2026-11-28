@@ -193,18 +193,22 @@ body:has(.impression:not([hidden])) .ink-pass{opacity:0}
 
 .jian-sheet{
   position:fixed;inset:0;z-index:80;background:rgba(28,26,22,.42);
-  display:grid;place-items:center;padding:16px;
+  display:grid;place-items:center;padding:8px;box-sizing:border-box;
 }
 .jian-sheet[hidden]{display:none !important}
 .jian-sheet-panel{
-  background:#F7F4EE;padding:16px 16px 12px;max-width:100%;
+  background:#F7F4EE;padding:8px 16px;max-width:100%;
   box-shadow:0 20px 50px rgba(20,16,12,.28);
+  box-sizing:border-box;
+  max-height:100vh;max-height:100dvh;
+  overflow:auto;-webkit-overflow-scrolling:touch;
+  display:flex;flex-direction:column;align-items:center;min-height:0;
 }
 .jian-sheet-grid{
   display:grid;grid-template-columns:repeat(4,44px);grid-auto-rows:64px;
   gap:8px;width:max-content;max-width:100%;
+  min-height:0;overflow:auto;
 }
-.jian-sheet-panel{overflow:auto;-webkit-overflow-scrolling:touch}
 .jian-slip{
   width:44px;height:64px;padding:4px 2px;border:0;border-radius:1px;
   background:rgba(42,38,33,.08);box-shadow:0 0 0 1px rgba(42,38,33,.08);
@@ -217,8 +221,9 @@ body:has(.impression:not([hidden])) .ink-pass{opacity:0}
 .jian-slip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .jian-slip:disabled{cursor:default}
 .jian-sheet-close{
-  display:block;margin:10px auto 0;width:44px;height:44px;padding:0;border:0;
+  display:block;margin:8px auto 0;width:44px;height:44px;padding:0;border:0;
   background:transparent;color:#2A2621;cursor:pointer;border-radius:50%;
+  flex-shrink:0;
 }
 .jian-sheet-close:focus-visible{outline:2px solid #2A2621;outline-offset:2px}
 .jian-flyer{

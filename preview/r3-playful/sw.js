@@ -2,7 +2,7 @@
 // Cache prefix rw-preview-r3-playful-. This worker must never delete or claim rw-v23 / live caches.
 // Reading Web service worker: offline reading + install (analysis-3 P5).
 // Bump CACHE on every release so the new files replace the old ones (old caches are deleted on activate).
-const CACHE = 'rw-preview-r3-playful-v1';
+const CACHE = 'rw-preview-r3-playful-v2';
 const RUNTIME = 'rw-preview-r3-playful-runtime';   // pdf.js cmaps / standard fonts, filled on first use
 const FONTS = 'rw-preview-r3-playful-fonts';      // Google Fonts CSS + files, stale-while-revalidate
 const SHELL = [
