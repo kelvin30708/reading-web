@@ -218,7 +218,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     if (armed) sessionStorage.removeItem('rw-sw-reloaded');
     // Drop the SW bump query after a forced navigate so the address bar stays clean.
     { const u = new URL(location.href); if (u.searchParams.has('rwsw')) { u.searchParams.delete('rwsw'); history.replaceState(null, '', u.href); } }
-    navigator.serviceWorker.register('sw.js').then(reg => {
+    navigator.serviceWorker.register('sw.js', { scope: './' }).then(reg => {
       const poke = () => reg.update().catch(() => {});
       poke();
       document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') poke(); });
@@ -643,22 +643,44 @@ async function openReader(id) {
   });
 }
 
-// Presentational phrase wrappers for Chinese typography. Characters (including
-// typographic \n already in the source) are preserved in the same order, so
-// highlight / link offsets inside [data-anchor] stay valid. The .ph-nl span
-// keeps those newlines in the DOM but takes no space, so a column can fill
-// until the next clause no longer fits, instead of breaking at every comma.
-const PHRASE_RE = /(\n+)|([^，、；：。！？\n]*[，、；：。！？]+[」』”’]*)|([^，、；：。！？\n]+)/g;
+// Presentational phrase wrappers for Chinese typography. Every source character
+// (including typographic \n and punctuation) stays in the DOM in the same order,
+// so highlight / link / tap-select offsets inside [data-anchor] stay valid.
+// Punctuation is not drawn (same rule as 對話): marks sit in .ph-mark (no box);
+// ，；： leave a small phrase gap and 。！？ a larger one, as padding on the
+// preceding clause; enumeration 、 is hidden with no gap and does not split the
+// list. Line and column breaks fall at those phrase boundaries. Source text is
+// not edited.
+const READ_MINOR = /[，；：,;:]/;
+const READ_ENUM = /[、､]/;
+const READ_MAJOR = /[。！？!?．]/;
+const READ_DROP = /[「」『』《》〈〉（）()\[\]【】"'“”‘’·・—–…～~﹁﹂﹃﹄]/;
+const READ_OPEN = /[「『（《〈【“‘﹁﹃(\[]/;
 function phraseHTML(s) {
   if (!s) return '';
-  PHRASE_RE.lastIndex = 0;
-  let out = '', m, ok = false;
-  while ((m = PHRASE_RE.exec(s))) {
-    ok = true;
-    if (m[1]) out += `<span class="ph-nl">${m[1]}</span>`;
-    else out += `<span class="ph">${esc(m[0])}</span>`;
+  let out = '', buf = '', gap = 0;
+  const flush = () => {
+    if (!buf) return;
+    const cls = gap === 2 ? 'ph g2' : gap === 1 ? 'ph g1' : 'ph';
+    out += `<span class="${cls}">${buf}</span>`;
+    buf = '';
+    gap = 0;
+  };
+  for (const c of s) {
+    if (c === '\n') { flush(); out += `<span class="ph-nl">\n</span>`; continue; }
+    if (READ_ENUM.test(c)) { buf += `<span class="ph-mark">${esc(c)}</span>`; continue; }
+    if (READ_DROP.test(c)) {
+      buf += `<span class="ph-mark">${esc(c)}</span>`;
+      if (READ_OPEN.test(c) && buf) gap = Math.max(gap, 1);
+      continue;
+    }
+    if (READ_MINOR.test(c)) { buf += `<span class="ph-mark">${esc(c)}</span>`; gap = Math.max(gap, 1); flush(); continue; }
+    if (READ_MAJOR.test(c)) { buf += `<span class="ph-mark">${esc(c)}</span>`; gap = 2; flush(); continue; }
+    if (/[\s\u3000]/.test(c)) { buf += esc(c); flush(); continue; }
+    buf += esc(c);
   }
-  return ok ? out : esc(s);
+  flush();
+  return out || esc(s);
 }
 
 async function renderTextDoc(R) {

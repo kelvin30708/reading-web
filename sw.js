@@ -1,11 +1,11 @@
 // Reading Web service worker: offline reading + install (analysis-3 P5).
 // Bump CACHE on every release so the new files replace the old ones (old caches are deleted on activate).
-const CACHE = 'rw-v23';
+const CACHE = 'rw-v24';
 const RUNTIME = 'rw-runtime-v3';   // pdf.js cmaps / standard fonts, filled on first use
 const FONTS = 'rw-gfonts-v1';      // Google Fonts CSS + files, stale-while-revalidate
 const SHELL = [
-  './', 'index.html', 'manifest.webmanifest', 'css/app.css',
-  'js/app.js', 'js/store.js', 'js/anchor.js', 'js/tapselect.js', 'js/toc.js', 'js/links.js', 'js/dialogue.js',
+  './', 'index.html', 'manifest.webmanifest', 'css/app.css', 'css/proposal.css',
+  'js/app.js', 'js/store.js', 'js/anchor.js', 'js/tapselect.js', 'js/toc.js', 'js/links.js', 'js/dialogue.js', 'js/proposal.js',
   'texts/meta.js', 'texts/diamond-zh.js', 'texts/diamond-xz.js', 'texts/diamond-en.js', 'texts/medicine-zh.js', 'texts/medicine-en.js', 'texts/tara-white-praise.js', 'texts/tara-21-praises.js', 'texts/qixin-zh.js',
   'vendor/fonts/NotoSerifTC-400-sutra-subset.woff2', 'vendor/fonts/NotoSerifTC-600-sutra-subset.woff2', 'vendor/fonts/RWBrush-subset.woff2', 'vendor/fonts/NotoSerifTibetan-subset.woff2',
   'vendor/pdfjs/pdf.min.mjs', 'vendor/pdfjs/pdf.worker.min.mjs',
@@ -21,7 +21,8 @@ self.addEventListener('activate', e => {
   const keep = new Set([CACHE, RUNTIME, FONTS]);
   e.waitUntil((async () => {
     const keys = await caches.keys();
-    const stale = keys.filter(k => k.startsWith('rw-') && !keep.has(k));
+    // Never delete /preview/ caches (rw-preview-*); those scopes have their own workers.
+    const stale = keys.filter(k => k.startsWith('rw-') && !k.startsWith('rw-preview-') && !keep.has(k));
     await Promise.all(stale.map(k => caches.delete(k)));
     await self.clients.claim();
     // Old tabs still have the previous JS in memory (and may lack the client reload hook).

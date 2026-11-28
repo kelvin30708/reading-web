@@ -282,8 +282,12 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     finalePlaying = false;
     stage.classList.remove('lotus-finale');
     lotusFinaleEl.hidden = true;
+    // Drop the finale motion immediately so the 箋匣 fab (below the lotus)
+    // is not left under a mid-return scaled lotus that intercepts taps.
+    lotusBtn.style.transition = 'none';
     lotusBtn.style.transform = '';
     lotusBtn.style.opacity = '';
+    void lotusBtn.offsetWidth;
     lotusBtn.style.transition = '';
     if (playing) held();
   };
@@ -315,7 +319,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       }, 2500);
     } else {
       lotusBtn.style.transition = 'transform 1.8s cubic-bezier(.22,.7,.25,1)';
-      requestAnimationFrame(() => requestAnimationFrame(place));
+      requestAnimationFrame(() => requestAnimationFrame(() => { if (finalePlaying) place(); }));
       tFinale = setTimeout(() => {
         lotusBtn.style.transform = 'none';
         tFinale = setTimeout(() => endFinale(), 1600);
@@ -336,6 +340,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     endFinale();
     hideLotusTip();
     paintLotus();
+    try { document.dispatchEvent(new CustomEvent('rw:lotus-reset', { detail: { id: R.id } })); } catch (_) {}
     announce('已重設蓮花進度');
     return true;
   };
@@ -348,6 +353,9 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
       lotusState.done.add(pin);
       persistLotus();
       paintLotus({ bloomPin: pin });
+      try {
+        document.dispatchEvent(new CustomEvent('rw:lotus-pin', { detail: { id: R.id, pin, how, i, already: false } }));
+      } catch (_) {}
     }
     if (lotusState.done.size === 32 && !lotusState.finale && how !== 'instant') playFinale({ replay: false });
   };
@@ -1096,6 +1104,9 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     }
     paint(); savePos();
     if (how !== 'scrub') notePin(i, how);
+    try {
+      document.dispatchEvent(new CustomEvent('rw:dlg-page', { detail: { id: R.id, i, how, playing } }));
+    } catch (_) {}
     if (i >= 0) live.textContent = turns[i][1].replace(/\n/g, '');
     if (i >= 0 && !started) { started = true; stage.classList.remove('show-hint'); clearTimeout(tHint); }
   }
@@ -1134,9 +1145,12 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   function play() {
     if (idx >= N - 1 && phase !== 'out') mount(-1, 'write');
     playing = true; requestWake(); paint(); if (phase === 'held') held();
+    try { document.dispatchEvent(new CustomEvent('rw:dlg-play', { detail: { playing: true } })); } catch (_) {}
     announce('自動播放 Auto-play on');
   }
-  function pause() { playing = false; clearTimeout(tHold); releaseWake(); paint(); }
+  function pause() { playing = false; clearTimeout(tHold); releaseWake(); paint();
+    try { document.dispatchEvent(new CustomEvent('rw:dlg-play', { detail: { playing: false } })); } catch (_) {}
+  }
 
   // ---------- chrome: the faint dot, tools, contents ----------
   function paint() {
@@ -1288,14 +1302,14 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
   const sideNav = () => matchMedia('(max-width: 860px), (pointer: coarse)').matches;
   let ptr0 = null, suppressNav = false;
   stage.addEventListener('pointerdown', e => {
-    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip, .ink-playbar, .ink-scrub')) { ptr0 = null; return; }
+    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip, .ink-playbar, .ink-scrub, .ink-moon, .plum-layer, .ink-ripple-layer, .jian-fab, .keep-frame-btn')) { ptr0 = null; return; }
     suppressNav = false;
     if (tools.classList.contains('open')) { peek(false); suppressNav = true; }
     if (!tocEl.hidden) { toc(false); suppressNav = true; }
     ptr0 = { x: e.clientX, y: e.clientY };
   });
   stage.addEventListener('click', e => {
-    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip, .ink-playbar, .ink-scrub')) { suppressNav = false; return; }
+    if (e.target.closest('.ink-tools, .ink-toc, .ink-lotus, .ink-lotus-finale, .ink-lotus-tip, .ink-playbar, .ink-scrub, .ink-moon, .plum-layer, .ink-ripple-layer, .jian-fab, .keep-frame-btn')) { suppressNav = false; return; }
     if (suppressNav) { suppressNav = false; return; }
     if (ptr0 && Math.hypot(e.clientX - ptr0.x, e.clientY - ptr0.y) > 28) { ptr0 = null; return; }
     ptr0 = null;
@@ -1369,6 +1383,7 @@ export function setupDialogue(R, { store, $, $$, esc, announce, debounce, hideBa
     if (remember) { modeMap[R.id] = m; store.save(); }
     syncUI();
     if (dlg) {
+      try { document.dispatchEvent(new CustomEvent('rw:dlg-open', { detail: { id: R.id } })); } catch (_) {}
       $('.vcoach button')?.click();
       if (R.sheetOpen && R.sheetOpen()) R.closePanel();
       peek(false); tocEl.hidden = true;
