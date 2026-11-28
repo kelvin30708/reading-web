@@ -60,6 +60,8 @@ self.addEventListener('fetch', e => {
   if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') { e.respondWith(staleWhileRevalidate(req)); return; }
   // everything else cross-origin (dictionaryapi.dev, source links) goes straight to the network
   if (url.origin !== location.origin) return;
+  // preview builds under /preview/ have their own service workers; never intercept them
+  if (url.pathname.includes('/preview/')) return;
   // page loads: the cached app shell (the hash router does the rest)
   if (req.mode === 'navigate') { e.respondWith(caches.match('index.html').then(hit => hit || fetch(req)).catch(() => caches.match('index.html'))); return; }
   e.respondWith(cacheFirst(req, url.pathname.includes('/vendor/pdfjs/') ? RUNTIME : CACHE));

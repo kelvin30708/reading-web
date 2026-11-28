@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-r3="calm">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reading Web · 讀書筆記</title>
+<meta name="description" content="Read sutras and your own PDFs, highlight, take notes and build flashcards. Everything stays in your browser.">
+<meta name="theme-color" content="#F7F4EE">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="讀書筆記">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23A8442A'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23fff' font-family='serif'%3E讀%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+<!-- N7: Noto Serif TC subset (built-in sutras + UI) and Noto Serif Tibetan subset, OFL — see vendor/fonts/OFL.txt and OFL-NotoSerifTibetan.txt -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="vendor/fonts/NotoSerifTC-400-sutra-subset.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="vendor/fonts/NotoSerifTibetan-subset.woff2">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<a class="skip" href="#view" data-skip="text">Skip to text 跳至內文</a>
+<a class="skip" href="#panel" data-skip="notes" hidden>Skip to notes 跳至筆記</a>
+<header class="topbar">
+  <a class="brand" href="#/library" aria-label="Library"><span class="logo">讀</span><span class="brand-text">Reading Web <small lang="zh-Hant">讀書筆記</small></span></a>
+  <nav class="nav">
+    <a href="#/library" data-nav="library">Library</a>
+    <a href="#/cards" data-nav="cards">Flashcards</a>
+  </nav>
+  <div class="tools">
+    <button class="icon-btn" id="sizeBtn" title="Text size" aria-label="Text size" aria-expanded="false" aria-controls="sizePop">Aa</button>
+    <div class="size-pop" id="sizePop" role="group" aria-label="Text size">
+      <button class="icon-btn" id="fontDown" title="Smaller text" aria-label="Smaller text">A−</button>
+      <output id="fsVal" aria-live="polite"></output>
+      <button class="icon-btn" id="fontUp" title="Larger text" aria-label="Larger text">A+</button>
+    </div>
+    <button class="icon-btn" id="themeBtn" title="Light / dark" aria-label="Toggle dark mode">◐</button>
+    <button type="button" class="icon-btn top-toggle" id="topToggle" aria-expanded="true" aria-label="Hide top bar 收合頂列" title="Hide top bar 收合頂列"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 9 L7 5 L11 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</header>
+
+<main id="view" tabindex="-1"></main>
+
+<!-- floating selection / highlight toolbar -->
+<div id="selbar" class="selbar" hidden role="toolbar" aria-label="Highlight tools">
+  <div class="swatches">
+    <button class="sw sw-yellow" data-color="yellow" title="1 · Yamabuki 山吹" aria-label="Highlight yamabuki (yellow)" aria-keyshortcuts="1"></button>
+    <button class="sw sw-green" data-color="green" title="2 · Matcha 抹茶" aria-label="Highlight matcha (green)" aria-keyshortcuts="2"></button>
+    <button class="sw sw-pink" data-color="pink" title="3 · Sakura 櫻" aria-label="Highlight sakura (pink)" aria-keyshortcuts="3"></button>
+    <button class="sw sw-blue" data-color="blue" title="4 · Ai 藍" aria-label="Highlight ai indigo (blue)" aria-keyshortcuts="4"></button>
+  </div>
+  <span class="sep"></span>
+  <button class="tb" data-act="note" title="N · Highlight and add a note 筆記" aria-keyshortcuts="N">✎ Note</button>
+  <button class="tb" data-act="card" title="C · Add to flashcards 單字卡" aria-keyshortcuts="C">＋ Card</button>
+  <button class="tb" data-act="link" title="L · Link to another passage 連結" aria-label="Link to another passage 連結" aria-keyshortcuts="L">⤳<span class="tb-label"> Link</span></button>
+  <button class="tb danger" data-act="remove" title="Del · Remove highlight" aria-label="Remove highlight" aria-keyshortcuts="Delete" hidden>✕<span class="tb-label"> Remove</span></button>
+</div>
+
+<div id="ctxMenu" class="ctxmenu" role="menu" aria-label="Selection 選取" hidden>
+  <button type="button" role="menuitem" data-ctx="link">⤳ 連結 Link to…</button>
+  <button type="button" role="menuitem" data-ctx="hl"><span class="cdot"></span>螢光筆 Highlight</button>
+  <button type="button" role="menuitem" data-ctx="copy">複製 Copy</button>
+</div>
+<div id="linkBanner" class="linkbanner" role="status" aria-live="polite" hidden>
+  <span class="lb-text"></span>
+  <span class="lb-acts"><button type="button" class="btn small ghost" data-lb="toc">目錄 Contents</button><button type="button" class="btn small primary" data-lb="ok" hidden>連結 Link</button><button type="button" class="btn small ghost" data-lb="cancel" aria-label="Cancel linking (Esc)">✕</button></span>
+</div>
+<button type="button" id="backPill" class="backpill" hidden>← 返回 Back</button>
+
+<dialog id="cardDlg" class="dlg">
+  <form method="dialog" id="cardForm">
+    <h3 id="cardDlgTitle">Add to flashcards 加入單字卡</h3>
+    <label>Word / phrase 單字
+      <input name="term" required autocomplete="off">
+    </label>
+    <label class="defrow">Definition 釋義
+      <textarea name="def" rows="4" placeholder="Type your own definition, or look it up (English words)"></textarea>
+    </label>
+    <div class="row">
+      <button type="button" class="btn ghost" id="lookupBtn">Look up (dictionaryapi.dev)</button>
+      <span class="hint" id="lookupMsg"></span>
+      <button type="button" class="btn small ghost" id="openDup" hidden>Open existing</button>
+    </div>
+    <label>Context sentence 例句
+      <textarea name="context" rows="3"></textarea>
+    </label>
+    <p class="hint" id="cardSrc"></p>
+    <div class="row end">
+      <button type="button" class="btn danger ghost" id="cardDelete" hidden>Delete</button>
+      <span class="grow"></span>
+      <button type="button" class="btn ghost" id="cardCancel">Cancel</button>
+      <button type="submit" value="save" class="btn primary" id="cardSave">Save</button>
+    </div>
+    <p class="hint kbd-hint">Enter ↵ save · Esc cancel · Ctrl/⌘+Enter save from any field</p>
+  </form>
+</dialog>
+
+<dialog id="restoreDlg" class="dlg" aria-labelledby="restoreTitle">
+  <form method="dialog">
+    <h3 id="restoreTitle">Restore a backup 還原備份</h3>
+    <div id="restoreInfo"></div>
+    <div class="row end">
+      <button type="button" class="btn danger ghost" id="restoreReplace">取代 Replace</button>
+      <span class="grow"></span>
+      <button type="button" class="btn ghost" id="restoreCancel">Cancel</button>
+      <button type="button" class="btn primary" id="restoreMerge">合併 Merge</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<p class="sr-only" id="live" aria-live="polite"></p>
+<input type="file" id="fileInput" accept="application/pdf,.pdf" hidden>
+<input type="file" id="importInput" accept="application/json,.json" hidden>
+
+<script src="texts/meta.js"></script>
+<link rel="stylesheet" href="css/proposal.css">
+<script type="module" src="js/app.js"></script>
+<script type="module" src="js/proposal.js"></script>
+</body>
+</html>
